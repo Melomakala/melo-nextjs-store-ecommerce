@@ -9,3 +9,17 @@ export interface registerResponse {
     name: string;
     email: string;
 }
+
+export interface loginRequest {
+    email: string;
+    password: string;
+}
+
+export interface loginResponse {
+    user_id: string;
+    name: string;
+    role: string;
+    email: string;
+    token: string;
+    refreshToken: string;
+}
