@@ -4,14 +4,17 @@ import logger from "../utils/logger";
 
 export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
     if (err instanceof CustomError) {
-        logger.error(err.message, { stack: err.stack });
+        logger.error(err.message);
+        // logger.error(err.message, { stack: err.stack });
         return res.status(err.statusCode).json({
             status: err.status,
             message: err.message,
+            error: err.details
         });
     }
 
-    logger.error(err.message, { stack: err.stack });
+    logger.error(err.message);
+    // logger.error(err.message, { stack: err.stack });
     return res.status(500).json({
         status: "error",
         message: "Something went very wrong!",
