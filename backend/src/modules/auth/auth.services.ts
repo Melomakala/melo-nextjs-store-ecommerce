@@ -51,3 +51,17 @@ export const loginService = async (data: authType.loginRequest): Promise<authTyp
         refreshToken: refreshToken,
     };
 }
+
+export const refreshTokenService = async (data: authType.refreshTokenRequest): Promise<authType.refreshTokenResponse> => {
+    const { user_id, email } = data;
+    const token = Jwt.genAccessToken({
+        user_id: user_id,
+        email: email,
+    });
+    if (!token) {
+        throw new CustomError("Token not generated", 500);
+    }
+    return {
+        token: token,
+    };
+}

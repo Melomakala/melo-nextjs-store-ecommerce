@@ -1,8 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { JwtPayload, verifyAccessToken, verifyRefreshToken } from "../utils/jwt";
 import { CustomError } from "../utils/CustomError";
+import bcrypt from "bcrypt";
+import { findRefreshToken } from "../../modules/auth/auth.models";
+import { cookieOptions } from "../utils/cookie";
 
-export const authenticate = (req: Request, res: Response, next: NextFunction) => {
+export const authenticateAccessToken = (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.authorization?.split(" ")[1];
         if (!token) {
@@ -24,13 +27,26 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
     }
 }
 
-export const refreshToken = (req: Request, res: Response, next: NextFunction) => {
+export const authenticateRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.cookies.refreshToken;
         if (!token) {
             throw new CustomError("Unauthorized: No refresh token provided", 401);
         }
         const decodedToken = verifyRefreshToken(token) as JwtPayload;
+        const userToken = await findRefreshToken(decodedToken.user_id);
+        if (!userToken) {
+            throw new CustomError("Refresh Token not found", 404);
+        }
+        if (userToken.revoked_at || userToken.expires_at < new Date()) {
+            res.clearCookie("refreshToken", cookieOptions);
+            throw new CustomError("Refresh Token Invalid or Expired", 401);
+        }
+        const isTokenValid = await bcrypt.compare(token, userToken.token_hash);
+        if (!isTokenValid) {
+            res.clearCookie("refreshToken", cookieOptions);
+            throw new CustomError("Refresh Token Invalid or Expired", 401);
+        }
         req.user = decodedToken;
         next();
     } catch (error: any) {
