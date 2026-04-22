@@ -30,10 +30,6 @@ export const login = async (req: Request, res: Response) => {
     res.cookie("refreshToken", user.refreshToken, cookieOptions);
     res.status(200).json({
         message: "Login Success", data: {
-            user_id: user.user_id,
-            name: user.name,
-            role: user.role,
-            email: user.email,
             token: user.token
         }
     });
@@ -49,7 +45,7 @@ export const login = async (req: Request, res: Response) => {
 
 export const refreshToken = async (req: Request, res: Response) => {
     if (!req.user) {
-        throw new CustomError("Unauthorized: No token provided", 401);
+        throw new CustomError("User not found", 404);
     }
     const user = await authServices.refreshTokenService(req.user);
     res.status(200).json({
@@ -59,7 +55,7 @@ export const refreshToken = async (req: Request, res: Response) => {
     });
     logger.info("Refresh Token Success", {
         meta: {
-            user_id: req.user.user_id,
+            user_id: req.user?.user_id,
             service: "auth-refresh",
             method: req.method,
             url: req.url,
@@ -69,7 +65,7 @@ export const refreshToken = async (req: Request, res: Response) => {
 
 export const logout = async (req: Request, res: Response) => {
     if (!req.user) {
-        throw new CustomError("Unauthorized: No token provided", 401);
+        throw new CustomError("User not found", 404);
     }
     await authServices.logoutServices(req.user.user_id);
     res.clearCookie("refreshToken", cookieOptions);
