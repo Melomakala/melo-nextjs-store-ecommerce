@@ -66,3 +66,22 @@ export const refreshToken = async (req: Request, res: Response) => {
         }
     })
 }
+
+export const logout = async (req: Request, res: Response) => {
+    if (!req.user) {
+        throw new CustomError("Unauthorized: No token provided", 401);
+    }
+    await authServices.logoutServices(req.user.user_id);
+    res.clearCookie("refreshToken", cookieOptions);
+    res.status(200).json({
+        message: "Logout Success",
+    });
+    logger.info("Logout Success", {
+        meta: {
+            user_id: req.user?.user_id,
+            service: "auth-logout",
+            method: req.method,
+            url: req.url,
+        }
+    })
+}

@@ -43,3 +43,12 @@ export const createRefreshToken = async (user_id: string, refreshToken: string) 
 export const findRefreshToken = async (user_id: string) => {
     return await prisma.refreshToken.findUnique({ where: { user_id } });
 }
+
+export const revokeRefreshToken = async (user_id: string) => {
+    return await prisma.refreshToken.update({
+        where: { user_id, revoked_at: null },
+        data: {
+            revoked_at: new Date(),
+        }
+    });
+}

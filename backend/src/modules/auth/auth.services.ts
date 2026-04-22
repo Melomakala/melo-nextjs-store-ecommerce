@@ -65,3 +65,7 @@ export const refreshTokenService = async (data: authType.refreshTokenRequest): P
         token: token,
     };
 }
+
+export const logoutServices = async (user_id: string) => {
+    await authModel.revokeRefreshToken(user_id);
+}
