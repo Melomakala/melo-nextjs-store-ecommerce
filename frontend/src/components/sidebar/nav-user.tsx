@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import {
   Avatar,
   AvatarFallback,
@@ -37,17 +38,13 @@ export function NavUser({
     <SidebarMenu>
       <SidebarMenuItem>
         {!login ? (
-          <SidebarMenuButton
-            size="lg"
-            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
+          <Link
+            href="/login"
+            className="flex items-center justify-center gap-2 rounded-lg bg-sidebar-primary px-4 py-2.5 text-sm font-medium text-sidebar-primary-foreground transition-all hover:bg-sidebar-primary/80 hover:shadow-md hover:shadow-sidebar-primary/20 active:scale-[0.98]"
           >
-            <Avatar className="h-8 w-8 rounded-lg">
-              <AvatarFallback className="rounded-lg"><LogIn /></AvatarFallback>
-            </Avatar>
-            <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-medium">{"Sign in"}</span>
-            </div>
-          </SidebarMenuButton>
+            <LogIn className="size-4" />
+            <span>Sign In</span>
+          </Link>
         ) : (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -1,11 +1,9 @@
-import { AppSidebar } from "@/components/mainpage/app-sidebar"
+import { AppSidebar } from "@/components/sidebar/app-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -13,6 +11,8 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { ProductGrid } from "@/components/store/product-grid"
+import { StoreSearch } from "@/components/store/store-search"
 
 export default function Home() {
   return (
@@ -29,19 +29,28 @@ export default function Home() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Home</BreadcrumbPage>
+                  <BreadcrumbPage>Store</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
+        <div className="flex flex-1 flex-col gap-6 p-4 pt-0">
+          {/* Hero / Welcome */}
+          <div className="rounded-xl border border-border/40 bg-gradient-to-br from-primary/5 via-transparent to-transparent p-6">
+            <h1 className="text-2xl font-bold tracking-tight">
+              Game Top-Up Store
+            </h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Browse and purchase game cards instantly. Fast delivery, best prices.
+            </p>
           </div>
-          <div className="min-h-screen flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+
+          {/* Search */}
+          <StoreSearch />
+
+          {/* Product Grid */}
+          <ProductGrid />
         </div>
       </SidebarInset>
     </SidebarProvider>

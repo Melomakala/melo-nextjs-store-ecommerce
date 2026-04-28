@@ -1,0 +1,182 @@
+"use client"
+
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import {
+  Card,
+  CardContent,
+} from "@/components/ui/card"
+import { ShoppingCart, Zap } from "lucide-react"
+
+const products = [
+  {
+    id: 1,
+    name: "Roblox Gift Card",
+    description: "400 Robux",
+    price: 199,
+    originalPrice: 250,
+    image: "/products/roblox.png",
+    tag: "Hot",
+    inStock: true,
+  },
+  {
+    id: 2,
+    name: "Steam Wallet",
+    description: "฿250 THB Code",
+    price: 250,
+    image: "/products/steam.png",
+    tag: null,
+    inStock: true,
+  },
+  {
+    id: 3,
+    name: "Valorant Points",
+    description: "1,000 VP",
+    price: 349,
+    originalPrice: 400,
+    image: "/products/valorant.png",
+    tag: "Sale",
+    inStock: true,
+  },
+  {
+    id: 4,
+    name: "Free Fire Diamonds",
+    description: "520 Diamonds",
+    price: 149,
+    image: "/products/freefire.png",
+    tag: "New",
+    inStock: true,
+  },
+  {
+    id: 5,
+    name: "PUBG Mobile UC",
+    description: "660 UC",
+    price: 249,
+    image: "/products/pubg.png",
+    tag: null,
+    inStock: true,
+  },
+  {
+    id: 6,
+    name: "Roblox Gift Card",
+    description: "800 Robux",
+    price: 379,
+    originalPrice: 450,
+    image: "/products/roblox.png",
+    tag: "Sale",
+    inStock: false,
+  },
+  {
+    id: 7,
+    name: "Steam Wallet",
+    description: "฿500 THB Code",
+    price: 500,
+    image: "/products/steam.png",
+    tag: null,
+    inStock: true,
+  },
+  {
+    id: 8,
+    name: "Valorant Points",
+    description: "2,575 VP",
+    price: 849,
+    originalPrice: 1000,
+    image: "/products/valorant.png",
+    tag: "Hot",
+    inStock: true,
+  },
+]
+
+function formatPrice(price: number) {
+  return `฿${price.toLocaleString()}`
+}
+
+export function ProductGrid() {
+  return (
+    <div>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-lg font-semibold">All Products</h2>
+        <span className="text-sm text-muted-foreground">{products.length} items</span>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {products.map((product) => (
+          <Card
+            key={product.id}
+            className="group relative overflow-hidden border-border/40 bg-card/50 transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5"
+          >
+            {/* Tag Badge */}
+            {product.tag && (
+              <div className="absolute top-3 left-3 z-10">
+                <Badge
+                  variant={product.tag === "Sale" ? "destructive" : "default"}
+                  className={
+                    product.tag === "Hot"
+                      ? "bg-orange-500/90 text-white hover:bg-orange-500"
+                      : product.tag === "New"
+                        ? "bg-emerald-500/90 text-white hover:bg-emerald-500"
+                        : ""
+                  }
+                >
+                  {product.tag === "Hot" && <Zap className="mr-1 size-3" />}
+                  {product.tag}
+                </Badge>
+              </div>
+            )}
+
+            {/* Out of stock overlay */}
+            {!product.inStock && (
+              <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/60 backdrop-blur-[2px]">
+                <Badge variant="secondary" className="text-sm">
+                  Out of Stock
+                </Badge>
+              </div>
+            )}
+
+            {/* Product Image */}
+            <div className="relative aspect-[4/3] overflow-hidden bg-muted/30">
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+
+            <CardContent className="p-4">
+              {/* Product Info */}
+              <div className="mb-3">
+                <h3 className="font-semibold leading-tight">{product.name}</h3>
+                <p className="mt-0.5 text-sm text-muted-foreground">
+                  {product.description}
+                </p>
+              </div>
+
+              {/* Price */}
+              <div className="mb-3 flex items-baseline gap-2">
+                <span className="text-lg font-bold text-primary">
+                  {formatPrice(product.price)}
+                </span>
+                {product.originalPrice && (
+                  <span className="text-sm text-muted-foreground line-through">
+                    {formatPrice(product.originalPrice)}
+                  </span>
+                )}
+              </div>
+
+              {/* Buy Button */}
+              <Button
+                size="lg"
+                disabled={!product.inStock}
+                className="w-full font-medium transition-all"
+              >
+                <ShoppingCart className="mr-2 size-4" />
+                {product.inStock ? "Buy Now" : "Unavailable"}
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  )
+}
