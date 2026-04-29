@@ -14,9 +14,14 @@ import {
 } from "@/components/ui/card";
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Store, User, LogIn, ShieldX } from "lucide-react";
 import { RegisterData } from "@/modules/auth/auth.type";
+import { useRegister } from "@/modules/auth/auth.hook";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { registerSchema } from "@/modules/auth/auth.schema"
 
 export default function RegisterPage() {
+    const router = useRouter();
+    const { handleRegister } = useRegister();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -43,14 +48,28 @@ export default function RegisterPage() {
 
         const result = registerSchema.safeParse(formData);
         if (!result.success) {
-            setTimeout(() => {
-                setIsLoading(false)
-                setStateError(result.error.issues);
-                console.log(result.error.issues);
-            }, 2000);
+            await new Promise((resolve) => setTimeout(resolve, 800));
+            setStateError(result.error.issues);
+            setIsLoading(false)
             return;
         }
-        setTimeout(() => setIsLoading(false), 2000);
+        try {
+            const response = await handleRegister(formData);
+            await new Promise((resolve) => setTimeout(resolve, 800));
+            if (response) {
+                toast.success("Account created successfully!");
+                router.push("/login");
+            }
+        } catch (error: any) {
+            toast(<div className="flex items-center gap-2">
+                <ShieldX className="h-4 w-4 text-red-500" />
+                <p className="text-red-500 text-sm">{error.message || "Something went wrong"}</p>
+            </div>,
+                { position: "bottom-center" });
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (

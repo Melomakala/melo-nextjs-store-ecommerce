@@ -8,7 +8,7 @@ export const register = async (req: Request, res: Response) => {
     const data = req.body;
     const user = await authServices.registerService(data);
     res.status(201).json({
-        message: "Register Success", data: {
+        message: "Register Success", result: {
             user_id: user.user_id,
             name: user.name,
             email: user.email,
@@ -29,7 +29,7 @@ export const login = async (req: Request, res: Response) => {
     const user = await authServices.loginService(data);
     res.cookie("refreshToken", user.refreshToken, cookieOptions);
     res.status(200).json({
-        message: "Login Success", data: {
+        message: "Login Success", result: {
             token: user.token
         }
     });
@@ -49,7 +49,7 @@ export const refreshToken = async (req: Request, res: Response) => {
     }
     const user = await authServices.refreshTokenService(req.user);
     res.status(200).json({
-        message: "Refresh Token Success", data: {
+        message: "Refresh Token Success", result: {
             token: user.token
         }
     });

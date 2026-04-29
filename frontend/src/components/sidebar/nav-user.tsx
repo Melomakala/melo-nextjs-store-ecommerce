@@ -30,14 +30,13 @@ export function NavUser({
     name: string
     email: string
     avatar: string
-  }
+  } | null
 }) {
   const { isMobile } = useSidebar()
-  const login = false
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        {!login ? (
+        {!user ? (
           <Link
             href="/login"
             className="flex items-center justify-center gap-2 rounded-lg bg-sidebar-primary px-4 py-2.5 text-sm font-medium text-sidebar-primary-foreground transition-all hover:bg-sidebar-primary/80 hover:shadow-md hover:shadow-sidebar-primary/20 active:scale-[0.98]"

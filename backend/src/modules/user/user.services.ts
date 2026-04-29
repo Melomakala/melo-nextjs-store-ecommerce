@@ -6,5 +6,10 @@ export const getProfileService = async (user_id: string) => {
     if (!user) {
         throw new CustomError("User not found", 404);
     }
-    return user;
+    return {
+        user_id: user.user_id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+    };
 }

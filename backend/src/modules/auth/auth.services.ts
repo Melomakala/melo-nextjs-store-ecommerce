@@ -20,11 +20,11 @@ export const loginService = async (data: authType.loginRequest): Promise<authTyp
     const { email, password } = data;
     const user = await authModel.findUserByEmail(email);
     if (!user) {
-        throw new CustomError("User not found", 404);
+        throw new CustomError("Invalid email or password. Please try again.", 404);
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-        throw new CustomError("Invalid password", 401);
+        throw new CustomError("Invalid email or password. Please try again.", 404);
     }
     const token = Jwt.genAccessToken({
         user_id: user.user_id,

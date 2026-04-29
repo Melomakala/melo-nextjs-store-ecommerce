@@ -16,39 +16,46 @@ import {
   SidebarGroupLabel,
 } from "@/components/ui/sidebar"
 import { Store, Home, ShoppingCart, CreditCard, Package, Wallet } from "lucide-react"
-
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Store",
-      url: "/",
-      icon: <Home />,
-      isActive: true,
-    },
-    {
-      title: "Shopping Cart",
-      url: "/cart",
-      icon: <ShoppingCart />,
-    },
-    {
-      title: "Top Up",
-      url: "/topup",
-      icon: <CreditCard />,
-    },
-    {
-      title: "Order History",
-      url: "/orders",
-      icon: <Package />,
-    },
-  ],
-}
+import { useUserStore } from "@/modules/user/user.store";
+import { useProfile } from "@/modules/user/user.hook";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { user } = useUserStore();
+  const { handleGetProfile } = useProfile();
+
+  React.useEffect(() => {
+    handleGetProfile();
+  }, [])
+  const data = {
+    profile: user ? {
+      name: user?.name,
+      email: user?.email,
+      avatar: "/avatars/shadcn.jpg",
+    } : null,
+    navMain: [
+      {
+        title: "Store",
+        url: "/",
+        icon: <Home />,
+        isActive: true,
+      },
+      {
+        title: "Shopping Cart",
+        url: "/cart",
+        icon: <ShoppingCart />,
+      },
+      {
+        title: "Top Up",
+        url: "/topup",
+        icon: <CreditCard />,
+      },
+      {
+        title: "Order History",
+        url: "/orders",
+        icon: <Package />,
+      },
+    ],
+  }
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -95,7 +102,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
 
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={data.profile} />
       </SidebarFooter>
     </Sidebar>
   )

@@ -15,9 +15,13 @@ import {
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Store, UserPlus, ShieldX } from "lucide-react";
 import { loginSchema } from "@/modules/auth/auth.schema";
 import { LoginData } from "@/modules/auth/auth.type";
+import { useLogin } from "@/modules/auth/auth.hook";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner"
 
 
 export default function LoginPage() {
+    const router = useRouter();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [formData, setFormData] = useState<LoginData>({
@@ -33,6 +37,7 @@ export default function LoginPage() {
         });
     };
 
+    const { handleLogin } = useLogin();
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsLoading(true);
@@ -40,14 +45,28 @@ export default function LoginPage() {
 
         const result = loginSchema.safeParse(formData);
         if (!result.success) {
-            setTimeout(() => {
-                setIsLoading(false)
-                setStateError(result.error.issues);
-                console.log(result.error.issues);
-            }, 2000);
+            await new Promise((resolve) => setTimeout(resolve, 800));
+            setStateError(result.error.issues);
+            setIsLoading(false)
             return;
         }
-        setTimeout(() => setIsLoading(false), 2000);
+        try {
+            const response = await handleLogin(formData);
+            await new Promise((resolve) => setTimeout(resolve, 800));
+            if (response) {
+                router.push("/");
+            }
+        } catch (error: any) {
+            toast(<div className="flex items-center gap-2">
+                <ShieldX className="h-4 w-4 text-red-500" />
+                <p className="text-red-500 text-sm">{error.message || "Something went wrong"}</p>
+            </div>,
+                { position: "bottom-center" });
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+
     };
 
     return (

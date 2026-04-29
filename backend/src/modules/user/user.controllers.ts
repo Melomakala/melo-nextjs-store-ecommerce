@@ -9,8 +9,13 @@ export const getProfile = async (req: Request, res: Response) => {
     }
     const user = await userServices.getProfileService(req.user.user_id);
     res.status(200).json({
-        message: "User",
-        data: user
+        message: "get Profile Success",
+        result: {
+            user_id: user.user_id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+        }
     });
     logger.info("Get Profile Success", {
         meta: {
