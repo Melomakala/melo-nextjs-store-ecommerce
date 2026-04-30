@@ -21,7 +21,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, CreditCardIcon, BellIcon, LogOutIcon, LogIn } from "lucide-react"
+import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, BellIcon, LogOutIcon, LogIn } from "lucide-react"
+import { useLogout } from "@/modules/auth/auth.hook";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner"
 
 export function NavUser({
   user,
@@ -32,7 +35,15 @@ export function NavUser({
     avatar: string
   } | null
 }) {
+  const router = useRouter();
   const { isMobile } = useSidebar()
+  const { handleLogout } = useLogout();
+
+  const handleLogoutClick = async () => {
+    await handleLogout();
+    toast("Logout Successful", { position: "bottom-center" })
+    router.push("/");
+  }
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -72,7 +83,7 @@ export function NavUser({
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                    <AvatarFallback className="rounded-lg">ML</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-medium">{user.name}</span>
@@ -96,18 +107,13 @@ export function NavUser({
                   Account
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <CreditCardIcon
-                  />
-                  Billing
-                </DropdownMenuItem>
-                <DropdownMenuItem>
                   <BellIcon
                   />
                   Notifications
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogoutClick}>
                 <LogOutIcon
                 />
                 Log out

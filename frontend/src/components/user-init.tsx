@@ -21,7 +21,6 @@ export default function UserInit() {
             try {
                 let currentToken = token;
 
-                // 1. เช็ค Refresh Token ถ้ายังไม่มี Access Token
                 if (!currentToken) {
                     try {
                         const result = await refreshService();
@@ -30,11 +29,9 @@ export default function UserInit() {
                             currentToken = result.token;
                         }
                     } catch (error) {
-                        // ไม่มี session - ไม่เป็นไร
+                        // คิดอยู่ไส่อะไรดี
                     }
                 }
-
-                // 2. ดึง Profile ถ้ามี Token
                 if (currentToken) {
                     await handleGetProfile();
                 }

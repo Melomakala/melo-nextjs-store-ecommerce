@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
     async (error: AxiosError) => {
         // จัดการ Error ทั่วไป เช่น 401 Unauthorized
         const originalRequest = error.config as CustomRequestConfig;
-        if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url?.includes("/auth/refresh")) {
+        if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url?.includes("/auth/refresh") && !originalRequest.url?.includes("/auth/logout")) {
             originalRequest._retry = true;
             try {
                 const response = await axios.post("http://localhost:5000/api/auth/refresh", {}, {
@@ -50,6 +50,7 @@ axiosInstance.interceptors.response.use(
             } catch {
                 useAuthStore.getState().removeToken();
                 useAuthStore.getState().setIsInitialized(false);
+                window.location.href = "/";
                 return Promise.reject(error);
             } finally {
                 useAuthStore.getState().setIsInitialized(true)

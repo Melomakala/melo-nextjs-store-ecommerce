@@ -53,6 +53,7 @@ export const authenticateRefreshToken = async (req: Request, res: Response, next
         if (error instanceof CustomError) {
             next(error);
         } else if (error.name === "TokenExpiredError") {
+            res.clearCookie("refreshToken", cookieOptions);
             next(new CustomError("Refresh Token Expired", 401));
         } else if (error.name === "JsonWebTokenError") {
             next(new CustomError("Invalid Refresh Token", 401));

@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Store, Home, ShoppingCart, CreditCard, Package, Wallet } from "lucide-react"
 import { useUserStore } from "@/modules/user/user.store";
+import Link from "next/link";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUserStore();
@@ -36,17 +37,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
       {
         title: "Shopping Cart",
-        url: "/cart",
+        url: "#",
         icon: <ShoppingCart />,
       },
       {
-        title: "Top Up",
-        url: "/topup",
-        icon: <CreditCard />,
-      },
-      {
         title: "Order History",
-        url: "/orders",
+        url: "#",
         icon: <Package />,
       },
     ],
@@ -57,7 +53,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="/">
+              <Link href="/">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <Store className="size-4" />
                 </div>
@@ -65,7 +61,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <span className="truncate font-medium">Melo Store</span>
                   <span className="truncate text-xs">Game Top-Up</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -81,13 +77,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <p className="mt-1 text-lg font-bold tracking-tight text-sidebar-foreground">
               ฿1,250.00
             </p>
-            <a
-              href="/topup"
+            <Link
+              href="#"
               className="mt-2 flex items-center justify-center rounded-md bg-sidebar-primary px-3 py-1.5 text-xs font-medium text-sidebar-primary-foreground transition-colors hover:bg-sidebar-primary/80"
             >
               <CreditCard className="mr-1.5 size-3" />
               Top Up
-            </a>
+            </Link>
           </div>
         </SidebarGroup>
       </SidebarHeader>

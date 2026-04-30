@@ -19,11 +19,7 @@ import { useLogin } from "@/modules/auth/auth.hook";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner"
 
-
-import { useRouteGuard } from "@/hooks/use-route-guard";
-
 export default function LoginPage() {
-    useRouteGuard();
     const router = useRouter();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);

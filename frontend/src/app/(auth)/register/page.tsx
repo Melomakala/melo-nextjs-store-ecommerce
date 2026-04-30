@@ -18,10 +18,8 @@ import { useRegister } from "@/modules/auth/auth.hook";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { registerSchema } from "@/modules/auth/auth.schema"
-import { useRouteGuard } from "@/hooks/use-route-guard";
 
 export default function RegisterPage() {
-    useRouteGuard();
     const router = useRouter();
     const { handleRegister } = useRegister();
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -57,7 +55,8 @@ export default function RegisterPage() {
         try {
             const response = await handleRegister(formData);
             if (response) {
-                toast.success("Account created successfully!");
+                toast.success("Account created successfully!",
+                    { position: "bottom-center" });
                 router.push("/login");
             }
         } catch (error: any) {
