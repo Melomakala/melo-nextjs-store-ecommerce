@@ -1,3 +1,4 @@
+"use client"
 import { AppSidebar } from "@/components/sidebar/app-sidebar"
 import {
   Breadcrumb,
@@ -13,8 +14,14 @@ import {
 } from "@/components/ui/sidebar"
 import { ProductGrid } from "@/components/store/product-grid"
 import { StoreSearch } from "@/components/store/store-search"
+import LoadingSpiner from "@/components/loadingspiner"
+import { useAuthStore } from "@/modules/auth/auth.store"
 
 export default function Home() {
+  const isInitialized = useAuthStore((state) => state.isInitialized)
+  if (!isInitialized) {
+    return <LoadingSpiner />
+  }
   return (
     <SidebarProvider>
       <AppSidebar />

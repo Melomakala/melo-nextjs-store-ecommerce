@@ -20,7 +20,10 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner"
 
 
+import { useRouteGuard } from "@/hooks/use-route-guard";
+
 export default function LoginPage() {
+    useRouteGuard();
     const router = useRouter();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -45,15 +48,16 @@ export default function LoginPage() {
 
         const result = loginSchema.safeParse(formData);
         if (!result.success) {
-            await new Promise((resolve) => setTimeout(resolve, 800));
             setStateError(result.error.issues);
             setIsLoading(false)
             return;
         }
         try {
             const response = await handleLogin(formData);
-            await new Promise((resolve) => setTimeout(resolve, 800));
             if (response) {
+                toast.success("Login Successful", {
+                    position: "bottom-center",
+                });
                 router.push("/");
             }
         } catch (error: any) {

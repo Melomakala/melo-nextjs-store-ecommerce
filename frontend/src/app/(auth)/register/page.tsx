@@ -18,8 +18,10 @@ import { useRegister } from "@/modules/auth/auth.hook";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { registerSchema } from "@/modules/auth/auth.schema"
+import { useRouteGuard } from "@/hooks/use-route-guard";
 
 export default function RegisterPage() {
+    useRouteGuard();
     const router = useRouter();
     const { handleRegister } = useRegister();
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -48,14 +50,12 @@ export default function RegisterPage() {
 
         const result = registerSchema.safeParse(formData);
         if (!result.success) {
-            await new Promise((resolve) => setTimeout(resolve, 800));
             setStateError(result.error.issues);
             setIsLoading(false)
             return;
         }
         try {
             const response = await handleRegister(formData);
-            await new Promise((resolve) => setTimeout(resolve, 800));
             if (response) {
                 toast.success("Account created successfully!");
                 router.push("/login");
@@ -66,7 +66,6 @@ export default function RegisterPage() {
                 <p className="text-red-500 text-sm">{error.message || "Something went wrong"}</p>
             </div>,
                 { position: "bottom-center" });
-            console.log(error);
         } finally {
             setIsLoading(false);
         }

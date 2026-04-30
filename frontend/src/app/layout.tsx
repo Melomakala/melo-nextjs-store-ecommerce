@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Toaster } from "@/components/ui/sonner"
+import { Loader2 } from "lucide-react";
+import UserInit from "@/components/user-init";
 
 
 
@@ -32,10 +34,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <UserInit />
           <TooltipProvider>
             {children}
             <Toaster />
           </TooltipProvider>
+
         </ThemeProvider>
       </body>
 

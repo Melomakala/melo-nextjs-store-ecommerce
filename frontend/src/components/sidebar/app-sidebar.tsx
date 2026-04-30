@@ -17,15 +17,10 @@ import {
 } from "@/components/ui/sidebar"
 import { Store, Home, ShoppingCart, CreditCard, Package, Wallet } from "lucide-react"
 import { useUserStore } from "@/modules/user/user.store";
-import { useProfile } from "@/modules/user/user.hook";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUserStore();
-  const { handleGetProfile } = useProfile();
 
-  React.useEffect(() => {
-    handleGetProfile();
-  }, [])
   const data = {
     profile: user ? {
       name: user?.name,
