@@ -25,7 +25,7 @@ import { useRouteGuard } from "@/hooks/use-route-guard";
 import LoadingSpiner from "@/components/loadingspiner";
 import { useTopupWallet } from "@/modules/wallet/wallet.hook";
 import { TopupWalletData } from "@/modules/wallet/wallet.types";
-
+import { useWallet } from "@/modules/wallet/wallet.hook";
 const AMOUNTS = [
     { value: 50, bonus: 0, label: "50" },
     { value: 100, bonus: 0, label: "100" },
@@ -66,6 +66,7 @@ const METHODS = [
 
 export default function Page() {
     const { handleTopupWallet } = useTopupWallet();
+    const { handleGetWallet } = useWallet();
     const { isLoading, isRedirecting } = useRouteGuard(true, "/");
     const { user } = useUserStore();
     const { balance } = useWalletStore();
@@ -101,6 +102,7 @@ export default function Page() {
         const response = await handleTopupWallet(data as TopupWalletData);
         if (response) {
             setConfirmed(true);
+            handleGetWallet();
         }
     }
 
@@ -123,7 +125,7 @@ export default function Page() {
                                 New Balance
                             </div>
                             <div className="text-3xl font-bold text-primary">
-                                {(currentBalance + totalAmount).toLocaleString()}
+                                {(balance).toLocaleString()}
                             </div>
                             <div className="text-sm text-muted-foreground">
                                 Baht

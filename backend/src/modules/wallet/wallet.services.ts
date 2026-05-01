@@ -28,18 +28,17 @@ export const topupWalletService = async (user_id: string, data: walletType.Topup
 
     //  ยิง mockup ปลอม
     // MOCKTOPUP.service.ts
-    setTimeout(async () => {
-        await fetch("http://localhost:5000/api/mockup-topup", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                topup_id: topup.topup_id,
-                status: topup.status
-            })
-        });
-    }, 3000);
+    await fetch("http://localhost:5000/api/mockup-topup", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            topup_id: topup.topup_id,
+            status: topup.status
+        })
+    });
+
     return {
         topup_id: topup.topup_id,
         wallet_id: topup.wallet_id,
@@ -74,5 +73,5 @@ export const mockupTopupWalletService = async (topup_id: string, status: walletT
             reference_id: tx.topup_id,
         });
     }
-    return "Payment Success";
+    return "Payment-Success";
 }
