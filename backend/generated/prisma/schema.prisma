@@ -40,5 +40,35 @@ model Wallet {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  user User @relation(fields: [user_id], references: [user_id])
+  user         User                @relation(fields: [user_id], references: [user_id])
+  transactions WalletTransaction[]
+  topup        WalletTopup[]
+}
+
+model WalletTransaction {
+  transaction_id String   @id @default(uuid())
+  wallet_id      String
+  amount         Int
+  type           String
+  balance_before Int
+  balance_after  Int
+  reference_id   String   @unique
+  created_at     DateTime @default(now())
+
+  wallet Wallet       @relation(fields: [wallet_id], references: [wallet_id])
+  topup  WalletTopup?
+}
+
+model WalletTopup {
+  topup_id       String   @id @default(uuid())
+  wallet_id      String
+  transaction_id String?  @unique
+  amount         Int
+  fee            Int
+  method         String
+  status         String
+  created_at     DateTime @default(now())
+
+  wallet      Wallet             @relation(fields: [wallet_id], references: [wallet_id])
+  transaction WalletTransaction? @relation(fields: [transaction_id], references: [transaction_id])
 }

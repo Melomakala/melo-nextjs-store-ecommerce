@@ -28,6 +28,16 @@ export type RefreshToken = $Result.DefaultSelection<Prisma.$RefreshTokenPayload>
  * 
  */
 export type Wallet = $Result.DefaultSelection<Prisma.$WalletPayload>
+/**
+ * Model WalletTransaction
+ * 
+ */
+export type WalletTransaction = $Result.DefaultSelection<Prisma.$WalletTransactionPayload>
+/**
+ * Model WalletTopup
+ * 
+ */
+export type WalletTopup = $Result.DefaultSelection<Prisma.$WalletTopupPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -179,6 +189,26 @@ export class PrismaClient<
     * ```
     */
   get wallet(): Prisma.WalletDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.walletTransaction`: Exposes CRUD operations for the **WalletTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WalletTransactions
+    * const walletTransactions = await prisma.walletTransaction.findMany()
+    * ```
+    */
+  get walletTransaction(): Prisma.WalletTransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.walletTopup`: Exposes CRUD operations for the **WalletTopup** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WalletTopups
+    * const walletTopups = await prisma.walletTopup.findMany()
+    * ```
+    */
+  get walletTopup(): Prisma.WalletTopupDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -615,7 +645,9 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     RefreshToken: 'RefreshToken',
-    Wallet: 'Wallet'
+    Wallet: 'Wallet',
+    WalletTransaction: 'WalletTransaction',
+    WalletTopup: 'WalletTopup'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -631,7 +663,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "refreshToken" | "wallet"
+      modelProps: "user" | "refreshToken" | "wallet" | "walletTransaction" | "walletTopup"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -857,6 +889,154 @@ export namespace Prisma {
           }
         }
       }
+      WalletTransaction: {
+        payload: Prisma.$WalletTransactionPayload<ExtArgs>
+        fields: Prisma.WalletTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WalletTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WalletTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.WalletTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WalletTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.WalletTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.WalletTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.WalletTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WalletTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.WalletTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTransactionPayload>
+          }
+          update: {
+            args: Prisma.WalletTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.WalletTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WalletTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WalletTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.WalletTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.WalletTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWalletTransaction>
+          }
+          groupBy: {
+            args: Prisma.WalletTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WalletTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WalletTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<WalletTransactionCountAggregateOutputType> | number
+          }
+        }
+      }
+      WalletTopup: {
+        payload: Prisma.$WalletTopupPayload<ExtArgs>
+        fields: Prisma.WalletTopupFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WalletTopupFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WalletTopupFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>
+          }
+          findFirst: {
+            args: Prisma.WalletTopupFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WalletTopupFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>
+          }
+          findMany: {
+            args: Prisma.WalletTopupFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>[]
+          }
+          create: {
+            args: Prisma.WalletTopupCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>
+          }
+          createMany: {
+            args: Prisma.WalletTopupCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WalletTopupCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>[]
+          }
+          delete: {
+            args: Prisma.WalletTopupDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>
+          }
+          update: {
+            args: Prisma.WalletTopupUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>
+          }
+          deleteMany: {
+            args: Prisma.WalletTopupDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WalletTopupUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WalletTopupUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>[]
+          }
+          upsert: {
+            args: Prisma.WalletTopupUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>
+          }
+          aggregate: {
+            args: Prisma.WalletTopupAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWalletTopup>
+          }
+          groupBy: {
+            args: Prisma.WalletTopupGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WalletTopupGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WalletTopupCountArgs<ExtArgs>
+            result: $Utils.Optional<WalletTopupCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -968,6 +1148,8 @@ export namespace Prisma {
     user?: UserOmit
     refreshToken?: RefreshTokenOmit
     wallet?: WalletOmit
+    walletTransaction?: WalletTransactionOmit
+    walletTopup?: WalletTopupOmit
   }
 
   /* Types for Logging */
@@ -1071,6 +1253,46 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountWalletArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WalletWhereInput
+  }
+
+
+  /**
+   * Count Type WalletCountOutputType
+   */
+
+  export type WalletCountOutputType = {
+    transactions: number
+    topup: number
+  }
+
+  export type WalletCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    transactions?: boolean | WalletCountOutputTypeCountTransactionsArgs
+    topup?: boolean | WalletCountOutputTypeCountTopupArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * WalletCountOutputType without action
+   */
+  export type WalletCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletCountOutputType
+     */
+    select?: WalletCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * WalletCountOutputType without action
+   */
+  export type WalletCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WalletTransactionWhereInput
+  }
+
+  /**
+   * WalletCountOutputType without action
+   */
+  export type WalletCountOutputTypeCountTopupArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WalletTopupWhereInput
   }
 
 
@@ -3460,6 +3682,9 @@ export namespace Prisma {
     created_at?: boolean
     updated_at?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    transactions?: boolean | Wallet$transactionsArgs<ExtArgs>
+    topup?: boolean | Wallet$topupArgs<ExtArgs>
+    _count?: boolean | WalletCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["wallet"]>
 
   export type WalletSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3491,6 +3716,9 @@ export namespace Prisma {
   export type WalletOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"wallet_id" | "user_id" | "balance" | "created_at" | "updated_at", ExtArgs["result"]["wallet"]>
   export type WalletInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    transactions?: boolean | Wallet$transactionsArgs<ExtArgs>
+    topup?: boolean | Wallet$topupArgs<ExtArgs>
+    _count?: boolean | WalletCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type WalletIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -3503,6 +3731,8 @@ export namespace Prisma {
     name: "Wallet"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      transactions: Prisma.$WalletTransactionPayload<ExtArgs>[]
+      topup: Prisma.$WalletTopupPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       wallet_id: string
@@ -3905,6 +4135,8 @@ export namespace Prisma {
   export interface Prisma__WalletClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    transactions<T extends Wallet$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Wallet$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    topup<T extends Wallet$topupArgs<ExtArgs> = {}>(args?: Subset<T, Wallet$topupArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4338,6 +4570,54 @@ export namespace Prisma {
   }
 
   /**
+   * Wallet.transactions
+   */
+  export type Wallet$transactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionInclude<ExtArgs> | null
+    where?: WalletTransactionWhereInput
+    orderBy?: WalletTransactionOrderByWithRelationInput | WalletTransactionOrderByWithRelationInput[]
+    cursor?: WalletTransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WalletTransactionScalarFieldEnum | WalletTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * Wallet.topup
+   */
+  export type Wallet$topupArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    where?: WalletTopupWhereInput
+    orderBy?: WalletTopupOrderByWithRelationInput | WalletTopupOrderByWithRelationInput[]
+    cursor?: WalletTopupWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WalletTopupScalarFieldEnum | WalletTopupScalarFieldEnum[]
+  }
+
+  /**
    * Wallet without action
    */
   export type WalletDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4353,6 +4633,2336 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: WalletInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model WalletTransaction
+   */
+
+  export type AggregateWalletTransaction = {
+    _count: WalletTransactionCountAggregateOutputType | null
+    _avg: WalletTransactionAvgAggregateOutputType | null
+    _sum: WalletTransactionSumAggregateOutputType | null
+    _min: WalletTransactionMinAggregateOutputType | null
+    _max: WalletTransactionMaxAggregateOutputType | null
+  }
+
+  export type WalletTransactionAvgAggregateOutputType = {
+    amount: number | null
+    balance_before: number | null
+    balance_after: number | null
+  }
+
+  export type WalletTransactionSumAggregateOutputType = {
+    amount: number | null
+    balance_before: number | null
+    balance_after: number | null
+  }
+
+  export type WalletTransactionMinAggregateOutputType = {
+    transaction_id: string | null
+    wallet_id: string | null
+    amount: number | null
+    type: string | null
+    balance_before: number | null
+    balance_after: number | null
+    reference_id: string | null
+    created_at: Date | null
+  }
+
+  export type WalletTransactionMaxAggregateOutputType = {
+    transaction_id: string | null
+    wallet_id: string | null
+    amount: number | null
+    type: string | null
+    balance_before: number | null
+    balance_after: number | null
+    reference_id: string | null
+    created_at: Date | null
+  }
+
+  export type WalletTransactionCountAggregateOutputType = {
+    transaction_id: number
+    wallet_id: number
+    amount: number
+    type: number
+    balance_before: number
+    balance_after: number
+    reference_id: number
+    created_at: number
+    _all: number
+  }
+
+
+  export type WalletTransactionAvgAggregateInputType = {
+    amount?: true
+    balance_before?: true
+    balance_after?: true
+  }
+
+  export type WalletTransactionSumAggregateInputType = {
+    amount?: true
+    balance_before?: true
+    balance_after?: true
+  }
+
+  export type WalletTransactionMinAggregateInputType = {
+    transaction_id?: true
+    wallet_id?: true
+    amount?: true
+    type?: true
+    balance_before?: true
+    balance_after?: true
+    reference_id?: true
+    created_at?: true
+  }
+
+  export type WalletTransactionMaxAggregateInputType = {
+    transaction_id?: true
+    wallet_id?: true
+    amount?: true
+    type?: true
+    balance_before?: true
+    balance_after?: true
+    reference_id?: true
+    created_at?: true
+  }
+
+  export type WalletTransactionCountAggregateInputType = {
+    transaction_id?: true
+    wallet_id?: true
+    amount?: true
+    type?: true
+    balance_before?: true
+    balance_after?: true
+    reference_id?: true
+    created_at?: true
+    _all?: true
+  }
+
+  export type WalletTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WalletTransaction to aggregate.
+     */
+    where?: WalletTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WalletTransactions to fetch.
+     */
+    orderBy?: WalletTransactionOrderByWithRelationInput | WalletTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WalletTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WalletTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WalletTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WalletTransactions
+    **/
+    _count?: true | WalletTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WalletTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WalletTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WalletTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WalletTransactionMaxAggregateInputType
+  }
+
+  export type GetWalletTransactionAggregateType<T extends WalletTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateWalletTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWalletTransaction[P]>
+      : GetScalarType<T[P], AggregateWalletTransaction[P]>
+  }
+
+
+
+
+  export type WalletTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WalletTransactionWhereInput
+    orderBy?: WalletTransactionOrderByWithAggregationInput | WalletTransactionOrderByWithAggregationInput[]
+    by: WalletTransactionScalarFieldEnum[] | WalletTransactionScalarFieldEnum
+    having?: WalletTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WalletTransactionCountAggregateInputType | true
+    _avg?: WalletTransactionAvgAggregateInputType
+    _sum?: WalletTransactionSumAggregateInputType
+    _min?: WalletTransactionMinAggregateInputType
+    _max?: WalletTransactionMaxAggregateInputType
+  }
+
+  export type WalletTransactionGroupByOutputType = {
+    transaction_id: string
+    wallet_id: string
+    amount: number
+    type: string
+    balance_before: number
+    balance_after: number
+    reference_id: string
+    created_at: Date
+    _count: WalletTransactionCountAggregateOutputType | null
+    _avg: WalletTransactionAvgAggregateOutputType | null
+    _sum: WalletTransactionSumAggregateOutputType | null
+    _min: WalletTransactionMinAggregateOutputType | null
+    _max: WalletTransactionMaxAggregateOutputType | null
+  }
+
+  type GetWalletTransactionGroupByPayload<T extends WalletTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WalletTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WalletTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WalletTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], WalletTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WalletTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    transaction_id?: boolean
+    wallet_id?: boolean
+    amount?: boolean
+    type?: boolean
+    balance_before?: boolean
+    balance_after?: boolean
+    reference_id?: boolean
+    created_at?: boolean
+    wallet?: boolean | WalletDefaultArgs<ExtArgs>
+    topup?: boolean | WalletTransaction$topupArgs<ExtArgs>
+  }, ExtArgs["result"]["walletTransaction"]>
+
+  export type WalletTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    transaction_id?: boolean
+    wallet_id?: boolean
+    amount?: boolean
+    type?: boolean
+    balance_before?: boolean
+    balance_after?: boolean
+    reference_id?: boolean
+    created_at?: boolean
+    wallet?: boolean | WalletDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["walletTransaction"]>
+
+  export type WalletTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    transaction_id?: boolean
+    wallet_id?: boolean
+    amount?: boolean
+    type?: boolean
+    balance_before?: boolean
+    balance_after?: boolean
+    reference_id?: boolean
+    created_at?: boolean
+    wallet?: boolean | WalletDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["walletTransaction"]>
+
+  export type WalletTransactionSelectScalar = {
+    transaction_id?: boolean
+    wallet_id?: boolean
+    amount?: boolean
+    type?: boolean
+    balance_before?: boolean
+    balance_after?: boolean
+    reference_id?: boolean
+    created_at?: boolean
+  }
+
+  export type WalletTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"transaction_id" | "wallet_id" | "amount" | "type" | "balance_before" | "balance_after" | "reference_id" | "created_at", ExtArgs["result"]["walletTransaction"]>
+  export type WalletTransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    wallet?: boolean | WalletDefaultArgs<ExtArgs>
+    topup?: boolean | WalletTransaction$topupArgs<ExtArgs>
+  }
+  export type WalletTransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    wallet?: boolean | WalletDefaultArgs<ExtArgs>
+  }
+  export type WalletTransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    wallet?: boolean | WalletDefaultArgs<ExtArgs>
+  }
+
+  export type $WalletTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WalletTransaction"
+    objects: {
+      wallet: Prisma.$WalletPayload<ExtArgs>
+      topup: Prisma.$WalletTopupPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      transaction_id: string
+      wallet_id: string
+      amount: number
+      type: string
+      balance_before: number
+      balance_after: number
+      reference_id: string
+      created_at: Date
+    }, ExtArgs["result"]["walletTransaction"]>
+    composites: {}
+  }
+
+  type WalletTransactionGetPayload<S extends boolean | null | undefined | WalletTransactionDefaultArgs> = $Result.GetResult<Prisma.$WalletTransactionPayload, S>
+
+  type WalletTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WalletTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WalletTransactionCountAggregateInputType | true
+    }
+
+  export interface WalletTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WalletTransaction'], meta: { name: 'WalletTransaction' } }
+    /**
+     * Find zero or one WalletTransaction that matches the filter.
+     * @param {WalletTransactionFindUniqueArgs} args - Arguments to find a WalletTransaction
+     * @example
+     * // Get one WalletTransaction
+     * const walletTransaction = await prisma.walletTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WalletTransactionFindUniqueArgs>(args: SelectSubset<T, WalletTransactionFindUniqueArgs<ExtArgs>>): Prisma__WalletTransactionClient<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WalletTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WalletTransactionFindUniqueOrThrowArgs} args - Arguments to find a WalletTransaction
+     * @example
+     * // Get one WalletTransaction
+     * const walletTransaction = await prisma.walletTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WalletTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, WalletTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WalletTransactionClient<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WalletTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTransactionFindFirstArgs} args - Arguments to find a WalletTransaction
+     * @example
+     * // Get one WalletTransaction
+     * const walletTransaction = await prisma.walletTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WalletTransactionFindFirstArgs>(args?: SelectSubset<T, WalletTransactionFindFirstArgs<ExtArgs>>): Prisma__WalletTransactionClient<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WalletTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTransactionFindFirstOrThrowArgs} args - Arguments to find a WalletTransaction
+     * @example
+     * // Get one WalletTransaction
+     * const walletTransaction = await prisma.walletTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WalletTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, WalletTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__WalletTransactionClient<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WalletTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WalletTransactions
+     * const walletTransactions = await prisma.walletTransaction.findMany()
+     * 
+     * // Get first 10 WalletTransactions
+     * const walletTransactions = await prisma.walletTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `transaction_id`
+     * const walletTransactionWithTransaction_idOnly = await prisma.walletTransaction.findMany({ select: { transaction_id: true } })
+     * 
+     */
+    findMany<T extends WalletTransactionFindManyArgs>(args?: SelectSubset<T, WalletTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WalletTransaction.
+     * @param {WalletTransactionCreateArgs} args - Arguments to create a WalletTransaction.
+     * @example
+     * // Create one WalletTransaction
+     * const WalletTransaction = await prisma.walletTransaction.create({
+     *   data: {
+     *     // ... data to create a WalletTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends WalletTransactionCreateArgs>(args: SelectSubset<T, WalletTransactionCreateArgs<ExtArgs>>): Prisma__WalletTransactionClient<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WalletTransactions.
+     * @param {WalletTransactionCreateManyArgs} args - Arguments to create many WalletTransactions.
+     * @example
+     * // Create many WalletTransactions
+     * const walletTransaction = await prisma.walletTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WalletTransactionCreateManyArgs>(args?: SelectSubset<T, WalletTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WalletTransactions and returns the data saved in the database.
+     * @param {WalletTransactionCreateManyAndReturnArgs} args - Arguments to create many WalletTransactions.
+     * @example
+     * // Create many WalletTransactions
+     * const walletTransaction = await prisma.walletTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WalletTransactions and only return the `transaction_id`
+     * const walletTransactionWithTransaction_idOnly = await prisma.walletTransaction.createManyAndReturn({
+     *   select: { transaction_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WalletTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, WalletTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WalletTransaction.
+     * @param {WalletTransactionDeleteArgs} args - Arguments to delete one WalletTransaction.
+     * @example
+     * // Delete one WalletTransaction
+     * const WalletTransaction = await prisma.walletTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one WalletTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WalletTransactionDeleteArgs>(args: SelectSubset<T, WalletTransactionDeleteArgs<ExtArgs>>): Prisma__WalletTransactionClient<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WalletTransaction.
+     * @param {WalletTransactionUpdateArgs} args - Arguments to update one WalletTransaction.
+     * @example
+     * // Update one WalletTransaction
+     * const walletTransaction = await prisma.walletTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WalletTransactionUpdateArgs>(args: SelectSubset<T, WalletTransactionUpdateArgs<ExtArgs>>): Prisma__WalletTransactionClient<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WalletTransactions.
+     * @param {WalletTransactionDeleteManyArgs} args - Arguments to filter WalletTransactions to delete.
+     * @example
+     * // Delete a few WalletTransactions
+     * const { count } = await prisma.walletTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WalletTransactionDeleteManyArgs>(args?: SelectSubset<T, WalletTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WalletTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WalletTransactions
+     * const walletTransaction = await prisma.walletTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WalletTransactionUpdateManyArgs>(args: SelectSubset<T, WalletTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WalletTransactions and returns the data updated in the database.
+     * @param {WalletTransactionUpdateManyAndReturnArgs} args - Arguments to update many WalletTransactions.
+     * @example
+     * // Update many WalletTransactions
+     * const walletTransaction = await prisma.walletTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WalletTransactions and only return the `transaction_id`
+     * const walletTransactionWithTransaction_idOnly = await prisma.walletTransaction.updateManyAndReturn({
+     *   select: { transaction_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WalletTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, WalletTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WalletTransaction.
+     * @param {WalletTransactionUpsertArgs} args - Arguments to update or create a WalletTransaction.
+     * @example
+     * // Update or create a WalletTransaction
+     * const walletTransaction = await prisma.walletTransaction.upsert({
+     *   create: {
+     *     // ... data to create a WalletTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WalletTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WalletTransactionUpsertArgs>(args: SelectSubset<T, WalletTransactionUpsertArgs<ExtArgs>>): Prisma__WalletTransactionClient<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WalletTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTransactionCountArgs} args - Arguments to filter WalletTransactions to count.
+     * @example
+     * // Count the number of WalletTransactions
+     * const count = await prisma.walletTransaction.count({
+     *   where: {
+     *     // ... the filter for the WalletTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends WalletTransactionCountArgs>(
+      args?: Subset<T, WalletTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WalletTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WalletTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WalletTransactionAggregateArgs>(args: Subset<T, WalletTransactionAggregateArgs>): Prisma.PrismaPromise<GetWalletTransactionAggregateType<T>>
+
+    /**
+     * Group by WalletTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WalletTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WalletTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: WalletTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WalletTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWalletTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WalletTransaction model
+   */
+  readonly fields: WalletTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WalletTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WalletTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    wallet<T extends WalletDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WalletDefaultArgs<ExtArgs>>): Prisma__WalletClient<$Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    topup<T extends WalletTransaction$topupArgs<ExtArgs> = {}>(args?: Subset<T, WalletTransaction$topupArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WalletTransaction model
+   */
+  interface WalletTransactionFieldRefs {
+    readonly transaction_id: FieldRef<"WalletTransaction", 'String'>
+    readonly wallet_id: FieldRef<"WalletTransaction", 'String'>
+    readonly amount: FieldRef<"WalletTransaction", 'Int'>
+    readonly type: FieldRef<"WalletTransaction", 'String'>
+    readonly balance_before: FieldRef<"WalletTransaction", 'Int'>
+    readonly balance_after: FieldRef<"WalletTransaction", 'Int'>
+    readonly reference_id: FieldRef<"WalletTransaction", 'String'>
+    readonly created_at: FieldRef<"WalletTransaction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WalletTransaction findUnique
+   */
+  export type WalletTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTransaction to fetch.
+     */
+    where: WalletTransactionWhereUniqueInput
+  }
+
+  /**
+   * WalletTransaction findUniqueOrThrow
+   */
+  export type WalletTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTransaction to fetch.
+     */
+    where: WalletTransactionWhereUniqueInput
+  }
+
+  /**
+   * WalletTransaction findFirst
+   */
+  export type WalletTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTransaction to fetch.
+     */
+    where?: WalletTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WalletTransactions to fetch.
+     */
+    orderBy?: WalletTransactionOrderByWithRelationInput | WalletTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WalletTransactions.
+     */
+    cursor?: WalletTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WalletTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WalletTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WalletTransactions.
+     */
+    distinct?: WalletTransactionScalarFieldEnum | WalletTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * WalletTransaction findFirstOrThrow
+   */
+  export type WalletTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTransaction to fetch.
+     */
+    where?: WalletTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WalletTransactions to fetch.
+     */
+    orderBy?: WalletTransactionOrderByWithRelationInput | WalletTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WalletTransactions.
+     */
+    cursor?: WalletTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WalletTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WalletTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WalletTransactions.
+     */
+    distinct?: WalletTransactionScalarFieldEnum | WalletTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * WalletTransaction findMany
+   */
+  export type WalletTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTransactions to fetch.
+     */
+    where?: WalletTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WalletTransactions to fetch.
+     */
+    orderBy?: WalletTransactionOrderByWithRelationInput | WalletTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WalletTransactions.
+     */
+    cursor?: WalletTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WalletTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WalletTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WalletTransactions.
+     */
+    distinct?: WalletTransactionScalarFieldEnum | WalletTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * WalletTransaction create
+   */
+  export type WalletTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WalletTransaction.
+     */
+    data: XOR<WalletTransactionCreateInput, WalletTransactionUncheckedCreateInput>
+  }
+
+  /**
+   * WalletTransaction createMany
+   */
+  export type WalletTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WalletTransactions.
+     */
+    data: WalletTransactionCreateManyInput | WalletTransactionCreateManyInput[]
+  }
+
+  /**
+   * WalletTransaction createManyAndReturn
+   */
+  export type WalletTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many WalletTransactions.
+     */
+    data: WalletTransactionCreateManyInput | WalletTransactionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WalletTransaction update
+   */
+  export type WalletTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WalletTransaction.
+     */
+    data: XOR<WalletTransactionUpdateInput, WalletTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which WalletTransaction to update.
+     */
+    where: WalletTransactionWhereUniqueInput
+  }
+
+  /**
+   * WalletTransaction updateMany
+   */
+  export type WalletTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WalletTransactions.
+     */
+    data: XOR<WalletTransactionUpdateManyMutationInput, WalletTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which WalletTransactions to update
+     */
+    where?: WalletTransactionWhereInput
+    /**
+     * Limit how many WalletTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WalletTransaction updateManyAndReturn
+   */
+  export type WalletTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update WalletTransactions.
+     */
+    data: XOR<WalletTransactionUpdateManyMutationInput, WalletTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which WalletTransactions to update
+     */
+    where?: WalletTransactionWhereInput
+    /**
+     * Limit how many WalletTransactions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WalletTransaction upsert
+   */
+  export type WalletTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WalletTransaction to update in case it exists.
+     */
+    where: WalletTransactionWhereUniqueInput
+    /**
+     * In case the WalletTransaction found by the `where` argument doesn't exist, create a new WalletTransaction with this data.
+     */
+    create: XOR<WalletTransactionCreateInput, WalletTransactionUncheckedCreateInput>
+    /**
+     * In case the WalletTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WalletTransactionUpdateInput, WalletTransactionUncheckedUpdateInput>
+  }
+
+  /**
+   * WalletTransaction delete
+   */
+  export type WalletTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionInclude<ExtArgs> | null
+    /**
+     * Filter which WalletTransaction to delete.
+     */
+    where: WalletTransactionWhereUniqueInput
+  }
+
+  /**
+   * WalletTransaction deleteMany
+   */
+  export type WalletTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WalletTransactions to delete
+     */
+    where?: WalletTransactionWhereInput
+    /**
+     * Limit how many WalletTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WalletTransaction.topup
+   */
+  export type WalletTransaction$topupArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    where?: WalletTopupWhereInput
+  }
+
+  /**
+   * WalletTransaction without action
+   */
+  export type WalletTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model WalletTopup
+   */
+
+  export type AggregateWalletTopup = {
+    _count: WalletTopupCountAggregateOutputType | null
+    _avg: WalletTopupAvgAggregateOutputType | null
+    _sum: WalletTopupSumAggregateOutputType | null
+    _min: WalletTopupMinAggregateOutputType | null
+    _max: WalletTopupMaxAggregateOutputType | null
+  }
+
+  export type WalletTopupAvgAggregateOutputType = {
+    amount: number | null
+    fee: number | null
+  }
+
+  export type WalletTopupSumAggregateOutputType = {
+    amount: number | null
+    fee: number | null
+  }
+
+  export type WalletTopupMinAggregateOutputType = {
+    topup_id: string | null
+    wallet_id: string | null
+    transaction_id: string | null
+    amount: number | null
+    fee: number | null
+    method: string | null
+    status: string | null
+    created_at: Date | null
+  }
+
+  export type WalletTopupMaxAggregateOutputType = {
+    topup_id: string | null
+    wallet_id: string | null
+    transaction_id: string | null
+    amount: number | null
+    fee: number | null
+    method: string | null
+    status: string | null
+    created_at: Date | null
+  }
+
+  export type WalletTopupCountAggregateOutputType = {
+    topup_id: number
+    wallet_id: number
+    transaction_id: number
+    amount: number
+    fee: number
+    method: number
+    status: number
+    created_at: number
+    _all: number
+  }
+
+
+  export type WalletTopupAvgAggregateInputType = {
+    amount?: true
+    fee?: true
+  }
+
+  export type WalletTopupSumAggregateInputType = {
+    amount?: true
+    fee?: true
+  }
+
+  export type WalletTopupMinAggregateInputType = {
+    topup_id?: true
+    wallet_id?: true
+    transaction_id?: true
+    amount?: true
+    fee?: true
+    method?: true
+    status?: true
+    created_at?: true
+  }
+
+  export type WalletTopupMaxAggregateInputType = {
+    topup_id?: true
+    wallet_id?: true
+    transaction_id?: true
+    amount?: true
+    fee?: true
+    method?: true
+    status?: true
+    created_at?: true
+  }
+
+  export type WalletTopupCountAggregateInputType = {
+    topup_id?: true
+    wallet_id?: true
+    transaction_id?: true
+    amount?: true
+    fee?: true
+    method?: true
+    status?: true
+    created_at?: true
+    _all?: true
+  }
+
+  export type WalletTopupAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WalletTopup to aggregate.
+     */
+    where?: WalletTopupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WalletTopups to fetch.
+     */
+    orderBy?: WalletTopupOrderByWithRelationInput | WalletTopupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WalletTopupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WalletTopups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WalletTopups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WalletTopups
+    **/
+    _count?: true | WalletTopupCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WalletTopupAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WalletTopupSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WalletTopupMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WalletTopupMaxAggregateInputType
+  }
+
+  export type GetWalletTopupAggregateType<T extends WalletTopupAggregateArgs> = {
+        [P in keyof T & keyof AggregateWalletTopup]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWalletTopup[P]>
+      : GetScalarType<T[P], AggregateWalletTopup[P]>
+  }
+
+
+
+
+  export type WalletTopupGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WalletTopupWhereInput
+    orderBy?: WalletTopupOrderByWithAggregationInput | WalletTopupOrderByWithAggregationInput[]
+    by: WalletTopupScalarFieldEnum[] | WalletTopupScalarFieldEnum
+    having?: WalletTopupScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WalletTopupCountAggregateInputType | true
+    _avg?: WalletTopupAvgAggregateInputType
+    _sum?: WalletTopupSumAggregateInputType
+    _min?: WalletTopupMinAggregateInputType
+    _max?: WalletTopupMaxAggregateInputType
+  }
+
+  export type WalletTopupGroupByOutputType = {
+    topup_id: string
+    wallet_id: string
+    transaction_id: string | null
+    amount: number
+    fee: number
+    method: string
+    status: string
+    created_at: Date
+    _count: WalletTopupCountAggregateOutputType | null
+    _avg: WalletTopupAvgAggregateOutputType | null
+    _sum: WalletTopupSumAggregateOutputType | null
+    _min: WalletTopupMinAggregateOutputType | null
+    _max: WalletTopupMaxAggregateOutputType | null
+  }
+
+  type GetWalletTopupGroupByPayload<T extends WalletTopupGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WalletTopupGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WalletTopupGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WalletTopupGroupByOutputType[P]>
+            : GetScalarType<T[P], WalletTopupGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WalletTopupSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    topup_id?: boolean
+    wallet_id?: boolean
+    transaction_id?: boolean
+    amount?: boolean
+    fee?: boolean
+    method?: boolean
+    status?: boolean
+    created_at?: boolean
+    wallet?: boolean | WalletDefaultArgs<ExtArgs>
+    transaction?: boolean | WalletTopup$transactionArgs<ExtArgs>
+  }, ExtArgs["result"]["walletTopup"]>
+
+  export type WalletTopupSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    topup_id?: boolean
+    wallet_id?: boolean
+    transaction_id?: boolean
+    amount?: boolean
+    fee?: boolean
+    method?: boolean
+    status?: boolean
+    created_at?: boolean
+    wallet?: boolean | WalletDefaultArgs<ExtArgs>
+    transaction?: boolean | WalletTopup$transactionArgs<ExtArgs>
+  }, ExtArgs["result"]["walletTopup"]>
+
+  export type WalletTopupSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    topup_id?: boolean
+    wallet_id?: boolean
+    transaction_id?: boolean
+    amount?: boolean
+    fee?: boolean
+    method?: boolean
+    status?: boolean
+    created_at?: boolean
+    wallet?: boolean | WalletDefaultArgs<ExtArgs>
+    transaction?: boolean | WalletTopup$transactionArgs<ExtArgs>
+  }, ExtArgs["result"]["walletTopup"]>
+
+  export type WalletTopupSelectScalar = {
+    topup_id?: boolean
+    wallet_id?: boolean
+    transaction_id?: boolean
+    amount?: boolean
+    fee?: boolean
+    method?: boolean
+    status?: boolean
+    created_at?: boolean
+  }
+
+  export type WalletTopupOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"topup_id" | "wallet_id" | "transaction_id" | "amount" | "fee" | "method" | "status" | "created_at", ExtArgs["result"]["walletTopup"]>
+  export type WalletTopupInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    wallet?: boolean | WalletDefaultArgs<ExtArgs>
+    transaction?: boolean | WalletTopup$transactionArgs<ExtArgs>
+  }
+  export type WalletTopupIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    wallet?: boolean | WalletDefaultArgs<ExtArgs>
+    transaction?: boolean | WalletTopup$transactionArgs<ExtArgs>
+  }
+  export type WalletTopupIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    wallet?: boolean | WalletDefaultArgs<ExtArgs>
+    transaction?: boolean | WalletTopup$transactionArgs<ExtArgs>
+  }
+
+  export type $WalletTopupPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WalletTopup"
+    objects: {
+      wallet: Prisma.$WalletPayload<ExtArgs>
+      transaction: Prisma.$WalletTransactionPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      topup_id: string
+      wallet_id: string
+      transaction_id: string | null
+      amount: number
+      fee: number
+      method: string
+      status: string
+      created_at: Date
+    }, ExtArgs["result"]["walletTopup"]>
+    composites: {}
+  }
+
+  type WalletTopupGetPayload<S extends boolean | null | undefined | WalletTopupDefaultArgs> = $Result.GetResult<Prisma.$WalletTopupPayload, S>
+
+  type WalletTopupCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WalletTopupFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WalletTopupCountAggregateInputType | true
+    }
+
+  export interface WalletTopupDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WalletTopup'], meta: { name: 'WalletTopup' } }
+    /**
+     * Find zero or one WalletTopup that matches the filter.
+     * @param {WalletTopupFindUniqueArgs} args - Arguments to find a WalletTopup
+     * @example
+     * // Get one WalletTopup
+     * const walletTopup = await prisma.walletTopup.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WalletTopupFindUniqueArgs>(args: SelectSubset<T, WalletTopupFindUniqueArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WalletTopup that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WalletTopupFindUniqueOrThrowArgs} args - Arguments to find a WalletTopup
+     * @example
+     * // Get one WalletTopup
+     * const walletTopup = await prisma.walletTopup.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WalletTopupFindUniqueOrThrowArgs>(args: SelectSubset<T, WalletTopupFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WalletTopup that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupFindFirstArgs} args - Arguments to find a WalletTopup
+     * @example
+     * // Get one WalletTopup
+     * const walletTopup = await prisma.walletTopup.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WalletTopupFindFirstArgs>(args?: SelectSubset<T, WalletTopupFindFirstArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WalletTopup that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupFindFirstOrThrowArgs} args - Arguments to find a WalletTopup
+     * @example
+     * // Get one WalletTopup
+     * const walletTopup = await prisma.walletTopup.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WalletTopupFindFirstOrThrowArgs>(args?: SelectSubset<T, WalletTopupFindFirstOrThrowArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WalletTopups that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WalletTopups
+     * const walletTopups = await prisma.walletTopup.findMany()
+     * 
+     * // Get first 10 WalletTopups
+     * const walletTopups = await prisma.walletTopup.findMany({ take: 10 })
+     * 
+     * // Only select the `topup_id`
+     * const walletTopupWithTopup_idOnly = await prisma.walletTopup.findMany({ select: { topup_id: true } })
+     * 
+     */
+    findMany<T extends WalletTopupFindManyArgs>(args?: SelectSubset<T, WalletTopupFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WalletTopup.
+     * @param {WalletTopupCreateArgs} args - Arguments to create a WalletTopup.
+     * @example
+     * // Create one WalletTopup
+     * const WalletTopup = await prisma.walletTopup.create({
+     *   data: {
+     *     // ... data to create a WalletTopup
+     *   }
+     * })
+     * 
+     */
+    create<T extends WalletTopupCreateArgs>(args: SelectSubset<T, WalletTopupCreateArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WalletTopups.
+     * @param {WalletTopupCreateManyArgs} args - Arguments to create many WalletTopups.
+     * @example
+     * // Create many WalletTopups
+     * const walletTopup = await prisma.walletTopup.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WalletTopupCreateManyArgs>(args?: SelectSubset<T, WalletTopupCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WalletTopups and returns the data saved in the database.
+     * @param {WalletTopupCreateManyAndReturnArgs} args - Arguments to create many WalletTopups.
+     * @example
+     * // Create many WalletTopups
+     * const walletTopup = await prisma.walletTopup.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WalletTopups and only return the `topup_id`
+     * const walletTopupWithTopup_idOnly = await prisma.walletTopup.createManyAndReturn({
+     *   select: { topup_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WalletTopupCreateManyAndReturnArgs>(args?: SelectSubset<T, WalletTopupCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WalletTopup.
+     * @param {WalletTopupDeleteArgs} args - Arguments to delete one WalletTopup.
+     * @example
+     * // Delete one WalletTopup
+     * const WalletTopup = await prisma.walletTopup.delete({
+     *   where: {
+     *     // ... filter to delete one WalletTopup
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WalletTopupDeleteArgs>(args: SelectSubset<T, WalletTopupDeleteArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WalletTopup.
+     * @param {WalletTopupUpdateArgs} args - Arguments to update one WalletTopup.
+     * @example
+     * // Update one WalletTopup
+     * const walletTopup = await prisma.walletTopup.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WalletTopupUpdateArgs>(args: SelectSubset<T, WalletTopupUpdateArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WalletTopups.
+     * @param {WalletTopupDeleteManyArgs} args - Arguments to filter WalletTopups to delete.
+     * @example
+     * // Delete a few WalletTopups
+     * const { count } = await prisma.walletTopup.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WalletTopupDeleteManyArgs>(args?: SelectSubset<T, WalletTopupDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WalletTopups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WalletTopups
+     * const walletTopup = await prisma.walletTopup.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WalletTopupUpdateManyArgs>(args: SelectSubset<T, WalletTopupUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WalletTopups and returns the data updated in the database.
+     * @param {WalletTopupUpdateManyAndReturnArgs} args - Arguments to update many WalletTopups.
+     * @example
+     * // Update many WalletTopups
+     * const walletTopup = await prisma.walletTopup.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WalletTopups and only return the `topup_id`
+     * const walletTopupWithTopup_idOnly = await prisma.walletTopup.updateManyAndReturn({
+     *   select: { topup_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WalletTopupUpdateManyAndReturnArgs>(args: SelectSubset<T, WalletTopupUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WalletTopup.
+     * @param {WalletTopupUpsertArgs} args - Arguments to update or create a WalletTopup.
+     * @example
+     * // Update or create a WalletTopup
+     * const walletTopup = await prisma.walletTopup.upsert({
+     *   create: {
+     *     // ... data to create a WalletTopup
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WalletTopup we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WalletTopupUpsertArgs>(args: SelectSubset<T, WalletTopupUpsertArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WalletTopups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupCountArgs} args - Arguments to filter WalletTopups to count.
+     * @example
+     * // Count the number of WalletTopups
+     * const count = await prisma.walletTopup.count({
+     *   where: {
+     *     // ... the filter for the WalletTopups we want to count
+     *   }
+     * })
+    **/
+    count<T extends WalletTopupCountArgs>(
+      args?: Subset<T, WalletTopupCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WalletTopupCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WalletTopup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WalletTopupAggregateArgs>(args: Subset<T, WalletTopupAggregateArgs>): Prisma.PrismaPromise<GetWalletTopupAggregateType<T>>
+
+    /**
+     * Group by WalletTopup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WalletTopupGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WalletTopupGroupByArgs['orderBy'] }
+        : { orderBy?: WalletTopupGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WalletTopupGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWalletTopupGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WalletTopup model
+   */
+  readonly fields: WalletTopupFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WalletTopup.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WalletTopupClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    wallet<T extends WalletDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WalletDefaultArgs<ExtArgs>>): Prisma__WalletClient<$Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    transaction<T extends WalletTopup$transactionArgs<ExtArgs> = {}>(args?: Subset<T, WalletTopup$transactionArgs<ExtArgs>>): Prisma__WalletTransactionClient<$Result.GetResult<Prisma.$WalletTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WalletTopup model
+   */
+  interface WalletTopupFieldRefs {
+    readonly topup_id: FieldRef<"WalletTopup", 'String'>
+    readonly wallet_id: FieldRef<"WalletTopup", 'String'>
+    readonly transaction_id: FieldRef<"WalletTopup", 'String'>
+    readonly amount: FieldRef<"WalletTopup", 'Int'>
+    readonly fee: FieldRef<"WalletTopup", 'Int'>
+    readonly method: FieldRef<"WalletTopup", 'String'>
+    readonly status: FieldRef<"WalletTopup", 'String'>
+    readonly created_at: FieldRef<"WalletTopup", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WalletTopup findUnique
+   */
+  export type WalletTopupFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTopup to fetch.
+     */
+    where: WalletTopupWhereUniqueInput
+  }
+
+  /**
+   * WalletTopup findUniqueOrThrow
+   */
+  export type WalletTopupFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTopup to fetch.
+     */
+    where: WalletTopupWhereUniqueInput
+  }
+
+  /**
+   * WalletTopup findFirst
+   */
+  export type WalletTopupFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTopup to fetch.
+     */
+    where?: WalletTopupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WalletTopups to fetch.
+     */
+    orderBy?: WalletTopupOrderByWithRelationInput | WalletTopupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WalletTopups.
+     */
+    cursor?: WalletTopupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WalletTopups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WalletTopups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WalletTopups.
+     */
+    distinct?: WalletTopupScalarFieldEnum | WalletTopupScalarFieldEnum[]
+  }
+
+  /**
+   * WalletTopup findFirstOrThrow
+   */
+  export type WalletTopupFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTopup to fetch.
+     */
+    where?: WalletTopupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WalletTopups to fetch.
+     */
+    orderBy?: WalletTopupOrderByWithRelationInput | WalletTopupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WalletTopups.
+     */
+    cursor?: WalletTopupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WalletTopups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WalletTopups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WalletTopups.
+     */
+    distinct?: WalletTopupScalarFieldEnum | WalletTopupScalarFieldEnum[]
+  }
+
+  /**
+   * WalletTopup findMany
+   */
+  export type WalletTopupFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTopups to fetch.
+     */
+    where?: WalletTopupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WalletTopups to fetch.
+     */
+    orderBy?: WalletTopupOrderByWithRelationInput | WalletTopupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WalletTopups.
+     */
+    cursor?: WalletTopupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WalletTopups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WalletTopups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WalletTopups.
+     */
+    distinct?: WalletTopupScalarFieldEnum | WalletTopupScalarFieldEnum[]
+  }
+
+  /**
+   * WalletTopup create
+   */
+  export type WalletTopupCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WalletTopup.
+     */
+    data: XOR<WalletTopupCreateInput, WalletTopupUncheckedCreateInput>
+  }
+
+  /**
+   * WalletTopup createMany
+   */
+  export type WalletTopupCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WalletTopups.
+     */
+    data: WalletTopupCreateManyInput | WalletTopupCreateManyInput[]
+  }
+
+  /**
+   * WalletTopup createManyAndReturn
+   */
+  export type WalletTopupCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * The data used to create many WalletTopups.
+     */
+    data: WalletTopupCreateManyInput | WalletTopupCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WalletTopup update
+   */
+  export type WalletTopupUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WalletTopup.
+     */
+    data: XOR<WalletTopupUpdateInput, WalletTopupUncheckedUpdateInput>
+    /**
+     * Choose, which WalletTopup to update.
+     */
+    where: WalletTopupWhereUniqueInput
+  }
+
+  /**
+   * WalletTopup updateMany
+   */
+  export type WalletTopupUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WalletTopups.
+     */
+    data: XOR<WalletTopupUpdateManyMutationInput, WalletTopupUncheckedUpdateManyInput>
+    /**
+     * Filter which WalletTopups to update
+     */
+    where?: WalletTopupWhereInput
+    /**
+     * Limit how many WalletTopups to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WalletTopup updateManyAndReturn
+   */
+  export type WalletTopupUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * The data used to update WalletTopups.
+     */
+    data: XOR<WalletTopupUpdateManyMutationInput, WalletTopupUncheckedUpdateManyInput>
+    /**
+     * Filter which WalletTopups to update
+     */
+    where?: WalletTopupWhereInput
+    /**
+     * Limit how many WalletTopups to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WalletTopup upsert
+   */
+  export type WalletTopupUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WalletTopup to update in case it exists.
+     */
+    where: WalletTopupWhereUniqueInput
+    /**
+     * In case the WalletTopup found by the `where` argument doesn't exist, create a new WalletTopup with this data.
+     */
+    create: XOR<WalletTopupCreateInput, WalletTopupUncheckedCreateInput>
+    /**
+     * In case the WalletTopup was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WalletTopupUpdateInput, WalletTopupUncheckedUpdateInput>
+  }
+
+  /**
+   * WalletTopup delete
+   */
+  export type WalletTopupDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * Filter which WalletTopup to delete.
+     */
+    where: WalletTopupWhereUniqueInput
+  }
+
+  /**
+   * WalletTopup deleteMany
+   */
+  export type WalletTopupDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WalletTopups to delete
+     */
+    where?: WalletTopupWhereInput
+    /**
+     * Limit how many WalletTopups to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WalletTopup.transaction
+   */
+  export type WalletTopup$transactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTransaction
+     */
+    select?: WalletTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTransaction
+     */
+    omit?: WalletTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTransactionInclude<ExtArgs> | null
+    where?: WalletTransactionWhereInput
+  }
+
+  /**
+   * WalletTopup without action
+   */
+  export type WalletTopupDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WalletTopup
+     */
+    omit?: WalletTopupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
   }
 
 
@@ -4400,6 +7010,34 @@ export namespace Prisma {
   };
 
   export type WalletScalarFieldEnum = (typeof WalletScalarFieldEnum)[keyof typeof WalletScalarFieldEnum]
+
+
+  export const WalletTransactionScalarFieldEnum: {
+    transaction_id: 'transaction_id',
+    wallet_id: 'wallet_id',
+    amount: 'amount',
+    type: 'type',
+    balance_before: 'balance_before',
+    balance_after: 'balance_after',
+    reference_id: 'reference_id',
+    created_at: 'created_at'
+  };
+
+  export type WalletTransactionScalarFieldEnum = (typeof WalletTransactionScalarFieldEnum)[keyof typeof WalletTransactionScalarFieldEnum]
+
+
+  export const WalletTopupScalarFieldEnum: {
+    topup_id: 'topup_id',
+    wallet_id: 'wallet_id',
+    transaction_id: 'transaction_id',
+    amount: 'amount',
+    fee: 'fee',
+    method: 'method',
+    status: 'status',
+    created_at: 'created_at'
+  };
+
+  export type WalletTopupScalarFieldEnum = (typeof WalletTopupScalarFieldEnum)[keyof typeof WalletTopupScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4587,6 +7225,8 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Wallet"> | Date | string
     updated_at?: DateTimeFilter<"Wallet"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    transactions?: WalletTransactionListRelationFilter
+    topup?: WalletTopupListRelationFilter
   }
 
   export type WalletOrderByWithRelationInput = {
@@ -4596,6 +7236,8 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     user?: UserOrderByWithRelationInput
+    transactions?: WalletTransactionOrderByRelationAggregateInput
+    topup?: WalletTopupOrderByRelationAggregateInput
   }
 
   export type WalletWhereUniqueInput = Prisma.AtLeast<{
@@ -4608,6 +7250,8 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Wallet"> | Date | string
     updated_at?: DateTimeFilter<"Wallet"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    transactions?: WalletTransactionListRelationFilter
+    topup?: WalletTopupListRelationFilter
   }, "wallet_id" | "user_id">
 
   export type WalletOrderByWithAggregationInput = {
@@ -4632,6 +7276,156 @@ export namespace Prisma {
     balance?: IntWithAggregatesFilter<"Wallet"> | number
     created_at?: DateTimeWithAggregatesFilter<"Wallet"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Wallet"> | Date | string
+  }
+
+  export type WalletTransactionWhereInput = {
+    AND?: WalletTransactionWhereInput | WalletTransactionWhereInput[]
+    OR?: WalletTransactionWhereInput[]
+    NOT?: WalletTransactionWhereInput | WalletTransactionWhereInput[]
+    transaction_id?: StringFilter<"WalletTransaction"> | string
+    wallet_id?: StringFilter<"WalletTransaction"> | string
+    amount?: IntFilter<"WalletTransaction"> | number
+    type?: StringFilter<"WalletTransaction"> | string
+    balance_before?: IntFilter<"WalletTransaction"> | number
+    balance_after?: IntFilter<"WalletTransaction"> | number
+    reference_id?: StringFilter<"WalletTransaction"> | string
+    created_at?: DateTimeFilter<"WalletTransaction"> | Date | string
+    wallet?: XOR<WalletScalarRelationFilter, WalletWhereInput>
+    topup?: XOR<WalletTopupNullableScalarRelationFilter, WalletTopupWhereInput> | null
+  }
+
+  export type WalletTransactionOrderByWithRelationInput = {
+    transaction_id?: SortOrder
+    wallet_id?: SortOrder
+    amount?: SortOrder
+    type?: SortOrder
+    balance_before?: SortOrder
+    balance_after?: SortOrder
+    reference_id?: SortOrder
+    created_at?: SortOrder
+    wallet?: WalletOrderByWithRelationInput
+    topup?: WalletTopupOrderByWithRelationInput
+  }
+
+  export type WalletTransactionWhereUniqueInput = Prisma.AtLeast<{
+    transaction_id?: string
+    reference_id?: string
+    AND?: WalletTransactionWhereInput | WalletTransactionWhereInput[]
+    OR?: WalletTransactionWhereInput[]
+    NOT?: WalletTransactionWhereInput | WalletTransactionWhereInput[]
+    wallet_id?: StringFilter<"WalletTransaction"> | string
+    amount?: IntFilter<"WalletTransaction"> | number
+    type?: StringFilter<"WalletTransaction"> | string
+    balance_before?: IntFilter<"WalletTransaction"> | number
+    balance_after?: IntFilter<"WalletTransaction"> | number
+    created_at?: DateTimeFilter<"WalletTransaction"> | Date | string
+    wallet?: XOR<WalletScalarRelationFilter, WalletWhereInput>
+    topup?: XOR<WalletTopupNullableScalarRelationFilter, WalletTopupWhereInput> | null
+  }, "transaction_id" | "reference_id">
+
+  export type WalletTransactionOrderByWithAggregationInput = {
+    transaction_id?: SortOrder
+    wallet_id?: SortOrder
+    amount?: SortOrder
+    type?: SortOrder
+    balance_before?: SortOrder
+    balance_after?: SortOrder
+    reference_id?: SortOrder
+    created_at?: SortOrder
+    _count?: WalletTransactionCountOrderByAggregateInput
+    _avg?: WalletTransactionAvgOrderByAggregateInput
+    _max?: WalletTransactionMaxOrderByAggregateInput
+    _min?: WalletTransactionMinOrderByAggregateInput
+    _sum?: WalletTransactionSumOrderByAggregateInput
+  }
+
+  export type WalletTransactionScalarWhereWithAggregatesInput = {
+    AND?: WalletTransactionScalarWhereWithAggregatesInput | WalletTransactionScalarWhereWithAggregatesInput[]
+    OR?: WalletTransactionScalarWhereWithAggregatesInput[]
+    NOT?: WalletTransactionScalarWhereWithAggregatesInput | WalletTransactionScalarWhereWithAggregatesInput[]
+    transaction_id?: StringWithAggregatesFilter<"WalletTransaction"> | string
+    wallet_id?: StringWithAggregatesFilter<"WalletTransaction"> | string
+    amount?: IntWithAggregatesFilter<"WalletTransaction"> | number
+    type?: StringWithAggregatesFilter<"WalletTransaction"> | string
+    balance_before?: IntWithAggregatesFilter<"WalletTransaction"> | number
+    balance_after?: IntWithAggregatesFilter<"WalletTransaction"> | number
+    reference_id?: StringWithAggregatesFilter<"WalletTransaction"> | string
+    created_at?: DateTimeWithAggregatesFilter<"WalletTransaction"> | Date | string
+  }
+
+  export type WalletTopupWhereInput = {
+    AND?: WalletTopupWhereInput | WalletTopupWhereInput[]
+    OR?: WalletTopupWhereInput[]
+    NOT?: WalletTopupWhereInput | WalletTopupWhereInput[]
+    topup_id?: StringFilter<"WalletTopup"> | string
+    wallet_id?: StringFilter<"WalletTopup"> | string
+    transaction_id?: StringNullableFilter<"WalletTopup"> | string | null
+    amount?: IntFilter<"WalletTopup"> | number
+    fee?: IntFilter<"WalletTopup"> | number
+    method?: StringFilter<"WalletTopup"> | string
+    status?: StringFilter<"WalletTopup"> | string
+    created_at?: DateTimeFilter<"WalletTopup"> | Date | string
+    wallet?: XOR<WalletScalarRelationFilter, WalletWhereInput>
+    transaction?: XOR<WalletTransactionNullableScalarRelationFilter, WalletTransactionWhereInput> | null
+  }
+
+  export type WalletTopupOrderByWithRelationInput = {
+    topup_id?: SortOrder
+    wallet_id?: SortOrder
+    transaction_id?: SortOrderInput | SortOrder
+    amount?: SortOrder
+    fee?: SortOrder
+    method?: SortOrder
+    status?: SortOrder
+    created_at?: SortOrder
+    wallet?: WalletOrderByWithRelationInput
+    transaction?: WalletTransactionOrderByWithRelationInput
+  }
+
+  export type WalletTopupWhereUniqueInput = Prisma.AtLeast<{
+    topup_id?: string
+    transaction_id?: string
+    AND?: WalletTopupWhereInput | WalletTopupWhereInput[]
+    OR?: WalletTopupWhereInput[]
+    NOT?: WalletTopupWhereInput | WalletTopupWhereInput[]
+    wallet_id?: StringFilter<"WalletTopup"> | string
+    amount?: IntFilter<"WalletTopup"> | number
+    fee?: IntFilter<"WalletTopup"> | number
+    method?: StringFilter<"WalletTopup"> | string
+    status?: StringFilter<"WalletTopup"> | string
+    created_at?: DateTimeFilter<"WalletTopup"> | Date | string
+    wallet?: XOR<WalletScalarRelationFilter, WalletWhereInput>
+    transaction?: XOR<WalletTransactionNullableScalarRelationFilter, WalletTransactionWhereInput> | null
+  }, "topup_id" | "transaction_id">
+
+  export type WalletTopupOrderByWithAggregationInput = {
+    topup_id?: SortOrder
+    wallet_id?: SortOrder
+    transaction_id?: SortOrderInput | SortOrder
+    amount?: SortOrder
+    fee?: SortOrder
+    method?: SortOrder
+    status?: SortOrder
+    created_at?: SortOrder
+    _count?: WalletTopupCountOrderByAggregateInput
+    _avg?: WalletTopupAvgOrderByAggregateInput
+    _max?: WalletTopupMaxOrderByAggregateInput
+    _min?: WalletTopupMinOrderByAggregateInput
+    _sum?: WalletTopupSumOrderByAggregateInput
+  }
+
+  export type WalletTopupScalarWhereWithAggregatesInput = {
+    AND?: WalletTopupScalarWhereWithAggregatesInput | WalletTopupScalarWhereWithAggregatesInput[]
+    OR?: WalletTopupScalarWhereWithAggregatesInput[]
+    NOT?: WalletTopupScalarWhereWithAggregatesInput | WalletTopupScalarWhereWithAggregatesInput[]
+    topup_id?: StringWithAggregatesFilter<"WalletTopup"> | string
+    wallet_id?: StringWithAggregatesFilter<"WalletTopup"> | string
+    transaction_id?: StringNullableWithAggregatesFilter<"WalletTopup"> | string | null
+    amount?: IntWithAggregatesFilter<"WalletTopup"> | number
+    fee?: IntWithAggregatesFilter<"WalletTopup"> | number
+    method?: StringWithAggregatesFilter<"WalletTopup"> | string
+    status?: StringWithAggregatesFilter<"WalletTopup"> | string
+    created_at?: DateTimeWithAggregatesFilter<"WalletTopup"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -4773,6 +7567,8 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     user: UserCreateNestedOneWithoutWalletInput
+    transactions?: WalletTransactionCreateNestedManyWithoutWalletInput
+    topup?: WalletTopupCreateNestedManyWithoutWalletInput
   }
 
   export type WalletUncheckedCreateInput = {
@@ -4781,6 +7577,8 @@ export namespace Prisma {
     balance?: number
     created_at?: Date | string
     updated_at?: Date | string
+    transactions?: WalletTransactionUncheckedCreateNestedManyWithoutWalletInput
+    topup?: WalletTopupUncheckedCreateNestedManyWithoutWalletInput
   }
 
   export type WalletUpdateInput = {
@@ -4789,6 +7587,8 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutWalletNestedInput
+    transactions?: WalletTransactionUpdateManyWithoutWalletNestedInput
+    topup?: WalletTopupUpdateManyWithoutWalletNestedInput
   }
 
   export type WalletUncheckedUpdateInput = {
@@ -4797,6 +7597,8 @@ export namespace Prisma {
     balance?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    transactions?: WalletTransactionUncheckedUpdateManyWithoutWalletNestedInput
+    topup?: WalletTopupUncheckedUpdateManyWithoutWalletNestedInput
   }
 
   export type WalletCreateManyInput = {
@@ -4820,6 +7622,161 @@ export namespace Prisma {
     balance?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletTransactionCreateInput = {
+    transaction_id?: string
+    amount: number
+    type: string
+    balance_before: number
+    balance_after: number
+    reference_id: string
+    created_at?: Date | string
+    wallet: WalletCreateNestedOneWithoutTransactionsInput
+    topup?: WalletTopupCreateNestedOneWithoutTransactionInput
+  }
+
+  export type WalletTransactionUncheckedCreateInput = {
+    transaction_id?: string
+    wallet_id: string
+    amount: number
+    type: string
+    balance_before: number
+    balance_after: number
+    reference_id: string
+    created_at?: Date | string
+    topup?: WalletTopupUncheckedCreateNestedOneWithoutTransactionInput
+  }
+
+  export type WalletTransactionUpdateInput = {
+    transaction_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    balance_before?: IntFieldUpdateOperationsInput | number
+    balance_after?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    wallet?: WalletUpdateOneRequiredWithoutTransactionsNestedInput
+    topup?: WalletTopupUpdateOneWithoutTransactionNestedInput
+  }
+
+  export type WalletTransactionUncheckedUpdateInput = {
+    transaction_id?: StringFieldUpdateOperationsInput | string
+    wallet_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    balance_before?: IntFieldUpdateOperationsInput | number
+    balance_after?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    topup?: WalletTopupUncheckedUpdateOneWithoutTransactionNestedInput
+  }
+
+  export type WalletTransactionCreateManyInput = {
+    transaction_id?: string
+    wallet_id: string
+    amount: number
+    type: string
+    balance_before: number
+    balance_after: number
+    reference_id: string
+    created_at?: Date | string
+  }
+
+  export type WalletTransactionUpdateManyMutationInput = {
+    transaction_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    balance_before?: IntFieldUpdateOperationsInput | number
+    balance_after?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletTransactionUncheckedUpdateManyInput = {
+    transaction_id?: StringFieldUpdateOperationsInput | string
+    wallet_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    balance_before?: IntFieldUpdateOperationsInput | number
+    balance_after?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletTopupCreateInput = {
+    topup_id?: string
+    amount: number
+    fee: number
+    method: string
+    status: string
+    created_at?: Date | string
+    wallet: WalletCreateNestedOneWithoutTopupInput
+    transaction?: WalletTransactionCreateNestedOneWithoutTopupInput
+  }
+
+  export type WalletTopupUncheckedCreateInput = {
+    topup_id?: string
+    wallet_id: string
+    transaction_id?: string | null
+    amount: number
+    fee: number
+    method: string
+    status: string
+    created_at?: Date | string
+  }
+
+  export type WalletTopupUpdateInput = {
+    topup_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    fee?: IntFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    wallet?: WalletUpdateOneRequiredWithoutTopupNestedInput
+    transaction?: WalletTransactionUpdateOneWithoutTopupNestedInput
+  }
+
+  export type WalletTopupUncheckedUpdateInput = {
+    topup_id?: StringFieldUpdateOperationsInput | string
+    wallet_id?: StringFieldUpdateOperationsInput | string
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: IntFieldUpdateOperationsInput | number
+    fee?: IntFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletTopupCreateManyInput = {
+    topup_id?: string
+    wallet_id: string
+    transaction_id?: string | null
+    amount: number
+    fee: number
+    method: string
+    status: string
+    created_at?: Date | string
+  }
+
+  export type WalletTopupUpdateManyMutationInput = {
+    topup_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    fee?: IntFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletTopupUncheckedUpdateManyInput = {
+    topup_id?: StringFieldUpdateOperationsInput | string
+    wallet_id?: StringFieldUpdateOperationsInput | string
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: IntFieldUpdateOperationsInput | number
+    fee?: IntFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -4993,6 +7950,26 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type WalletTransactionListRelationFilter = {
+    every?: WalletTransactionWhereInput
+    some?: WalletTransactionWhereInput
+    none?: WalletTransactionWhereInput
+  }
+
+  export type WalletTopupListRelationFilter = {
+    every?: WalletTopupWhereInput
+    some?: WalletTopupWhereInput
+    none?: WalletTopupWhereInput
+  }
+
+  export type WalletTransactionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WalletTopupOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type WalletCountOrderByAggregateInput = {
     wallet_id?: SortOrder
     user_id?: SortOrder
@@ -5039,6 +8016,140 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type WalletScalarRelationFilter = {
+    is?: WalletWhereInput
+    isNot?: WalletWhereInput
+  }
+
+  export type WalletTopupNullableScalarRelationFilter = {
+    is?: WalletTopupWhereInput | null
+    isNot?: WalletTopupWhereInput | null
+  }
+
+  export type WalletTransactionCountOrderByAggregateInput = {
+    transaction_id?: SortOrder
+    wallet_id?: SortOrder
+    amount?: SortOrder
+    type?: SortOrder
+    balance_before?: SortOrder
+    balance_after?: SortOrder
+    reference_id?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type WalletTransactionAvgOrderByAggregateInput = {
+    amount?: SortOrder
+    balance_before?: SortOrder
+    balance_after?: SortOrder
+  }
+
+  export type WalletTransactionMaxOrderByAggregateInput = {
+    transaction_id?: SortOrder
+    wallet_id?: SortOrder
+    amount?: SortOrder
+    type?: SortOrder
+    balance_before?: SortOrder
+    balance_after?: SortOrder
+    reference_id?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type WalletTransactionMinOrderByAggregateInput = {
+    transaction_id?: SortOrder
+    wallet_id?: SortOrder
+    amount?: SortOrder
+    type?: SortOrder
+    balance_before?: SortOrder
+    balance_after?: SortOrder
+    reference_id?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type WalletTransactionSumOrderByAggregateInput = {
+    amount?: SortOrder
+    balance_before?: SortOrder
+    balance_after?: SortOrder
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type WalletTransactionNullableScalarRelationFilter = {
+    is?: WalletTransactionWhereInput | null
+    isNot?: WalletTransactionWhereInput | null
+  }
+
+  export type WalletTopupCountOrderByAggregateInput = {
+    topup_id?: SortOrder
+    wallet_id?: SortOrder
+    transaction_id?: SortOrder
+    amount?: SortOrder
+    fee?: SortOrder
+    method?: SortOrder
+    status?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type WalletTopupAvgOrderByAggregateInput = {
+    amount?: SortOrder
+    fee?: SortOrder
+  }
+
+  export type WalletTopupMaxOrderByAggregateInput = {
+    topup_id?: SortOrder
+    wallet_id?: SortOrder
+    transaction_id?: SortOrder
+    amount?: SortOrder
+    fee?: SortOrder
+    method?: SortOrder
+    status?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type WalletTopupMinOrderByAggregateInput = {
+    topup_id?: SortOrder
+    wallet_id?: SortOrder
+    transaction_id?: SortOrder
+    amount?: SortOrder
+    fee?: SortOrder
+    method?: SortOrder
+    status?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type WalletTopupSumOrderByAggregateInput = {
+    amount?: SortOrder
+    fee?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type RefreshTokenCreateNestedOneWithoutUserInput = {
@@ -5147,6 +8258,34 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type WalletTransactionCreateNestedManyWithoutWalletInput = {
+    create?: XOR<WalletTransactionCreateWithoutWalletInput, WalletTransactionUncheckedCreateWithoutWalletInput> | WalletTransactionCreateWithoutWalletInput[] | WalletTransactionUncheckedCreateWithoutWalletInput[]
+    connectOrCreate?: WalletTransactionCreateOrConnectWithoutWalletInput | WalletTransactionCreateOrConnectWithoutWalletInput[]
+    createMany?: WalletTransactionCreateManyWalletInputEnvelope
+    connect?: WalletTransactionWhereUniqueInput | WalletTransactionWhereUniqueInput[]
+  }
+
+  export type WalletTopupCreateNestedManyWithoutWalletInput = {
+    create?: XOR<WalletTopupCreateWithoutWalletInput, WalletTopupUncheckedCreateWithoutWalletInput> | WalletTopupCreateWithoutWalletInput[] | WalletTopupUncheckedCreateWithoutWalletInput[]
+    connectOrCreate?: WalletTopupCreateOrConnectWithoutWalletInput | WalletTopupCreateOrConnectWithoutWalletInput[]
+    createMany?: WalletTopupCreateManyWalletInputEnvelope
+    connect?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+  }
+
+  export type WalletTransactionUncheckedCreateNestedManyWithoutWalletInput = {
+    create?: XOR<WalletTransactionCreateWithoutWalletInput, WalletTransactionUncheckedCreateWithoutWalletInput> | WalletTransactionCreateWithoutWalletInput[] | WalletTransactionUncheckedCreateWithoutWalletInput[]
+    connectOrCreate?: WalletTransactionCreateOrConnectWithoutWalletInput | WalletTransactionCreateOrConnectWithoutWalletInput[]
+    createMany?: WalletTransactionCreateManyWalletInputEnvelope
+    connect?: WalletTransactionWhereUniqueInput | WalletTransactionWhereUniqueInput[]
+  }
+
+  export type WalletTopupUncheckedCreateNestedManyWithoutWalletInput = {
+    create?: XOR<WalletTopupCreateWithoutWalletInput, WalletTopupUncheckedCreateWithoutWalletInput> | WalletTopupCreateWithoutWalletInput[] | WalletTopupUncheckedCreateWithoutWalletInput[]
+    connectOrCreate?: WalletTopupCreateOrConnectWithoutWalletInput | WalletTopupCreateOrConnectWithoutWalletInput[]
+    createMany?: WalletTopupCreateManyWalletInputEnvelope
+    connect?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -5161,6 +8300,142 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutWalletInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWalletInput, UserUpdateWithoutWalletInput>, UserUncheckedUpdateWithoutWalletInput>
+  }
+
+  export type WalletTransactionUpdateManyWithoutWalletNestedInput = {
+    create?: XOR<WalletTransactionCreateWithoutWalletInput, WalletTransactionUncheckedCreateWithoutWalletInput> | WalletTransactionCreateWithoutWalletInput[] | WalletTransactionUncheckedCreateWithoutWalletInput[]
+    connectOrCreate?: WalletTransactionCreateOrConnectWithoutWalletInput | WalletTransactionCreateOrConnectWithoutWalletInput[]
+    upsert?: WalletTransactionUpsertWithWhereUniqueWithoutWalletInput | WalletTransactionUpsertWithWhereUniqueWithoutWalletInput[]
+    createMany?: WalletTransactionCreateManyWalletInputEnvelope
+    set?: WalletTransactionWhereUniqueInput | WalletTransactionWhereUniqueInput[]
+    disconnect?: WalletTransactionWhereUniqueInput | WalletTransactionWhereUniqueInput[]
+    delete?: WalletTransactionWhereUniqueInput | WalletTransactionWhereUniqueInput[]
+    connect?: WalletTransactionWhereUniqueInput | WalletTransactionWhereUniqueInput[]
+    update?: WalletTransactionUpdateWithWhereUniqueWithoutWalletInput | WalletTransactionUpdateWithWhereUniqueWithoutWalletInput[]
+    updateMany?: WalletTransactionUpdateManyWithWhereWithoutWalletInput | WalletTransactionUpdateManyWithWhereWithoutWalletInput[]
+    deleteMany?: WalletTransactionScalarWhereInput | WalletTransactionScalarWhereInput[]
+  }
+
+  export type WalletTopupUpdateManyWithoutWalletNestedInput = {
+    create?: XOR<WalletTopupCreateWithoutWalletInput, WalletTopupUncheckedCreateWithoutWalletInput> | WalletTopupCreateWithoutWalletInput[] | WalletTopupUncheckedCreateWithoutWalletInput[]
+    connectOrCreate?: WalletTopupCreateOrConnectWithoutWalletInput | WalletTopupCreateOrConnectWithoutWalletInput[]
+    upsert?: WalletTopupUpsertWithWhereUniqueWithoutWalletInput | WalletTopupUpsertWithWhereUniqueWithoutWalletInput[]
+    createMany?: WalletTopupCreateManyWalletInputEnvelope
+    set?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    disconnect?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    delete?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    connect?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    update?: WalletTopupUpdateWithWhereUniqueWithoutWalletInput | WalletTopupUpdateWithWhereUniqueWithoutWalletInput[]
+    updateMany?: WalletTopupUpdateManyWithWhereWithoutWalletInput | WalletTopupUpdateManyWithWhereWithoutWalletInput[]
+    deleteMany?: WalletTopupScalarWhereInput | WalletTopupScalarWhereInput[]
+  }
+
+  export type WalletTransactionUncheckedUpdateManyWithoutWalletNestedInput = {
+    create?: XOR<WalletTransactionCreateWithoutWalletInput, WalletTransactionUncheckedCreateWithoutWalletInput> | WalletTransactionCreateWithoutWalletInput[] | WalletTransactionUncheckedCreateWithoutWalletInput[]
+    connectOrCreate?: WalletTransactionCreateOrConnectWithoutWalletInput | WalletTransactionCreateOrConnectWithoutWalletInput[]
+    upsert?: WalletTransactionUpsertWithWhereUniqueWithoutWalletInput | WalletTransactionUpsertWithWhereUniqueWithoutWalletInput[]
+    createMany?: WalletTransactionCreateManyWalletInputEnvelope
+    set?: WalletTransactionWhereUniqueInput | WalletTransactionWhereUniqueInput[]
+    disconnect?: WalletTransactionWhereUniqueInput | WalletTransactionWhereUniqueInput[]
+    delete?: WalletTransactionWhereUniqueInput | WalletTransactionWhereUniqueInput[]
+    connect?: WalletTransactionWhereUniqueInput | WalletTransactionWhereUniqueInput[]
+    update?: WalletTransactionUpdateWithWhereUniqueWithoutWalletInput | WalletTransactionUpdateWithWhereUniqueWithoutWalletInput[]
+    updateMany?: WalletTransactionUpdateManyWithWhereWithoutWalletInput | WalletTransactionUpdateManyWithWhereWithoutWalletInput[]
+    deleteMany?: WalletTransactionScalarWhereInput | WalletTransactionScalarWhereInput[]
+  }
+
+  export type WalletTopupUncheckedUpdateManyWithoutWalletNestedInput = {
+    create?: XOR<WalletTopupCreateWithoutWalletInput, WalletTopupUncheckedCreateWithoutWalletInput> | WalletTopupCreateWithoutWalletInput[] | WalletTopupUncheckedCreateWithoutWalletInput[]
+    connectOrCreate?: WalletTopupCreateOrConnectWithoutWalletInput | WalletTopupCreateOrConnectWithoutWalletInput[]
+    upsert?: WalletTopupUpsertWithWhereUniqueWithoutWalletInput | WalletTopupUpsertWithWhereUniqueWithoutWalletInput[]
+    createMany?: WalletTopupCreateManyWalletInputEnvelope
+    set?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    disconnect?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    delete?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    connect?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    update?: WalletTopupUpdateWithWhereUniqueWithoutWalletInput | WalletTopupUpdateWithWhereUniqueWithoutWalletInput[]
+    updateMany?: WalletTopupUpdateManyWithWhereWithoutWalletInput | WalletTopupUpdateManyWithWhereWithoutWalletInput[]
+    deleteMany?: WalletTopupScalarWhereInput | WalletTopupScalarWhereInput[]
+  }
+
+  export type WalletCreateNestedOneWithoutTransactionsInput = {
+    create?: XOR<WalletCreateWithoutTransactionsInput, WalletUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: WalletCreateOrConnectWithoutTransactionsInput
+    connect?: WalletWhereUniqueInput
+  }
+
+  export type WalletTopupCreateNestedOneWithoutTransactionInput = {
+    create?: XOR<WalletTopupCreateWithoutTransactionInput, WalletTopupUncheckedCreateWithoutTransactionInput>
+    connectOrCreate?: WalletTopupCreateOrConnectWithoutTransactionInput
+    connect?: WalletTopupWhereUniqueInput
+  }
+
+  export type WalletTopupUncheckedCreateNestedOneWithoutTransactionInput = {
+    create?: XOR<WalletTopupCreateWithoutTransactionInput, WalletTopupUncheckedCreateWithoutTransactionInput>
+    connectOrCreate?: WalletTopupCreateOrConnectWithoutTransactionInput
+    connect?: WalletTopupWhereUniqueInput
+  }
+
+  export type WalletUpdateOneRequiredWithoutTransactionsNestedInput = {
+    create?: XOR<WalletCreateWithoutTransactionsInput, WalletUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: WalletCreateOrConnectWithoutTransactionsInput
+    upsert?: WalletUpsertWithoutTransactionsInput
+    connect?: WalletWhereUniqueInput
+    update?: XOR<XOR<WalletUpdateToOneWithWhereWithoutTransactionsInput, WalletUpdateWithoutTransactionsInput>, WalletUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type WalletTopupUpdateOneWithoutTransactionNestedInput = {
+    create?: XOR<WalletTopupCreateWithoutTransactionInput, WalletTopupUncheckedCreateWithoutTransactionInput>
+    connectOrCreate?: WalletTopupCreateOrConnectWithoutTransactionInput
+    upsert?: WalletTopupUpsertWithoutTransactionInput
+    disconnect?: WalletTopupWhereInput | boolean
+    delete?: WalletTopupWhereInput | boolean
+    connect?: WalletTopupWhereUniqueInput
+    update?: XOR<XOR<WalletTopupUpdateToOneWithWhereWithoutTransactionInput, WalletTopupUpdateWithoutTransactionInput>, WalletTopupUncheckedUpdateWithoutTransactionInput>
+  }
+
+  export type WalletTopupUncheckedUpdateOneWithoutTransactionNestedInput = {
+    create?: XOR<WalletTopupCreateWithoutTransactionInput, WalletTopupUncheckedCreateWithoutTransactionInput>
+    connectOrCreate?: WalletTopupCreateOrConnectWithoutTransactionInput
+    upsert?: WalletTopupUpsertWithoutTransactionInput
+    disconnect?: WalletTopupWhereInput | boolean
+    delete?: WalletTopupWhereInput | boolean
+    connect?: WalletTopupWhereUniqueInput
+    update?: XOR<XOR<WalletTopupUpdateToOneWithWhereWithoutTransactionInput, WalletTopupUpdateWithoutTransactionInput>, WalletTopupUncheckedUpdateWithoutTransactionInput>
+  }
+
+  export type WalletCreateNestedOneWithoutTopupInput = {
+    create?: XOR<WalletCreateWithoutTopupInput, WalletUncheckedCreateWithoutTopupInput>
+    connectOrCreate?: WalletCreateOrConnectWithoutTopupInput
+    connect?: WalletWhereUniqueInput
+  }
+
+  export type WalletTransactionCreateNestedOneWithoutTopupInput = {
+    create?: XOR<WalletTransactionCreateWithoutTopupInput, WalletTransactionUncheckedCreateWithoutTopupInput>
+    connectOrCreate?: WalletTransactionCreateOrConnectWithoutTopupInput
+    connect?: WalletTransactionWhereUniqueInput
+  }
+
+  export type WalletUpdateOneRequiredWithoutTopupNestedInput = {
+    create?: XOR<WalletCreateWithoutTopupInput, WalletUncheckedCreateWithoutTopupInput>
+    connectOrCreate?: WalletCreateOrConnectWithoutTopupInput
+    upsert?: WalletUpsertWithoutTopupInput
+    connect?: WalletWhereUniqueInput
+    update?: XOR<XOR<WalletUpdateToOneWithWhereWithoutTopupInput, WalletUpdateWithoutTopupInput>, WalletUncheckedUpdateWithoutTopupInput>
+  }
+
+  export type WalletTransactionUpdateOneWithoutTopupNestedInput = {
+    create?: XOR<WalletTransactionCreateWithoutTopupInput, WalletTransactionUncheckedCreateWithoutTopupInput>
+    connectOrCreate?: WalletTransactionCreateOrConnectWithoutTopupInput
+    upsert?: WalletTransactionUpsertWithoutTopupInput
+    disconnect?: WalletTransactionWhereInput | boolean
+    delete?: WalletTransactionWhereInput | boolean
+    connect?: WalletTransactionWhereUniqueInput
+    update?: XOR<XOR<WalletTransactionUpdateToOneWithWhereWithoutTopupInput, WalletTransactionUpdateWithoutTopupInput>, WalletTransactionUncheckedUpdateWithoutTopupInput>
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5293,6 +8568,37 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type RefreshTokenCreateWithoutUserInput = {
     refreshtoken_id?: string
     token_hash: string
@@ -5319,6 +8625,8 @@ export namespace Prisma {
     balance?: number
     created_at?: Date | string
     updated_at?: Date | string
+    transactions?: WalletTransactionCreateNestedManyWithoutWalletInput
+    topup?: WalletTopupCreateNestedManyWithoutWalletInput
   }
 
   export type WalletUncheckedCreateWithoutUserInput = {
@@ -5326,6 +8634,8 @@ export namespace Prisma {
     balance?: number
     created_at?: Date | string
     updated_at?: Date | string
+    transactions?: WalletTransactionUncheckedCreateNestedManyWithoutWalletInput
+    topup?: WalletTopupUncheckedCreateNestedManyWithoutWalletInput
   }
 
   export type WalletCreateOrConnectWithoutUserInput = {
@@ -5472,6 +8782,66 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutWalletInput, UserUncheckedCreateWithoutWalletInput>
   }
 
+  export type WalletTransactionCreateWithoutWalletInput = {
+    transaction_id?: string
+    amount: number
+    type: string
+    balance_before: number
+    balance_after: number
+    reference_id: string
+    created_at?: Date | string
+    topup?: WalletTopupCreateNestedOneWithoutTransactionInput
+  }
+
+  export type WalletTransactionUncheckedCreateWithoutWalletInput = {
+    transaction_id?: string
+    amount: number
+    type: string
+    balance_before: number
+    balance_after: number
+    reference_id: string
+    created_at?: Date | string
+    topup?: WalletTopupUncheckedCreateNestedOneWithoutTransactionInput
+  }
+
+  export type WalletTransactionCreateOrConnectWithoutWalletInput = {
+    where: WalletTransactionWhereUniqueInput
+    create: XOR<WalletTransactionCreateWithoutWalletInput, WalletTransactionUncheckedCreateWithoutWalletInput>
+  }
+
+  export type WalletTransactionCreateManyWalletInputEnvelope = {
+    data: WalletTransactionCreateManyWalletInput | WalletTransactionCreateManyWalletInput[]
+  }
+
+  export type WalletTopupCreateWithoutWalletInput = {
+    topup_id?: string
+    amount: number
+    fee: number
+    method: string
+    status: string
+    created_at?: Date | string
+    transaction?: WalletTransactionCreateNestedOneWithoutTopupInput
+  }
+
+  export type WalletTopupUncheckedCreateWithoutWalletInput = {
+    topup_id?: string
+    transaction_id?: string | null
+    amount: number
+    fee: number
+    method: string
+    status: string
+    created_at?: Date | string
+  }
+
+  export type WalletTopupCreateOrConnectWithoutWalletInput = {
+    where: WalletTopupWhereUniqueInput
+    create: XOR<WalletTopupCreateWithoutWalletInput, WalletTopupUncheckedCreateWithoutWalletInput>
+  }
+
+  export type WalletTopupCreateManyWalletInputEnvelope = {
+    data: WalletTopupCreateManyWalletInput | WalletTopupCreateManyWalletInput[]
+  }
+
   export type UserUpsertWithoutWalletInput = {
     update: XOR<UserUpdateWithoutWalletInput, UserUncheckedUpdateWithoutWalletInput>
     create: XOR<UserCreateWithoutWalletInput, UserUncheckedCreateWithoutWalletInput>
@@ -5503,6 +8873,286 @@ export namespace Prisma {
     refreshtoken?: RefreshTokenUncheckedUpdateOneWithoutUserNestedInput
   }
 
+  export type WalletTransactionUpsertWithWhereUniqueWithoutWalletInput = {
+    where: WalletTransactionWhereUniqueInput
+    update: XOR<WalletTransactionUpdateWithoutWalletInput, WalletTransactionUncheckedUpdateWithoutWalletInput>
+    create: XOR<WalletTransactionCreateWithoutWalletInput, WalletTransactionUncheckedCreateWithoutWalletInput>
+  }
+
+  export type WalletTransactionUpdateWithWhereUniqueWithoutWalletInput = {
+    where: WalletTransactionWhereUniqueInput
+    data: XOR<WalletTransactionUpdateWithoutWalletInput, WalletTransactionUncheckedUpdateWithoutWalletInput>
+  }
+
+  export type WalletTransactionUpdateManyWithWhereWithoutWalletInput = {
+    where: WalletTransactionScalarWhereInput
+    data: XOR<WalletTransactionUpdateManyMutationInput, WalletTransactionUncheckedUpdateManyWithoutWalletInput>
+  }
+
+  export type WalletTransactionScalarWhereInput = {
+    AND?: WalletTransactionScalarWhereInput | WalletTransactionScalarWhereInput[]
+    OR?: WalletTransactionScalarWhereInput[]
+    NOT?: WalletTransactionScalarWhereInput | WalletTransactionScalarWhereInput[]
+    transaction_id?: StringFilter<"WalletTransaction"> | string
+    wallet_id?: StringFilter<"WalletTransaction"> | string
+    amount?: IntFilter<"WalletTransaction"> | number
+    type?: StringFilter<"WalletTransaction"> | string
+    balance_before?: IntFilter<"WalletTransaction"> | number
+    balance_after?: IntFilter<"WalletTransaction"> | number
+    reference_id?: StringFilter<"WalletTransaction"> | string
+    created_at?: DateTimeFilter<"WalletTransaction"> | Date | string
+  }
+
+  export type WalletTopupUpsertWithWhereUniqueWithoutWalletInput = {
+    where: WalletTopupWhereUniqueInput
+    update: XOR<WalletTopupUpdateWithoutWalletInput, WalletTopupUncheckedUpdateWithoutWalletInput>
+    create: XOR<WalletTopupCreateWithoutWalletInput, WalletTopupUncheckedCreateWithoutWalletInput>
+  }
+
+  export type WalletTopupUpdateWithWhereUniqueWithoutWalletInput = {
+    where: WalletTopupWhereUniqueInput
+    data: XOR<WalletTopupUpdateWithoutWalletInput, WalletTopupUncheckedUpdateWithoutWalletInput>
+  }
+
+  export type WalletTopupUpdateManyWithWhereWithoutWalletInput = {
+    where: WalletTopupScalarWhereInput
+    data: XOR<WalletTopupUpdateManyMutationInput, WalletTopupUncheckedUpdateManyWithoutWalletInput>
+  }
+
+  export type WalletTopupScalarWhereInput = {
+    AND?: WalletTopupScalarWhereInput | WalletTopupScalarWhereInput[]
+    OR?: WalletTopupScalarWhereInput[]
+    NOT?: WalletTopupScalarWhereInput | WalletTopupScalarWhereInput[]
+    topup_id?: StringFilter<"WalletTopup"> | string
+    wallet_id?: StringFilter<"WalletTopup"> | string
+    transaction_id?: StringNullableFilter<"WalletTopup"> | string | null
+    amount?: IntFilter<"WalletTopup"> | number
+    fee?: IntFilter<"WalletTopup"> | number
+    method?: StringFilter<"WalletTopup"> | string
+    status?: StringFilter<"WalletTopup"> | string
+    created_at?: DateTimeFilter<"WalletTopup"> | Date | string
+  }
+
+  export type WalletCreateWithoutTransactionsInput = {
+    wallet_id?: string
+    balance?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutWalletInput
+    topup?: WalletTopupCreateNestedManyWithoutWalletInput
+  }
+
+  export type WalletUncheckedCreateWithoutTransactionsInput = {
+    wallet_id?: string
+    user_id: string
+    balance?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    topup?: WalletTopupUncheckedCreateNestedManyWithoutWalletInput
+  }
+
+  export type WalletCreateOrConnectWithoutTransactionsInput = {
+    where: WalletWhereUniqueInput
+    create: XOR<WalletCreateWithoutTransactionsInput, WalletUncheckedCreateWithoutTransactionsInput>
+  }
+
+  export type WalletTopupCreateWithoutTransactionInput = {
+    topup_id?: string
+    amount: number
+    fee: number
+    method: string
+    status: string
+    created_at?: Date | string
+    wallet: WalletCreateNestedOneWithoutTopupInput
+  }
+
+  export type WalletTopupUncheckedCreateWithoutTransactionInput = {
+    topup_id?: string
+    wallet_id: string
+    amount: number
+    fee: number
+    method: string
+    status: string
+    created_at?: Date | string
+  }
+
+  export type WalletTopupCreateOrConnectWithoutTransactionInput = {
+    where: WalletTopupWhereUniqueInput
+    create: XOR<WalletTopupCreateWithoutTransactionInput, WalletTopupUncheckedCreateWithoutTransactionInput>
+  }
+
+  export type WalletUpsertWithoutTransactionsInput = {
+    update: XOR<WalletUpdateWithoutTransactionsInput, WalletUncheckedUpdateWithoutTransactionsInput>
+    create: XOR<WalletCreateWithoutTransactionsInput, WalletUncheckedCreateWithoutTransactionsInput>
+    where?: WalletWhereInput
+  }
+
+  export type WalletUpdateToOneWithWhereWithoutTransactionsInput = {
+    where?: WalletWhereInput
+    data: XOR<WalletUpdateWithoutTransactionsInput, WalletUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type WalletUpdateWithoutTransactionsInput = {
+    wallet_id?: StringFieldUpdateOperationsInput | string
+    balance?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutWalletNestedInput
+    topup?: WalletTopupUpdateManyWithoutWalletNestedInput
+  }
+
+  export type WalletUncheckedUpdateWithoutTransactionsInput = {
+    wallet_id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    balance?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    topup?: WalletTopupUncheckedUpdateManyWithoutWalletNestedInput
+  }
+
+  export type WalletTopupUpsertWithoutTransactionInput = {
+    update: XOR<WalletTopupUpdateWithoutTransactionInput, WalletTopupUncheckedUpdateWithoutTransactionInput>
+    create: XOR<WalletTopupCreateWithoutTransactionInput, WalletTopupUncheckedCreateWithoutTransactionInput>
+    where?: WalletTopupWhereInput
+  }
+
+  export type WalletTopupUpdateToOneWithWhereWithoutTransactionInput = {
+    where?: WalletTopupWhereInput
+    data: XOR<WalletTopupUpdateWithoutTransactionInput, WalletTopupUncheckedUpdateWithoutTransactionInput>
+  }
+
+  export type WalletTopupUpdateWithoutTransactionInput = {
+    topup_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    fee?: IntFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    wallet?: WalletUpdateOneRequiredWithoutTopupNestedInput
+  }
+
+  export type WalletTopupUncheckedUpdateWithoutTransactionInput = {
+    topup_id?: StringFieldUpdateOperationsInput | string
+    wallet_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    fee?: IntFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletCreateWithoutTopupInput = {
+    wallet_id?: string
+    balance?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    user: UserCreateNestedOneWithoutWalletInput
+    transactions?: WalletTransactionCreateNestedManyWithoutWalletInput
+  }
+
+  export type WalletUncheckedCreateWithoutTopupInput = {
+    wallet_id?: string
+    user_id: string
+    balance?: number
+    created_at?: Date | string
+    updated_at?: Date | string
+    transactions?: WalletTransactionUncheckedCreateNestedManyWithoutWalletInput
+  }
+
+  export type WalletCreateOrConnectWithoutTopupInput = {
+    where: WalletWhereUniqueInput
+    create: XOR<WalletCreateWithoutTopupInput, WalletUncheckedCreateWithoutTopupInput>
+  }
+
+  export type WalletTransactionCreateWithoutTopupInput = {
+    transaction_id?: string
+    amount: number
+    type: string
+    balance_before: number
+    balance_after: number
+    reference_id: string
+    created_at?: Date | string
+    wallet: WalletCreateNestedOneWithoutTransactionsInput
+  }
+
+  export type WalletTransactionUncheckedCreateWithoutTopupInput = {
+    transaction_id?: string
+    wallet_id: string
+    amount: number
+    type: string
+    balance_before: number
+    balance_after: number
+    reference_id: string
+    created_at?: Date | string
+  }
+
+  export type WalletTransactionCreateOrConnectWithoutTopupInput = {
+    where: WalletTransactionWhereUniqueInput
+    create: XOR<WalletTransactionCreateWithoutTopupInput, WalletTransactionUncheckedCreateWithoutTopupInput>
+  }
+
+  export type WalletUpsertWithoutTopupInput = {
+    update: XOR<WalletUpdateWithoutTopupInput, WalletUncheckedUpdateWithoutTopupInput>
+    create: XOR<WalletCreateWithoutTopupInput, WalletUncheckedCreateWithoutTopupInput>
+    where?: WalletWhereInput
+  }
+
+  export type WalletUpdateToOneWithWhereWithoutTopupInput = {
+    where?: WalletWhereInput
+    data: XOR<WalletUpdateWithoutTopupInput, WalletUncheckedUpdateWithoutTopupInput>
+  }
+
+  export type WalletUpdateWithoutTopupInput = {
+    wallet_id?: StringFieldUpdateOperationsInput | string
+    balance?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutWalletNestedInput
+    transactions?: WalletTransactionUpdateManyWithoutWalletNestedInput
+  }
+
+  export type WalletUncheckedUpdateWithoutTopupInput = {
+    wallet_id?: StringFieldUpdateOperationsInput | string
+    user_id?: StringFieldUpdateOperationsInput | string
+    balance?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    transactions?: WalletTransactionUncheckedUpdateManyWithoutWalletNestedInput
+  }
+
+  export type WalletTransactionUpsertWithoutTopupInput = {
+    update: XOR<WalletTransactionUpdateWithoutTopupInput, WalletTransactionUncheckedUpdateWithoutTopupInput>
+    create: XOR<WalletTransactionCreateWithoutTopupInput, WalletTransactionUncheckedCreateWithoutTopupInput>
+    where?: WalletTransactionWhereInput
+  }
+
+  export type WalletTransactionUpdateToOneWithWhereWithoutTopupInput = {
+    where?: WalletTransactionWhereInput
+    data: XOR<WalletTransactionUpdateWithoutTopupInput, WalletTransactionUncheckedUpdateWithoutTopupInput>
+  }
+
+  export type WalletTransactionUpdateWithoutTopupInput = {
+    transaction_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    balance_before?: IntFieldUpdateOperationsInput | number
+    balance_after?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    wallet?: WalletUpdateOneRequiredWithoutTransactionsNestedInput
+  }
+
+  export type WalletTransactionUncheckedUpdateWithoutTopupInput = {
+    transaction_id?: StringFieldUpdateOperationsInput | string
+    wallet_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    balance_before?: IntFieldUpdateOperationsInput | number
+    balance_after?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type WalletCreateManyUserInput = {
     wallet_id?: string
     balance?: number
@@ -5515,6 +9165,8 @@ export namespace Prisma {
     balance?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    transactions?: WalletTransactionUpdateManyWithoutWalletNestedInput
+    topup?: WalletTopupUpdateManyWithoutWalletNestedInput
   }
 
   export type WalletUncheckedUpdateWithoutUserInput = {
@@ -5522,6 +9174,8 @@ export namespace Prisma {
     balance?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    transactions?: WalletTransactionUncheckedUpdateManyWithoutWalletNestedInput
+    topup?: WalletTopupUncheckedUpdateManyWithoutWalletNestedInput
   }
 
   export type WalletUncheckedUpdateManyWithoutUserInput = {
@@ -5529,6 +9183,88 @@ export namespace Prisma {
     balance?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletTransactionCreateManyWalletInput = {
+    transaction_id?: string
+    amount: number
+    type: string
+    balance_before: number
+    balance_after: number
+    reference_id: string
+    created_at?: Date | string
+  }
+
+  export type WalletTopupCreateManyWalletInput = {
+    topup_id?: string
+    transaction_id?: string | null
+    amount: number
+    fee: number
+    method: string
+    status: string
+    created_at?: Date | string
+  }
+
+  export type WalletTransactionUpdateWithoutWalletInput = {
+    transaction_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    balance_before?: IntFieldUpdateOperationsInput | number
+    balance_after?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    topup?: WalletTopupUpdateOneWithoutTransactionNestedInput
+  }
+
+  export type WalletTransactionUncheckedUpdateWithoutWalletInput = {
+    transaction_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    balance_before?: IntFieldUpdateOperationsInput | number
+    balance_after?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    topup?: WalletTopupUncheckedUpdateOneWithoutTransactionNestedInput
+  }
+
+  export type WalletTransactionUncheckedUpdateManyWithoutWalletInput = {
+    transaction_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
+    balance_before?: IntFieldUpdateOperationsInput | number
+    balance_after?: IntFieldUpdateOperationsInput | number
+    reference_id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletTopupUpdateWithoutWalletInput = {
+    topup_id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    fee?: IntFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    transaction?: WalletTransactionUpdateOneWithoutTopupNestedInput
+  }
+
+  export type WalletTopupUncheckedUpdateWithoutWalletInput = {
+    topup_id?: StringFieldUpdateOperationsInput | string
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: IntFieldUpdateOperationsInput | number
+    fee?: IntFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletTopupUncheckedUpdateManyWithoutWalletInput = {
+    topup_id?: StringFieldUpdateOperationsInput | string
+    transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: IntFieldUpdateOperationsInput | number
+    fee?: IntFieldUpdateOperationsInput | number
+    method?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

@@ -143,6 +143,28 @@ exports.Prisma.WalletScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.WalletTransactionScalarFieldEnum = {
+  transaction_id: 'transaction_id',
+  wallet_id: 'wallet_id',
+  amount: 'amount',
+  type: 'type',
+  balance_before: 'balance_before',
+  balance_after: 'balance_after',
+  reference_id: 'reference_id',
+  created_at: 'created_at'
+};
+
+exports.Prisma.WalletTopupScalarFieldEnum = {
+  topup_id: 'topup_id',
+  wallet_id: 'wallet_id',
+  transaction_id: 'transaction_id',
+  amount: 'amount',
+  fee: 'fee',
+  method: 'method',
+  status: 'status',
+  created_at: 'created_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -157,7 +179,9 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   User: 'User',
   RefreshToken: 'RefreshToken',
-  Wallet: 'Wallet'
+  Wallet: 'Wallet',
+  WalletTransaction: 'WalletTransaction',
+  WalletTopup: 'WalletTopup'
 };
 
 /**
