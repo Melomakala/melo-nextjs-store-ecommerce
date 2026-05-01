@@ -3,9 +3,10 @@ import { useEffect, useRef } from "react";
 import { useProfile } from "@/modules/user/user.hook";
 import { useAuthStore } from "@/modules/auth/auth.store";
 import { refreshService } from "@/modules/auth/auth.services";
-
+import { useWallet } from "@/modules/wallet/wallet.hook";
 export default function UserInit() {
     const { handleGetProfile } = useProfile();
+    const { handleGetWallet } = useWallet();
     const token = useAuthStore((state) => state.token);
     const setToken = useAuthStore((state) => state.setToken);
     const isInitialized = useAuthStore((state) => state.isInitialized);
@@ -34,6 +35,7 @@ export default function UserInit() {
                 }
                 if (currentToken) {
                     await handleGetProfile();
+                    await handleGetWallet();
                 }
             } catch (error) {
                 console.error("UserInit Error:", error);

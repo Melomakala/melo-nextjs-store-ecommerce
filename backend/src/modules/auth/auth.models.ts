@@ -3,7 +3,16 @@ import * as authType from "./auth.types";
 
 export const createUser = async (data: authType.registerRequest): Promise<authType.registerResponse> => {
     return await prisma.user.create({
-        data,
+        data: {
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            wallet: {
+                create: {
+                    balance: 0,
+                }
+            }
+        },
         select: {
             user_id: true,
             name: true,

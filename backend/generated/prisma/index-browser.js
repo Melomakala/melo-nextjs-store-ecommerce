@@ -135,6 +135,14 @@ exports.Prisma.RefreshTokenScalarFieldEnum = {
   revoked_at: 'revoked_at'
 };
 
+exports.Prisma.WalletScalarFieldEnum = {
+  wallet_id: 'wallet_id',
+  user_id: 'user_id',
+  balance: 'balance',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -148,7 +156,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  RefreshToken: 'RefreshToken'
+  RefreshToken: 'RefreshToken',
+  Wallet: 'Wallet'
 };
 
 /**

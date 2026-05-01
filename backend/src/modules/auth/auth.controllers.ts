@@ -67,7 +67,7 @@ export const logout = async (req: Request, res: Response) => {
     if (!req.user) {
         throw new CustomError("User not found", 404);
     }
-    await authServices.logoutServices(req.user.user_id);
+    await authServices.logoutService(req.user.user_id);
     res.clearCookie("refreshToken", cookieOptions);
     res.status(200).json({
         message: "Logout Success",

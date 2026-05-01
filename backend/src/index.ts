@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import authRoutes from './modules/auth/auth.routes';
 import userRoutes from './modules/user/user.routes';
+import walletRoutes from './modules/wallet/wallet.routes';
 
 const app = express()
 
@@ -16,9 +17,11 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json())
 
+// GlobalGuard
 app.use('/api', authRoutes)
-
+// routeGuard
 app.use("/api", userRoutes)
+app.use("/api", walletRoutes)
 
 app.use(errorHandler);
 export default app;

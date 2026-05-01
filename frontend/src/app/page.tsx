@@ -18,7 +18,7 @@ import LoadingSpiner from "@/components/loadingspiner"
 import { useAuthStore } from "@/modules/auth/auth.store"
 
 export default function Home() {
-  const isInitialized = useAuthStore((state) => state.isInitialized)
+  const isInitialized = useAuthStore((state) => state.isInitialized) //เช็ค refreshtoken
   if (!isInitialized) {
     return <LoadingSpiner />
   }

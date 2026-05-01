@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-
+import { useEffect } from "react";
 import { NavMain } from "@/components/sidebar/nav-main"
 import { NavUser } from "@/components/sidebar/nav-user"
 import {
@@ -18,9 +18,10 @@ import {
 import { Store, Home, ShoppingCart, CreditCard, Package, Wallet } from "lucide-react"
 import { useUserStore } from "@/modules/user/user.store";
 import Link from "next/link";
-
+import { useWalletStore } from "@/modules/wallet/wallet.store";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUserStore();
+  const { balance } = useWalletStore();
 
   const data = {
     profile: user ? {
@@ -75,7 +76,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <span>Balance</span>
             </div>
             <p className="mt-1 text-lg font-bold tracking-tight text-sidebar-foreground">
-              ฿1,250.00
+              ฿{balance.toLocaleString()} { /* balance */}
             </p>
             <Link
               href="#"
