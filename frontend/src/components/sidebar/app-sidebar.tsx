@@ -79,7 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               ฿{balance.toLocaleString()} { /* balance */}
             </p>
             <Link
-              href="#"
+              href={user ? "/topup" : "/login"}
               className="mt-2 flex items-center justify-center rounded-md bg-sidebar-primary px-3 py-1.5 text-xs font-medium text-sidebar-primary-foreground transition-colors hover:bg-sidebar-primary/80"
             >
               <CreditCard className="mr-1.5 size-3" />
