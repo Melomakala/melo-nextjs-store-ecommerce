@@ -26,6 +26,8 @@ import LoadingSpiner from "@/components/loadingspiner";
 import { useTopupWallet } from "@/modules/wallet/wallet.hook";
 import { TopupWalletData } from "@/modules/wallet/wallet.types";
 import { useWallet } from "@/modules/wallet/wallet.hook";
+import { TopupSuccess } from "./components/topup-success";
+
 const AMOUNTS = [
     { value: 50, bonus: 0, label: "50" },
     { value: 100, bonus: 0, label: "100" },
@@ -108,44 +110,13 @@ export default function Page() {
 
     if (confirmed && selectedAmount) {
         return (
-            <div className="min-h-screen flex items-center justify-center px-4">
-                <Card className="w-full max-w-sm text-center border shadow-sm">
-                    <CardHeader>
-                        <div className="flex justify-center mb-4">
-                            <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center">
-                                <CheckCircle2 className="w-8 h-8 text-emerald-500" />
-                            </div>
-                        </div>
-                        <CardTitle className="text-xl">Top Up Successful!</CardTitle>
-                        <CardDescription>The balance has been added to your account</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="rounded-xl p-4 bg-muted">
-                            <div className="text-sm mb-1 text-muted-foreground">
-                                New Balance
-                            </div>
-                            <div className="text-3xl font-bold text-primary">
-                                {(balance).toLocaleString()}
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                                Baht
-                            </div>
-                        </div>
-                    </CardContent>
-                    <CardFooter>
-                        <Button
-                            asChild
-                            className="w-full h-12 rounded-xl text-sm font-medium"
-                            onClick={() => {
-                                setConfirmed(false);
-                                setSelectedAmount(null);
-                            }}
-                        >
-                            <Link href="/">Back to Home</Link>
-                        </Button>
-                    </CardFooter>
-                </Card>
-            </div>
+            <TopupSuccess
+                balance={balance}
+                onReset={() => {
+                    setConfirmed(false);
+                    setSelectedAmount(null);
+                }}
+            />
         );
     }
 
