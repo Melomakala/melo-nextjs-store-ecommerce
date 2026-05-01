@@ -80,7 +80,13 @@ export const createWalletTransactionModel = async (data: walletType.WalletTransa
             balance_before: data.balance_before,
             balance_after: data.balance_after,
             reference_id: data.reference_id,
-        }
+
+            topup: {
+                connect: {
+                    topup_id: data.reference_id,
+                }
+            }
+        },
     });
 }
 

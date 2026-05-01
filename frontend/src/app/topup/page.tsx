@@ -23,13 +23,15 @@ import { useUserStore } from "@/modules/user/user.store";
 import { useWalletStore } from "@/modules/wallet/wallet.store";
 import { useRouteGuard } from "@/hooks/use-route-guard";
 import LoadingSpiner from "@/components/loadingspiner";
+import { useTopupWallet } from "@/modules/wallet/wallet.hook";
+import { TopupWalletData } from "@/modules/wallet/wallet.types";
 
 const AMOUNTS = [
     { value: 50, bonus: 0, label: "50" },
     { value: 100, bonus: 0, label: "100" },
-    { value: 300, bonus: 15, label: "300", popular: true },
-    { value: 500, bonus: 30, label: "500" },
-    { value: 1000, bonus: 100, label: "1,000" },
+    { value: 300, bonus: 0, label: "300", popular: true },
+    { value: 500, bonus: 0, label: "500" },
+    { value: 1000, bonus: 0, label: "1,000" },
 ];
 
 const METHODS = [
@@ -37,7 +39,7 @@ const METHODS = [
         id: "promptpay",
         name: "PromptPay",
         description: "Scan QR to pay instantly",
-        fee: "Free",
+        fee: 0,
         icon: QrCode,
         color: "bg-emerald-50 text-emerald-600",
         badgeVariant: "default",
@@ -46,7 +48,7 @@ const METHODS = [
         id: "card",
         name: "Credit / Debit Card",
         description: "Visa, Mastercard",
-        fee: "+1.5%",
+        fee: 0.015,
         icon: CreditCard,
         color: "bg-blue-50 text-blue-600",
         badgeVariant: "secondary",
@@ -55,7 +57,7 @@ const METHODS = [
         id: "truemoney",
         name: "TrueMoney Wallet",
         description: "Online Wallet",
-        fee: "Free",
+        fee: 0,
         icon: Smartphone,
         color: "bg-orange-50 text-orange-500",
         badgeVariant: "default",
@@ -63,6 +65,7 @@ const METHODS = [
 ];
 
 export default function Page() {
+    const { handleTopupWallet } = useTopupWallet();
     const { isLoading, isRedirecting } = useRouteGuard(true, "/");
     const { user } = useUserStore();
     const { balance } = useWalletStore();
@@ -76,14 +79,30 @@ export default function Page() {
 
     const currentBalance = balance;
     const selectedData = AMOUNTS.find((a) => a.value === selectedAmount);
-    const fee =
-        selectedMethod === "card" && selectedAmount
-            ? Math.round(selectedAmount * 0.015)
+    const feecal =
+        selectedAmount
+            ? Math.round(selectedAmount * METHODS.find((m) => m.id === selectedMethod)?.fee!)
             : 0;
-    const totalPay = selectedAmount ? selectedAmount + fee : 0;
-    const totalCredit = selectedAmount
+    const totalPay = selectedAmount ? selectedAmount + feecal : 0;
+
+
+    const totalAmount = selectedAmount
         ? selectedAmount + (selectedData?.bonus ?? 0)
         : 0;
+
+    const handleClickTopup = async () => {
+        const fee = METHODS.find((m) => m.id === selectedMethod)?.fee;
+        const data = {
+            amount: totalAmount,
+            fee,
+            method: selectedMethod,
+        }
+        console.log(data)
+        const response = await handleTopupWallet(data as TopupWalletData);
+        if (response) {
+            setConfirmed(true);
+        }
+    }
 
     if (confirmed && selectedAmount) {
         return (
@@ -104,7 +123,7 @@ export default function Page() {
                                 New Balance
                             </div>
                             <div className="text-3xl font-bold text-primary">
-                                {(currentBalance + totalCredit).toLocaleString()}
+                                {(currentBalance + totalAmount).toLocaleString()}
                             </div>
                             <div className="text-sm text-muted-foreground">
                                 Baht
@@ -249,10 +268,10 @@ export default function Page() {
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-3 flex-shrink-0">
-                                            <Badge variant={method.fee === "Free" ? "outline" : "secondary"} className={cn(
-                                                method.fee === "Free" ? "bg-emerald-50 text-emerald-600 border-emerald-200" : ""
+                                            <Badge variant={method.fee === 0 ? "outline" : "secondary"} className={cn(
+                                                method.fee === 0 ? "bg-emerald-50 text-emerald-600 border-emerald-200" : ""
                                             )}>
-                                                {method.fee}
+                                                {method.fee === 0 ? "Free" : `+${method.fee * 100} %`}
                                             </Badge>
                                             <div
                                                 className={cn(
@@ -289,16 +308,16 @@ export default function Page() {
                                     <span className="font-medium text-emerald-600">+{selectedData?.bonus} Baht</span>
                                 </div>
                             )}
-                            {fee > 0 && (
+                            {feecal > 0 && (
                                 <div className="flex justify-between">
                                     <span className="text-muted-foreground">Fee</span>
-                                    <span className="font-medium">฿{fee}</span>
+                                    <span className="font-medium">฿{feecal}</span>
                                 </div>
                             )}
                             <Separator className="my-1.5" />
                             <div className="flex justify-between font-semibold">
                                 <span>Total Received</span>
-                                <span className="text-primary">{totalCredit.toLocaleString()} Baht</span>
+                                <span className="text-primary">{totalAmount.toLocaleString()} Baht</span>
                             </div>
                             <div className="flex justify-between items-center text-xs mt-1">
                                 <span className="text-muted-foreground">Total Payment</span>
@@ -312,7 +331,7 @@ export default function Page() {
                 <Button
                     size="lg"
                     disabled={!selectedAmount}
-                    onClick={() => selectedAmount && setConfirmed(true)}
+                    onClick={() => selectedAmount && handleClickTopup()}
                     className="w-full rounded-2xl h-14 text-sm font-semibold shadow-md"
                 >
                     {selectedAmount ? (

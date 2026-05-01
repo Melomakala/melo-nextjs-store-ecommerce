@@ -18,6 +18,9 @@ export const topupWalletService = async (user_id: string, data: walletType.Topup
     if (!wallet) {
         throw new CustomError("Wallet not found", 404);
     }
+    if (data.fee !== 0) {
+        data.fee = data.amount * data.fee;
+    }
     data.amount = toCents(data.amount);
     data.fee = toCents(data.fee);
     const topup = await walletModel.topupWalletModel(wallet.wallet_id, data, null, walletType.status.PENDING)
@@ -62,7 +65,7 @@ export const mockupTopupWalletService = async (topup_id: string, status: walletT
             throw new CustomError("Wallet not found", 404);
         }
         await walletModel.updateWalletModel(tx.wallet_id, wallet.balance + tx.amount);
-        await walletModel.createWalletTransactionModel({
+        const transaction = await walletModel.createWalletTransactionModel({
             wallet_id: tx.wallet_id,
             amount: tx.amount,
             type: walletType.transactionType.TOPUP,
