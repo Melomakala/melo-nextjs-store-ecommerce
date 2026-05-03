@@ -60,15 +60,29 @@ model WalletTransaction {
 }
 
 model WalletTopup {
-  topup_id       String   @id @default(uuid())
-  wallet_id      String
-  transaction_id String?  @unique
-  amount         Int
-  fee            Int
-  method         String
-  status         String
-  created_at     DateTime @default(now())
+  topup_id        String   @id @default(uuid())
+  wallet_id       String
+  transaction_id  String?  @unique
+  idempotency_key String   @unique
+  amount          Int
+  fee             Int
+  method          String
+  status          String
+  created_at      DateTime @default(now())
 
   wallet      Wallet             @relation(fields: [wallet_id], references: [wallet_id])
   transaction WalletTransaction? @relation(fields: [transaction_id], references: [transaction_id])
+}
+
+model Product {
+  product_id  String  @id @default(uuid())
+  name        String
+  description String?
+  price       Int
+  stock       Int     @default(-1) // -1 หมายถึง Unlimited Stock
+  image_url   String?
+  is_active   Boolean @default(true)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }

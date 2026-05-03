@@ -19,7 +19,8 @@ export const useWallet = () => {
 export const useTopupWallet = () => {
     const handleTopupWallet = async (data: TopupWalletData) => {
         try {
-            const walletTopup = await walletServices.topupWalletService(data);
+            const idempotency_key = crypto.randomUUID();
+            const walletTopup = await walletServices.topupWalletService({ ...data, idempotency_key });
             return walletTopup;
         } catch (error: any) {
             throw Error(error?.response?.data?.message || "Failed to topup wallet");

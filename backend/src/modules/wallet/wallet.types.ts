@@ -2,6 +2,7 @@ export interface TopupWalletRequest {
     amount: number;
     fee: number;
     method: string;
+    idempotency_key: string;
 }
 
 export enum status {
@@ -12,10 +13,6 @@ export enum status {
 
 export interface TopupWalletResponse {
     topup_id: string;
-    wallet_id: string;
-    amount: number;
-    fee: number;
-    method: string;
     status: status;
 }
 

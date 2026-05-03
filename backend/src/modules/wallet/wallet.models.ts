@@ -26,6 +26,7 @@ export const topupWalletModel = async (wallet_id: string, data: walletType.Topup
         data: {
             wallet_id,
             transaction_id,
+            idempotency_key: data.idempotency_key,
             amount: data.amount,
             fee: data.fee,
             method: data.method,

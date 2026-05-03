@@ -31,10 +31,6 @@ export const topupWallet = async (req: Request, res: Response) => {
     res.status(200).json({
         message: "Wallet", result: {
             topup_id: walletTopup.topup_id,
-            wallet_id: walletTopup.wallet_id,
-            amount: walletTopup.amount,
-            fee: walletTopup.fee,
-            method: walletTopup.method,
             status: walletTopup.status,
         }
     });

@@ -158,11 +158,24 @@ exports.Prisma.WalletTopupScalarFieldEnum = {
   topup_id: 'topup_id',
   wallet_id: 'wallet_id',
   transaction_id: 'transaction_id',
+  idempotency_key: 'idempotency_key',
   amount: 'amount',
   fee: 'fee',
   method: 'method',
   status: 'status',
   created_at: 'created_at'
+};
+
+exports.Prisma.ProductScalarFieldEnum = {
+  product_id: 'product_id',
+  name: 'name',
+  description: 'description',
+  price: 'price',
+  stock: 'stock',
+  image_url: 'image_url',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 };
 
 exports.Prisma.SortOrder = {
@@ -181,7 +194,8 @@ exports.Prisma.ModelName = {
   RefreshToken: 'RefreshToken',
   Wallet: 'Wallet',
   WalletTransaction: 'WalletTransaction',
-  WalletTopup: 'WalletTopup'
+  WalletTopup: 'WalletTopup',
+  Product: 'Product'
 };
 
 /**

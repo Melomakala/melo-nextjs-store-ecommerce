@@ -41,10 +41,6 @@ export const topupWalletService = async (user_id: string, data: walletType.Topup
 
     return {
         topup_id: topup.topup_id,
-        wallet_id: topup.wallet_id,
-        amount: topup.amount,
-        fee: topup.fee,
-        method: topup.method,
         status: topup.status as walletType.status,
     };
 }
