@@ -31,6 +31,7 @@ export default function UserInit() {
                         }
                     } catch (error) {
                         // คิดอยู่ไส่อะไรดี
+                        console.log(error);
                     }
                 }
                 if (currentToken) {

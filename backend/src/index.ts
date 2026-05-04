@@ -7,6 +7,7 @@ import authRoutes from './modules/auth/auth.routes';
 import userRoutes from './modules/user/user.routes';
 import walletRoutes from './modules/wallet/wallet.routes';
 import productRoutes from './modules/product/product.routes';
+import path from "path";
 
 const app = express()
 
@@ -21,6 +22,7 @@ app.use(express.json())
 // GlobalGuard
 app.use('/api', authRoutes)
 app.use('/api', productRoutes)
+app.use('/uploads/products', express.static(path.join(__dirname, 'uploads/products')))
 // routeGuard
 app.use("/api", userRoutes)
 app.use("/api", walletRoutes)

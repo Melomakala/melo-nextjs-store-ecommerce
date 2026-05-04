@@ -1,5 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { useAuthStore } from "@/modules/auth/auth.store";
+import { useUserStore } from "@/modules/user/user.store";
 
 interface CustomRequestConfig extends InternalAxiosRequestConfig {
     _retry?: boolean;
@@ -49,6 +50,7 @@ axiosInstance.interceptors.response.use(
                 return axiosInstance(originalRequest);
             } catch {
                 useAuthStore.getState().removeToken();
+                useUserStore.getState().clearUser();
                 useAuthStore.getState().setIsInitialized(false);
                 window.location.href = "/";
                 return Promise.reject(error);

@@ -6,7 +6,11 @@ export const getWalletService = async () => {
     return response.data.result;
 }
 
-export const topupWalletService = async (data: TopupWalletData) => {
-    const response = await axiosInstance.post("/wallet/topup", data);
+export const topupWalletService = async (data: TopupWalletData, key: string) => {
+    const response = await axiosInstance.post("/wallet/topup", data, {
+        headers: {
+            "idempotency-key": key,
+        }
+    });
     return response.data.result;
 }

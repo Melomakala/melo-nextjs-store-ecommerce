@@ -8,9 +8,9 @@ export const topupSchema = z.object({
         fee: z.number().refine((val) => [0, 0.015, 0.02, 0.03].includes(val), {
             message: "Invalid fee",
         }),
-        method: z.string().refine((val) => ["promptpay", "card", "truemoney"].includes(val), {
-            message: "Invalid method",
-        }),
-        idempotency_key: z.string(),
+        method: z.enum(["promptpay", "card", "truemoney"]),
+    }),
+    headers: z.object({
+        "idempotency-key": z.string().uuid(),
     })
-});
+})

@@ -27,7 +27,12 @@ export const topupWallet = async (req: Request, res: Response) => {
     if (!req.user || !req.body) {
         throw new CustomError("User not found", 404);
     }
-    const walletTopup = await walletServices.topupWalletService(req.user.user_id, req.body);
+
+    const idempotency_key = req.headers["idempotency-key"] as string;
+    if (!idempotency_key || typeof idempotency_key !== "string") {
+        throw new CustomError("Idempotency-Key is required", 400);
+    }
+    const walletTopup = await walletServices.topupWalletService(req.user.user_id, req.body, idempotency_key);
     res.status(200).json({
         message: "Wallet", result: {
             topup_id: walletTopup.topup_id,

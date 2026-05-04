@@ -8,91 +8,22 @@ import {
   CardContent,
 } from "@/components/ui/card"
 import { ShoppingCart, Zap } from "lucide-react"
-
-const products = [
-  {
-    id: 1,
-    name: "Roblox Gift Card",
-    description: "400 Robux",
-    price: 199,
-    originalPrice: 250,
-    image: "/products/roblox.png",
-    tag: "Hot",
-    inStock: true,
-  },
-  {
-    id: 2,
-    name: "Steam Wallet",
-    description: "฿250 THB Code",
-    price: 250,
-    image: "/products/steam.png",
-    tag: null,
-    inStock: true,
-  },
-  {
-    id: 3,
-    name: "Valorant Points",
-    description: "1,000 VP",
-    price: 349,
-    originalPrice: 400,
-    image: "/products/valorant.png",
-    tag: "Sale",
-    inStock: true,
-  },
-  {
-    id: 4,
-    name: "Free Fire Diamonds",
-    description: "520 Diamonds",
-    price: 149,
-    image: "/products/freefire.png",
-    tag: "New",
-    inStock: true,
-  },
-  {
-    id: 5,
-    name: "PUBG Mobile UC",
-    description: "660 UC",
-    price: 249,
-    image: "/products/pubg.png",
-    tag: null,
-    inStock: true,
-  },
-  {
-    id: 6,
-    name: "Roblox Gift Card",
-    description: "800 Robux",
-    price: 379,
-    originalPrice: 450,
-    image: "/products/roblox.png",
-    tag: "Sale",
-    inStock: false,
-  },
-  {
-    id: 7,
-    name: "Steam Wallet",
-    description: "฿500 THB Code",
-    price: 500,
-    image: "/products/steam.png",
-    tag: null,
-    inStock: true,
-  },
-  {
-    id: 8,
-    name: "Valorant Points",
-    description: "2,575 VP",
-    price: 849,
-    originalPrice: 1000,
-    image: "/products/valorant.png",
-    tag: "Hot",
-    inStock: true,
-  },
-]
+import { useProductStore } from "@/modules/product/product.store";
+import { useProduct } from "@/modules/product/product.hook";
+import { useEffect } from "react";
 
 function formatPrice(price: number) {
   return `฿${price.toLocaleString()}`
 }
 
 export function ProductGrid() {
+  const { getProducts } = useProduct();
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+  const { products } = useProductStore();
+
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
@@ -102,11 +33,11 @@ export function ProductGrid() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {products.map((product) => (
           <Card
-            key={product.id}
+            key={product.product_id}
             className="group relative overflow-hidden border-border/40 bg-card/50 transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5"
           >
             {/* Tag Badge */}
-            {product.tag && (
+            {/* {product.tag && (
               <div className="absolute top-3 left-3 z-10">
                 <Badge
                   variant={product.tag === "Sale" ? "destructive" : "default"}
@@ -122,10 +53,10 @@ export function ProductGrid() {
                   {product.tag}
                 </Badge>
               </div>
-            )}
+            )} */}
 
             {/* Out of stock overlay */}
-            {!product.inStock && (
+            {product.stock === 0 && (
               <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/60 backdrop-blur-[2px]">
                 <Badge variant="secondary" className="text-sm">
                   Out of Stock
@@ -136,7 +67,7 @@ export function ProductGrid() {
             {/* Product Image */}
             <div className="relative aspect-[4/3] overflow-hidden bg-muted/30">
               <Image
-                src={product.image}
+                src={product.image_url}
                 alt={product.name}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -157,21 +88,22 @@ export function ProductGrid() {
                 <span className="text-lg font-bold text-primary">
                   {formatPrice(product.price)}
                 </span>
-                {product.originalPrice && (
+                {/* original price */}
+                {/* {product.originalPrice && (
                   <span className="text-sm text-muted-foreground line-through">
                     {formatPrice(product.originalPrice)}
                   </span>
-                )}
+                )} */}
               </div>
 
               {/* Buy Button */}
               <Button
                 size="lg"
-                disabled={!product.inStock}
+                disabled={product.stock === 0}
                 className="w-full font-medium transition-all"
               >
                 <ShoppingCart className="mr-2 size-4" />
-                {product.inStock ? "Buy Now" : "Unavailable"}
+                {product.stock === 0 ? "Unavailable" : "Buy Now"}
               </Button>
             </CardContent>
           </Card>

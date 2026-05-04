@@ -21,16 +21,25 @@ export const getWalletByWalletIdModel = async (wallet_id: string) => {
     });
 }
 
-export const topupWalletModel = async (wallet_id: string, data: walletType.TopupWalletRequest, transaction_id: string | null, status: walletType.status) => {
+export const topupWalletModel = async (
+    payload: {
+        wallet_id: string,
+        data: walletType.TopupWalletRequest,
+        transaction_id: string | null,
+        idempotency_key: string,
+        status: walletType.status
+    }
+) => {
+    const { wallet_id, data, transaction_id, idempotency_key, status } = payload;
     return await prisma.walletTopup.create({
         data: {
             wallet_id,
             transaction_id,
-            idempotency_key: data.idempotency_key,
+            idempotency_key,
             amount: data.amount,
             fee: data.fee,
             method: data.method,
-            status: status,
+            status,
         },
         select: {
             topup_id: true,

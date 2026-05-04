@@ -21,7 +21,7 @@ export const useTopupWallet = () => {
     const handleTopupWallet = async (data: TopupWalletData) => {
         try {
             const key = useIdempotencyKeyStore.getState().createKey();
-            const walletTopup = await walletServices.topupWalletService({ ...data, idempotency_key: key });
+            const walletTopup = await walletServices.topupWalletService(data, key);
             useIdempotencyKeyStore.getState().clearKey();
             return walletTopup;
         } catch (error: any) {

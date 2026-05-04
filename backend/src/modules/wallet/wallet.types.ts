@@ -2,7 +2,6 @@ export interface TopupWalletRequest {
     amount: number;
     fee: number;
     method: string;
-    idempotency_key: string;
 }
 
 export enum status {

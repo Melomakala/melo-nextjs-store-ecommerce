@@ -13,13 +13,13 @@ export const getWalletService = async (user_id: string) => {
     return wallet;
 }
 
-export const topupWalletService = async (user_id: string, data: walletType.TopupWalletRequest): Promise<walletType.TopupWalletResponse> => {
+export const topupWalletService = async (user_id: string, data: walletType.TopupWalletRequest, idempotency_key: string): Promise<walletType.TopupWalletResponse> => {
     const wallet = await walletModel.getWalletModel(user_id);
     if (!wallet) {
         throw new CustomError("Wallet not found", 404);
     }
     const checkIdempotencyKey = await walletModel.findTopupWalletModel(wallet.wallet_id);
-    if (checkIdempotencyKey?.idempotency_key === data.idempotency_key) {
+    if (checkIdempotencyKey?.idempotency_key === idempotency_key) {
         throw new CustomError("Idempotency key already exists", 400);
     }
     if (data.fee !== 0) {
@@ -27,7 +27,14 @@ export const topupWalletService = async (user_id: string, data: walletType.Topup
     }
     data.amount = toCents(data.amount);
     data.fee = toCents(data.fee);
-    const topup = await walletModel.topupWalletModel(wallet.wallet_id, data, null, walletType.status.PENDING)
+    const topup = await walletModel.topupWalletModel({
+        wallet_id: wallet.wallet_id,
+        data,
+        transaction_id: null,
+        idempotency_key: idempotency_key,
+        status: walletType.status.PENDING
+    }
+    )
 
 
     //  ยิง mockup ปลอม
