@@ -11,5 +11,6 @@ export const topupSchema = z.object({
         method: z.string().refine((val) => ["promptpay", "card", "truemoney"].includes(val), {
             message: "Invalid method",
         }),
+        idempotency_key: z.string(),
     })
 });

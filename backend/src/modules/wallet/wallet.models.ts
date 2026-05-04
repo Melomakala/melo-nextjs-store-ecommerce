@@ -47,6 +47,7 @@ export const findTopupWalletModel = async (topup_id: string) => {
     return await prisma.walletTopup.findUnique({
         where: { topup_id },
         select: {
+            idempotency_key: true,
             topup_id: true,
             wallet_id: true,
             amount: true,

@@ -1,6 +1,7 @@
 import * as walletServices from "./wallet.services";
 import { useWalletStore } from "./wallet.store";
 import { TopupWalletData } from "./wallet.types";
+import { useIdempotencyKeyStore } from "@/lib/idempotencykey";
 
 export const useWallet = () => {
     const { setBalance } = useWalletStore();
@@ -19,8 +20,9 @@ export const useWallet = () => {
 export const useTopupWallet = () => {
     const handleTopupWallet = async (data: TopupWalletData) => {
         try {
-            const idempotency_key = crypto.randomUUID();
-            const walletTopup = await walletServices.topupWalletService({ ...data, idempotency_key });
+            const key = useIdempotencyKeyStore.getState().createKey();
+            const walletTopup = await walletServices.topupWalletService({ ...data, idempotency_key: key });
+            useIdempotencyKeyStore.getState().clearKey();
             return walletTopup;
         } catch (error: any) {
             throw Error(error?.response?.data?.message || "Failed to topup wallet");

@@ -6,6 +6,7 @@ import cors from 'cors';
 import authRoutes from './modules/auth/auth.routes';
 import userRoutes from './modules/user/user.routes';
 import walletRoutes from './modules/wallet/wallet.routes';
+import productRoutes from './modules/product/product.routes';
 
 const app = express()
 
@@ -19,6 +20,7 @@ app.use(express.json())
 
 // GlobalGuard
 app.use('/api', authRoutes)
+app.use('/api', productRoutes)
 // routeGuard
 app.use("/api", userRoutes)
 app.use("/api", walletRoutes)
