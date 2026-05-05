@@ -12,8 +12,7 @@ export const loginService = async (data: LoginData) => {
 }
 
 export const logoutService = async () => {
-    const response = await axiosInstance.post("/auth/logout");
-    return response.data;
+    return await axiosInstance.post("/auth/logout");
 }
 
 export const refreshService = async () => {

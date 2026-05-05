@@ -14,6 +14,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
 } from "@/components/ui/dropdown-menu"
 import {
   SidebarMenu,
@@ -21,7 +27,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, BellIcon, LogOutIcon, LogIn } from "lucide-react"
+import { ChevronsUpDownIcon, BadgeCheckIcon, BellIcon, LogOutIcon, LogIn, Sun, Moon, Monitor } from "lucide-react"
+import { useTheme } from "next-themes"
 import { useLogout } from "@/modules/auth/auth.hook";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner"
@@ -38,6 +45,7 @@ export function NavUser({
   const router = useRouter();
   const { isMobile } = useSidebar()
   const { handleLogout } = useLogout();
+  const { setTheme, theme } = useTheme()
 
   const handleLogoutClick = async () => {
     await handleLogout();
@@ -93,11 +101,36 @@ export function NavUser({
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <SparklesIcon
-                  />
-                  Upgrade to Pro
-                </DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    {theme === "light" ? (
+                      <Sun className="mr-2 h-4 w-4" />
+                    ) : theme === "dark" ? (
+                      <Moon className="mr-2 h-4 w-4" />
+                    ) : (
+                      <Monitor className="mr-2 h-4 w-4" />
+                    )}
+                    <span>Theme</span>
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+                        <DropdownMenuRadioItem value="light">
+                          <Sun className="mr-2 h-4 w-4" />
+                          <span>Light</span>
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="dark">
+                          <Moon className="mr-2 h-4 w-4" />
+                          <span>Dark</span>
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="system">
+                          <Monitor className="mr-2 h-4 w-4" />
+                          <span>System</span>
+                        </DropdownMenuRadioItem>
+                      </DropdownMenuRadioGroup>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>

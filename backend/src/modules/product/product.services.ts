@@ -13,3 +13,14 @@ export const getProductService = async (): Promise<productType.Product[]> => {
         price: fromCents(item.price),
     }));
 }
+
+export const getProductByIdService = async (product_id: string): Promise<productType.Product> => {
+    const product = await productModel.getProductByIdModel(product_id);
+    if (!product) {
+        throw new CustomError("Product not found", 404);
+    }
+    return {
+        ...product,
+        price: fromCents(product.price),
+    };
+}

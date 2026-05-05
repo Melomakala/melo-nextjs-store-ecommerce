@@ -68,7 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
 
         {/* Balance Card */}
-        <SidebarGroup className="py-0">
+        <SidebarGroup className="py-0" hidden={!user}>
           <SidebarGroupLabel>Wallet</SidebarGroupLabel>
           <div className="mx-2 rounded-lg border border-sidebar-border bg-sidebar-accent/50 p-3">
             <div className="flex items-center gap-2 text-xs text-sidebar-foreground/60">

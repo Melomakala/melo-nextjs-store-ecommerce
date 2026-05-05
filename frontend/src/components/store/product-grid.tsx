@@ -11,6 +11,7 @@ import { ShoppingCart, Zap } from "lucide-react"
 import { useProductStore } from "@/modules/product/product.store";
 import { useProduct } from "@/modules/product/product.hook";
 import { useEffect } from "react";
+import Link from "next/link";
 
 function formatPrice(price: number) {
   return `฿${price.toLocaleString()}`
@@ -97,14 +98,16 @@ export function ProductGrid() {
               </div>
 
               {/* Buy Button */}
-              <Button
-                size="lg"
-                disabled={product.stock === 0}
-                className="w-full font-medium transition-all"
-              >
-                <ShoppingCart className="mr-2 size-4" />
-                {product.stock === 0 ? "Unavailable" : "Buy Now"}
-              </Button>
+              <Link href={`/product/${product.product_id}`}>
+                <Button
+                  size="lg"
+                  disabled={product.stock === 0}
+                  className="w-full font-medium transition-all cursor-pointer"
+                >
+                  <ShoppingCart className="mr-2 size-4" />
+                  {product.stock === 0 ? "Unavailable" : "Buy Now"}
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         ))}
