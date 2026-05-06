@@ -12,10 +12,7 @@ import { useProductStore } from "@/modules/product/product.store";
 import { useProduct } from "@/modules/product/product.hook";
 import { useEffect } from "react";
 import Link from "next/link";
-
-function formatPrice(price: number) {
-  return `฿${price.toLocaleString()}`
-}
+import { formatPrice } from "@/lib/formatPrice";
 
 export function ProductGrid() {
   const { getProducts } = useProduct();
@@ -24,7 +21,19 @@ export function ProductGrid() {
     getProducts();
   }, []);
   const { products } = useProductStore();
-
+  if (products.length === 0) {
+    return (
+      <div>
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-lg font-semibold">All Products</h2>
+          <span className="text-sm text-muted-foreground">{products.length} items</span>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <p>No products found</p>
+        </div>
+      </div>
+    )
+  }
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">

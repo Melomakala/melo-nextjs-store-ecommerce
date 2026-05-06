@@ -17,14 +17,8 @@ import {
 } from "@/components/ui/sidebar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogFooter,
-} from "@/components/ui/dialog"
+import { Card } from "@/components/ui/card"
+import { BuyProductDialog } from "./components/buy-product-dialog"
 import {
     ShoppingCart,
     CreditCard,
@@ -32,28 +26,22 @@ import {
     Zap,
     Shield,
     Headphones,
-    Wallet,
-    ArrowDown,
-    Info,
     Loader2,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState, use } from "react"
 import { useProductById } from "@/modules/product/product.hook"
-import { useWalletStore } from "@/modules/wallet/wallet.store"
 import * as ProductType from "@/modules/product/product.types"
 import { useRouter } from "next/navigation"
 import LoadingSpiner from "@/components/loadingspiner"
 import { useUserStore } from "@/modules/user/user.store"
+import { formatPrice } from "@/lib/formatPrice"
+
 type Props = {
     params: Promise<{
         id: string
     }>
-}
-
-function formatPrice(price: number) {
-    return `฿${price.toLocaleString()}`
 }
 
 export default function ProductDetailPage({ params }: Props) {
@@ -75,22 +63,13 @@ export default function ProductDetailPage({ params }: Props) {
         fetchProduct()
     }, [id, router])
 
-    const { balance } = useWalletStore()
-
     const [dialogOpen, setDialogOpen] = useState(false)
-    const [confirming, setConfirming] = useState(false)
     const [addedToCart, setAddedToCart] = useState(false)
 
-    const afterPurchase = product ? balance - product.price : balance
-    const canAfford = product ? balance >= product.price : false
-
-    function handleConfirm() {
-        setConfirming(true)
-        // TODO: ต่อ API จริง
-        setTimeout(() => {
-            setConfirming(false)
-            setDialogOpen(false)
-        }, 1500)
+    // TODO: เมื่อมี hook จริง สามารถนำมาเรียกใช้ที่นี่ หรือส่งไปให้ BuyProductDialog โดยตรง
+    const handleConfirmPurchase = async () => {
+        // Mock logic สำหรับในอนาคตที่ต้องต่อ API
+        await new Promise((resolve) => setTimeout(resolve, 1500))
     }
 
     function handleAddToCart() {
@@ -275,105 +254,14 @@ export default function ProductDetailPage({ params }: Props) {
                 </div>
 
                 {/* ── Buy Confirmation Dialog ── */}
-                <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <DialogContent className="sm:max-w-md">
-                        <DialogHeader>
-                            <DialogTitle>Confirm Purchase</DialogTitle>
-                        </DialogHeader>
-
-                        <Separator />
-
-                        {/* Product Row */}
-                        <div className="flex items-center gap-3 py-1">
-                            <div className="relative size-14 shrink-0 overflow-hidden rounded-md border border-border/40 bg-muted/30">
-                                <Image
-                                    src={product.image_url}
-                                    alt={product.name}
-                                    fill
-                                    className="object-cover"
-                                    unoptimized
-                                />
-                            </div>
-                            <div className="flex flex-1 flex-col gap-0.5">
-                                <p className="text-sm font-semibold leading-tight">
-                                    {product.name}
-                                </p>
-                            </div>
-                            <span className="text-sm font-bold text-blue-500">
-                                {formatPrice(product.price)}
-                            </span>
-                        </div>
-
-                        <Separator />
-
-                        {/* Wallet Section */}
-                        <div className="flex flex-col gap-2 py-1">
-                            <div className="flex items-center justify-between text-sm">
-                                <div className="flex items-center gap-2 text-muted-foreground">
-                                    <Wallet className="size-4" />
-                                    <span>Current Balance</span>
-                                </div>
-                                <span className="font-semibold">
-                                    {formatPrice(balance)}
-                                </span>
-                            </div>
-
-                            <div className="flex justify-center">
-                                <ArrowDown className="size-4 text-muted-foreground" />
-                            </div>
-
-                            <div className="flex items-center justify-between text-sm">
-                                <div className="flex items-center gap-2 text-muted-foreground">
-                                    <ShoppingCart className="size-4" />
-                                    <span>After Purchase</span>
-                                </div>
-                                <span
-                                    className={`font-semibold ${canAfford ? "text-emerald-400" : "text-red-400"}`}
-                                >
-                                    {formatPrice(afterPurchase)}
-                                </span>
-                            </div>
-                        </div>
-
-                        <Separator />
-
-                        {/* Info Box */}
-                        <div className="flex items-start gap-2 rounded-md border border-blue-500/20 bg-blue-500/5 p-3 text-sm text-muted-foreground">
-                            <Info className="mt-0.5 size-4 shrink-0 text-blue-500" />
-                            <p>
-                                This purchase is non-refundable. The digital code will be
-                                delivered instantly after confirming your purchase.
-                            </p>
-                        </div>
-
-                        {!canAfford && (
-                            <p className="text-center text-xs text-red-400">
-                                Insufficient balance.{" "}
-                                <Link href="/topup" className="underline">
-                                    Top up now
-                                </Link>
-                            </p>
-                        )}
-
-                        <DialogFooter className="gap-2 sm:gap-2">
-                            <Button
-                                variant="outline"
-                                className="flex-1"
-                                onClick={() => setDialogOpen(false)}
-                                disabled={confirming}
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                className="flex-1 bg-blue-600 font-semibold text-white hover:bg-blue-700"
-                                onClick={handleConfirm}
-                                disabled={!canAfford || confirming}
-                            >
-                                {confirming ? "Processing..." : "Confirm Purchase"}
-                            </Button>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
+                {user && (
+                    <BuyProductDialog
+                        open={dialogOpen}
+                        onOpenChange={setDialogOpen}
+                        product={product}
+                        onConfirm={handleConfirmPurchase}
+                    />
+                )}
             </SidebarInset>
         </SidebarProvider>
     )

@@ -19,6 +19,7 @@ import { Store, Home, ShoppingCart, CreditCard, Package, Wallet } from "lucide-r
 import { useUserStore } from "@/modules/user/user.store";
 import Link from "next/link";
 import { useWalletStore } from "@/modules/wallet/wallet.store";
+import { formatPrice } from "@/lib/formatPrice";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUserStore();
   const { balance } = useWalletStore();
@@ -68,25 +69,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
 
         {/* Balance Card */}
-        <SidebarGroup className="py-0" hidden={!user}>
-          <SidebarGroupLabel>Wallet</SidebarGroupLabel>
-          <div className="mx-2 rounded-lg border border-sidebar-border bg-sidebar-accent/50 p-3">
-            <div className="flex items-center gap-2 text-xs text-sidebar-foreground/60">
-              <Wallet className="size-3.5" />
-              <span>Balance</span>
+        {user && (
+          <SidebarGroup className="py-0">
+            <SidebarGroupLabel>Wallet</SidebarGroupLabel>
+            <div className="mx-2 rounded-lg border border-sidebar-border bg-sidebar-accent/50 p-3">
+              <div className="flex items-center gap-2 text-xs text-sidebar-foreground/60">
+                <Wallet className="size-3.5" />
+                <span>Balance</span>
+              </div>
+              <p className="mt-1 text-lg font-bold tracking-tight text-sidebar-foreground">
+                {formatPrice(balance)}
+              </p>
+              <Link
+                href={user ? "/topup" : "/login"}
+                className="mt-2 flex items-center justify-center rounded-md bg-sidebar-primary px-3 py-1.5 text-xs font-medium text-sidebar-primary-foreground transition-colors hover:bg-sidebar-primary/80"
+              >
+                <CreditCard className="mr-1.5 size-3" />
+                Top Up
+              </Link>
             </div>
-            <p className="mt-1 text-lg font-bold tracking-tight text-sidebar-foreground">
-              ฿{balance.toLocaleString()} { /* balance */}
-            </p>
-            <Link
-              href={user ? "/topup" : "/login"}
-              className="mt-2 flex items-center justify-center rounded-md bg-sidebar-primary px-3 py-1.5 text-xs font-medium text-sidebar-primary-foreground transition-colors hover:bg-sidebar-primary/80"
-            >
-              <CreditCard className="mr-1.5 size-3" />
-              Top Up
-            </Link>
-          </div>
-        </SidebarGroup>
+          </SidebarGroup>
+        )}
       </SidebarHeader>
 
       <SidebarContent>

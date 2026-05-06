@@ -3,6 +3,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+import { formatPrice } from "@/lib/formatPrice";
+
 interface TopupSuccessProps {
     balance: number;
     onReset: () => void;
@@ -27,7 +29,7 @@ export function TopupSuccess({ balance, onReset }: TopupSuccessProps) {
                             New Balance
                         </div>
                         <div className="text-3xl font-bold text-primary">
-                            {balance.toLocaleString()}
+                            {formatPrice(balance)}
                         </div>
                         <div className="text-sm text-muted-foreground">
                             Baht

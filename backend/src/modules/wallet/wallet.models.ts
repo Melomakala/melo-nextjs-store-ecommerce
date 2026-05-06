@@ -105,7 +105,9 @@ export const updateWalletModel = async (wallet_id: string, amount: number) => {
     return await prisma.wallet.update({
         where: { wallet_id },
         data: {
-            balance: amount,
+            balance: {
+                decrement: amount,
+            },
         }
     });
 }

@@ -80,5 +80,25 @@ export const mockupTopupWalletService = async (topup_id: string, status: walletT
             reference_id: tx.topup_id,
         });
     }
-    return "Payment-Success";
+    return "Topup-Success";
+}
+
+export const deductWalletService = async (user_id: string, data: { total_amount: number, reference_id: string }) => {
+    const wallet = await walletModel.getWalletModel(user_id);
+    if (!wallet) {
+        throw new CustomError("Wallet not found", 404);
+    }
+    if (wallet.balance < data.total_amount) {
+        throw new CustomError("Insufficient balance", 400);
+    }
+    await walletModel.updateWalletModel(wallet.wallet_id, wallet.balance - data.total_amount);
+    const transaction = await walletModel.createWalletTransactionModel({
+        wallet_id: wallet.wallet_id,
+        amount: -data.total_amount,
+        type: walletType.transactionType.PAYMENT,
+        balance_before: wallet.balance,
+        balance_after: wallet.balance - data.total_amount,
+        reference_id: data.reference_id,
+    });
+    return transaction
 }

@@ -27,6 +27,7 @@ import { useTopupWallet } from "@/modules/wallet/wallet.hook";
 import { TopupWalletData } from "@/modules/wallet/wallet.types";
 import { useWallet } from "@/modules/wallet/wallet.hook";
 import { TopupSuccess } from "./components/topup-success";
+import { formatPrice } from "@/lib/formatPrice";
 
 const AMOUNTS = [
     { value: 50, bonus: 0, label: "50" },
@@ -153,7 +154,7 @@ export default function Page() {
                             <span className="text-xs text-white/70 mb-1">Current Balance</span>
                         </div>
                         <div className="text-4xl font-bold mt-0.5 text-white">
-                            {currentBalance.toLocaleString()}
+                            {formatPrice(currentBalance)}
                         </div>
                         <div className="text-sm text-white/70">Baht</div>
                     </div>
@@ -273,7 +274,7 @@ export default function Page() {
                         <CardContent className="space-y-2.5 text-sm px-4 pb-4">
                             <div className="flex justify-between">
                                 <span className="text-muted-foreground">Amount</span>
-                                <span className="font-medium">{selectedAmount.toLocaleString()} Baht</span>
+                                <span className="font-medium">{formatPrice(selectedAmount)}</span>
                             </div>
                             {(selectedData?.bonus ?? 0) > 0 && (
                                 <div className="flex justify-between">
@@ -290,11 +291,11 @@ export default function Page() {
                             <Separator className="my-1.5" />
                             <div className="flex justify-between font-semibold">
                                 <span>Total Received</span>
-                                <span className="text-primary">{totalAmount.toLocaleString()} Baht</span>
+                                <span className="text-primary">{formatPrice(totalAmount)}</span>
                             </div>
                             <div className="flex justify-between items-center text-xs mt-1">
                                 <span className="text-muted-foreground">Total Payment</span>
-                                <span className="font-semibold text-base">฿{totalPay.toLocaleString()}</span>
+                                <span className="font-semibold text-base">{formatPrice(totalPay)}</span>
                             </div>
                         </CardContent>
                     </Card>
@@ -309,7 +310,7 @@ export default function Page() {
                 >
                     {selectedAmount ? (
                         <>
-                            Confirm Top Up ฿{totalPay.toLocaleString()}
+                            Confirm Top Up {formatPrice(totalPay)}
                             <ChevronRight className="w-4 h-4 ml-1.5" />
                         </>
                     ) : (

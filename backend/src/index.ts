@@ -7,6 +7,8 @@ import authRoutes from './modules/auth/auth.routes';
 import userRoutes from './modules/user/user.routes';
 import walletRoutes from './modules/wallet/wallet.routes';
 import productRoutes from './modules/product/product.routes';
+import orderRoutes from './modules/order/order.routes';
+
 import path from "path";
 
 const app = express()
@@ -26,6 +28,7 @@ app.use('/uploads/products', express.static(path.join(__dirname, 'uploads/produc
 // routeGuard
 app.use("/api", userRoutes)
 app.use("/api", walletRoutes)
+app.use('/api', orderRoutes)
 
 app.use(errorHandler);
 export default app;

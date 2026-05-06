@@ -17,7 +17,7 @@ export interface TopupWalletResponse {
 
 export enum transactionType {
     TOPUP = "TOPUP",
-    ORDER = "ORDER",
+    PAYMENT = "PAYMENT",
 }
 
 export interface WalletTransactionRequest {
