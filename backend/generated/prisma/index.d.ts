@@ -8561,6 +8561,7 @@ export namespace Prisma {
     order_id: string | null
     user_id: string | null
     transaction_id: string | null
+    idempotency_key: string | null
     total_amount: number | null
     status: string | null
     created_at: Date | null
@@ -8571,6 +8572,7 @@ export namespace Prisma {
     order_id: string | null
     user_id: string | null
     transaction_id: string | null
+    idempotency_key: string | null
     total_amount: number | null
     status: string | null
     created_at: Date | null
@@ -8581,6 +8583,7 @@ export namespace Prisma {
     order_id: number
     user_id: number
     transaction_id: number
+    idempotency_key: number
     total_amount: number
     status: number
     created_at: number
@@ -8601,6 +8604,7 @@ export namespace Prisma {
     order_id?: true
     user_id?: true
     transaction_id?: true
+    idempotency_key?: true
     total_amount?: true
     status?: true
     created_at?: true
@@ -8611,6 +8615,7 @@ export namespace Prisma {
     order_id?: true
     user_id?: true
     transaction_id?: true
+    idempotency_key?: true
     total_amount?: true
     status?: true
     created_at?: true
@@ -8621,6 +8626,7 @@ export namespace Prisma {
     order_id?: true
     user_id?: true
     transaction_id?: true
+    idempotency_key?: true
     total_amount?: true
     status?: true
     created_at?: true
@@ -8718,6 +8724,7 @@ export namespace Prisma {
     order_id: string
     user_id: string
     transaction_id: string | null
+    idempotency_key: string
     total_amount: number
     status: string
     created_at: Date
@@ -8747,6 +8754,7 @@ export namespace Prisma {
     order_id?: boolean
     user_id?: boolean
     transaction_id?: boolean
+    idempotency_key?: boolean
     total_amount?: boolean
     status?: boolean
     created_at?: boolean
@@ -8761,6 +8769,7 @@ export namespace Prisma {
     order_id?: boolean
     user_id?: boolean
     transaction_id?: boolean
+    idempotency_key?: boolean
     total_amount?: boolean
     status?: boolean
     created_at?: boolean
@@ -8773,6 +8782,7 @@ export namespace Prisma {
     order_id?: boolean
     user_id?: boolean
     transaction_id?: boolean
+    idempotency_key?: boolean
     total_amount?: boolean
     status?: boolean
     created_at?: boolean
@@ -8785,13 +8795,14 @@ export namespace Prisma {
     order_id?: boolean
     user_id?: boolean
     transaction_id?: boolean
+    idempotency_key?: boolean
     total_amount?: boolean
     status?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"order_id" | "user_id" | "transaction_id" | "total_amount" | "status" | "created_at" | "updated_at", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"order_id" | "user_id" | "transaction_id" | "idempotency_key" | "total_amount" | "status" | "created_at" | "updated_at", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     transaction?: boolean | Order$transactionArgs<ExtArgs>
@@ -8818,6 +8829,7 @@ export namespace Prisma {
       order_id: string
       user_id: string
       transaction_id: string | null
+      idempotency_key: string
       total_amount: number
       status: string
       created_at: Date
@@ -9251,6 +9263,7 @@ export namespace Prisma {
     readonly order_id: FieldRef<"Order", 'String'>
     readonly user_id: FieldRef<"Order", 'String'>
     readonly transaction_id: FieldRef<"Order", 'String'>
+    readonly idempotency_key: FieldRef<"Order", 'String'>
     readonly total_amount: FieldRef<"Order", 'Int'>
     readonly status: FieldRef<"Order", 'String'>
     readonly created_at: FieldRef<"Order", 'DateTime'>
@@ -10916,6 +10929,7 @@ export namespace Prisma {
     order_id: 'order_id',
     user_id: 'user_id',
     transaction_id: 'transaction_id',
+    idempotency_key: 'idempotency_key',
     total_amount: 'total_amount',
     status: 'status',
     created_at: 'created_at',
@@ -11426,6 +11440,7 @@ export namespace Prisma {
     order_id?: StringFilter<"Order"> | string
     user_id?: StringFilter<"Order"> | string
     transaction_id?: StringNullableFilter<"Order"> | string | null
+    idempotency_key?: StringFilter<"Order"> | string
     total_amount?: IntFilter<"Order"> | number
     status?: StringFilter<"Order"> | string
     created_at?: DateTimeFilter<"Order"> | Date | string
@@ -11439,6 +11454,7 @@ export namespace Prisma {
     order_id?: SortOrder
     user_id?: SortOrder
     transaction_id?: SortOrderInput | SortOrder
+    idempotency_key?: SortOrder
     total_amount?: SortOrder
     status?: SortOrder
     created_at?: SortOrder
@@ -11451,6 +11467,7 @@ export namespace Prisma {
   export type OrderWhereUniqueInput = Prisma.AtLeast<{
     order_id?: string
     transaction_id?: string
+    idempotency_key?: string
     AND?: OrderWhereInput | OrderWhereInput[]
     OR?: OrderWhereInput[]
     NOT?: OrderWhereInput | OrderWhereInput[]
@@ -11462,12 +11479,13 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     transaction?: XOR<WalletTransactionNullableScalarRelationFilter, WalletTransactionWhereInput> | null
     items?: OrderItemListRelationFilter
-  }, "order_id" | "transaction_id">
+  }, "order_id" | "transaction_id" | "idempotency_key">
 
   export type OrderOrderByWithAggregationInput = {
     order_id?: SortOrder
     user_id?: SortOrder
     transaction_id?: SortOrderInput | SortOrder
+    idempotency_key?: SortOrder
     total_amount?: SortOrder
     status?: SortOrder
     created_at?: SortOrder
@@ -11486,6 +11504,7 @@ export namespace Prisma {
     order_id?: StringWithAggregatesFilter<"Order"> | string
     user_id?: StringWithAggregatesFilter<"Order"> | string
     transaction_id?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    idempotency_key?: StringWithAggregatesFilter<"Order"> | string
     total_amount?: IntWithAggregatesFilter<"Order"> | number
     status?: StringWithAggregatesFilter<"Order"> | string
     created_at?: DateTimeWithAggregatesFilter<"Order"> | Date | string
@@ -11842,7 +11861,7 @@ export namespace Prisma {
     amount: number
     fee: number
     method: string
-    status: string
+    status?: string
     created_at?: Date | string
     wallet: WalletCreateNestedOneWithoutTopupInput
     transaction?: WalletTransactionCreateNestedOneWithoutTopupInput
@@ -11856,7 +11875,7 @@ export namespace Prisma {
     amount: number
     fee: number
     method: string
-    status: string
+    status?: string
     created_at?: Date | string
   }
 
@@ -11892,7 +11911,7 @@ export namespace Prisma {
     amount: number
     fee: number
     method: string
-    status: string
+    status?: string
     created_at?: Date | string
   }
 
@@ -12008,6 +12027,7 @@ export namespace Prisma {
 
   export type OrderCreateInput = {
     order_id?: string
+    idempotency_key: string
     total_amount: number
     status?: string
     created_at?: Date | string
@@ -12021,6 +12041,7 @@ export namespace Prisma {
     order_id?: string
     user_id: string
     transaction_id?: string | null
+    idempotency_key: string
     total_amount: number
     status?: string
     created_at?: Date | string
@@ -12030,6 +12051,7 @@ export namespace Prisma {
 
   export type OrderUpdateInput = {
     order_id?: StringFieldUpdateOperationsInput | string
+    idempotency_key?: StringFieldUpdateOperationsInput | string
     total_amount?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12043,6 +12065,7 @@ export namespace Prisma {
     order_id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    idempotency_key?: StringFieldUpdateOperationsInput | string
     total_amount?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12054,6 +12077,7 @@ export namespace Prisma {
     order_id?: string
     user_id: string
     transaction_id?: string | null
+    idempotency_key: string
     total_amount: number
     status?: string
     created_at?: Date | string
@@ -12062,6 +12086,7 @@ export namespace Prisma {
 
   export type OrderUpdateManyMutationInput = {
     order_id?: StringFieldUpdateOperationsInput | string
+    idempotency_key?: StringFieldUpdateOperationsInput | string
     total_amount?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12072,6 +12097,7 @@ export namespace Prisma {
     order_id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    idempotency_key?: StringFieldUpdateOperationsInput | string
     total_amount?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12596,6 +12622,7 @@ export namespace Prisma {
     order_id?: SortOrder
     user_id?: SortOrder
     transaction_id?: SortOrder
+    idempotency_key?: SortOrder
     total_amount?: SortOrder
     status?: SortOrder
     created_at?: SortOrder
@@ -12610,6 +12637,7 @@ export namespace Prisma {
     order_id?: SortOrder
     user_id?: SortOrder
     transaction_id?: SortOrder
+    idempotency_key?: SortOrder
     total_amount?: SortOrder
     status?: SortOrder
     created_at?: SortOrder
@@ -12620,6 +12648,7 @@ export namespace Prisma {
     order_id?: SortOrder
     user_id?: SortOrder
     transaction_id?: SortOrder
+    idempotency_key?: SortOrder
     total_amount?: SortOrder
     status?: SortOrder
     created_at?: SortOrder
@@ -13404,6 +13433,7 @@ export namespace Prisma {
 
   export type OrderCreateWithoutUserInput = {
     order_id?: string
+    idempotency_key: string
     total_amount: number
     status?: string
     created_at?: Date | string
@@ -13415,6 +13445,7 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutUserInput = {
     order_id?: string
     transaction_id?: string | null
+    idempotency_key: string
     total_amount: number
     status?: string
     created_at?: Date | string
@@ -13508,6 +13539,7 @@ export namespace Prisma {
     order_id?: StringFilter<"Order"> | string
     user_id?: StringFilter<"Order"> | string
     transaction_id?: StringNullableFilter<"Order"> | string | null
+    idempotency_key?: StringFilter<"Order"> | string
     total_amount?: IntFilter<"Order"> | number
     status?: StringFilter<"Order"> | string
     created_at?: DateTimeFilter<"Order"> | Date | string
@@ -13640,7 +13672,7 @@ export namespace Prisma {
     amount: number
     fee: number
     method: string
-    status: string
+    status?: string
     created_at?: Date | string
     transaction?: WalletTransactionCreateNestedOneWithoutTopupInput
   }
@@ -13652,7 +13684,7 @@ export namespace Prisma {
     amount: number
     fee: number
     method: string
-    status: string
+    status?: string
     created_at?: Date | string
   }
 
@@ -13788,7 +13820,7 @@ export namespace Prisma {
     amount: number
     fee: number
     method: string
-    status: string
+    status?: string
     created_at?: Date | string
     wallet: WalletCreateNestedOneWithoutTopupInput
   }
@@ -13800,7 +13832,7 @@ export namespace Prisma {
     amount: number
     fee: number
     method: string
-    status: string
+    status?: string
     created_at?: Date | string
   }
 
@@ -13811,6 +13843,7 @@ export namespace Prisma {
 
   export type OrderCreateWithoutTransactionInput = {
     order_id?: string
+    idempotency_key: string
     total_amount: number
     status?: string
     created_at?: Date | string
@@ -13822,6 +13855,7 @@ export namespace Prisma {
   export type OrderUncheckedCreateWithoutTransactionInput = {
     order_id?: string
     user_id: string
+    idempotency_key: string
     total_amount: number
     status?: string
     created_at?: Date | string
@@ -13909,6 +13943,7 @@ export namespace Prisma {
 
   export type OrderUpdateWithoutTransactionInput = {
     order_id?: StringFieldUpdateOperationsInput | string
+    idempotency_key?: StringFieldUpdateOperationsInput | string
     total_amount?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13920,6 +13955,7 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutTransactionInput = {
     order_id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
+    idempotency_key?: StringFieldUpdateOperationsInput | string
     total_amount?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14258,6 +14294,7 @@ export namespace Prisma {
 
   export type OrderCreateWithoutItemsInput = {
     order_id?: string
+    idempotency_key: string
     total_amount: number
     status?: string
     created_at?: Date | string
@@ -14270,6 +14307,7 @@ export namespace Prisma {
     order_id?: string
     user_id: string
     transaction_id?: string | null
+    idempotency_key: string
     total_amount: number
     status?: string
     created_at?: Date | string
@@ -14323,6 +14361,7 @@ export namespace Prisma {
 
   export type OrderUpdateWithoutItemsInput = {
     order_id?: StringFieldUpdateOperationsInput | string
+    idempotency_key?: StringFieldUpdateOperationsInput | string
     total_amount?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14335,6 +14374,7 @@ export namespace Prisma {
     order_id?: StringFieldUpdateOperationsInput | string
     user_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    idempotency_key?: StringFieldUpdateOperationsInput | string
     total_amount?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14386,6 +14426,7 @@ export namespace Prisma {
   export type OrderCreateManyUserInput = {
     order_id?: string
     transaction_id?: string | null
+    idempotency_key: string
     total_amount: number
     status?: string
     created_at?: Date | string
@@ -14419,6 +14460,7 @@ export namespace Prisma {
 
   export type OrderUpdateWithoutUserInput = {
     order_id?: StringFieldUpdateOperationsInput | string
+    idempotency_key?: StringFieldUpdateOperationsInput | string
     total_amount?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14430,6 +14472,7 @@ export namespace Prisma {
   export type OrderUncheckedUpdateWithoutUserInput = {
     order_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    idempotency_key?: StringFieldUpdateOperationsInput | string
     total_amount?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14440,6 +14483,7 @@ export namespace Prisma {
   export type OrderUncheckedUpdateManyWithoutUserInput = {
     order_id?: StringFieldUpdateOperationsInput | string
     transaction_id?: NullableStringFieldUpdateOperationsInput | string | null
+    idempotency_key?: StringFieldUpdateOperationsInput | string
     total_amount?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14463,7 +14507,7 @@ export namespace Prisma {
     amount: number
     fee: number
     method: string
-    status: string
+    status?: string
     created_at?: Date | string
   }
 

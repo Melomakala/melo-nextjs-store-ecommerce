@@ -92,11 +92,12 @@ model Product {
 }
 
 model Order {
-  order_id       String   @id @default(uuid())
-  user_id        String
-  transaction_id String?  @unique
-  total_amount   Int
-  status         String   @default("PENDING") // PENDING, COMPLETED, CANCELLED
+  order_id        String   @id @default(uuid())
+  user_id         String
+  transaction_id  String?  @unique
+  idempotency_key String   @unique
+  total_amount    Int
+  status          String   @default("PENDING") // PENDING, COMPLETED, CANCELLED
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

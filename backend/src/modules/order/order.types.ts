@@ -6,6 +6,7 @@ export interface CreateOrderRequest {
         price_at_purchase?: number;
     }[];
     total_amount: number;
+    idempotency_key?: string;
 }
 
 export interface CreateOrderResponse {

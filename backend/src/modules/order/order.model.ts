@@ -2,12 +2,13 @@ import { prisma } from "../../common/utils/prisma";
 import * as orderType from "./order.types";
 import { Prisma } from "../../../generated/prisma";
 
-export const createOrderModel = async (user_id: orderType.CreateOrderRequest["user_id"], data: orderType.CreateOrderRequest) => {
+export const createOrderModel = async (user_id: string, data: orderType.CreateOrderRequest) => {
     return await prisma.order.create({
         data: {
             user_id: user_id,
             total_amount: data.total_amount,
             status: orderType.status.PENDING,
+            idempotency_key: data.idempotency_key!,
             items: {
                 create: data.items.map((item) => ({
                     product_id: item.product_id,
@@ -36,6 +37,14 @@ export const findOrderById = async (order_id: string) => {
     return await prisma.order.findUnique({
         where: {
             order_id,
+        },
+    });
+};
+
+export const findOrderByIdempotencyKey = async (idempotency_key: string) => {
+    return await prisma.order.findUnique({
+        where: {
+            idempotency_key,
         },
     });
 };

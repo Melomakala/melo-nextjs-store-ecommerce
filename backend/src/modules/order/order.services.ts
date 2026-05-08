@@ -5,7 +5,11 @@ import { deductWalletService } from "../wallet/wallet.services";
 import { decrementStock } from "../product/product.services";
 import { prisma } from "../../common/utils/prisma";
 
-const createOrder = async (user_id: string, data: orderType.CreateOrderRequest) => {
+const createOrder = async (user_id: string, data: orderType.CreateOrderRequest, idempotency_key: string) => {
+    const checkIdempotencyKey = await orderModel.findOrderByIdempotencyKey(idempotency_key);
+    if (checkIdempotencyKey) {
+        throw new CustomError("Idempotency key already exists", 400);
+    }
     const product_ids = data.items.map((item) => item.product_id);
     const products = await orderModel.findManyProductById(product_ids);
 
@@ -39,13 +43,14 @@ const createOrder = async (user_id: string, data: orderType.CreateOrderRequest) 
         user_id: user_id,
         total_amount: total_amount,
         items: order_items,
+        idempotency_key: idempotency_key,
     });
 
     return order;
 }
 
-export const placeOrder = async (user_id: string, data: orderType.CreateOrderRequest) => {
-    const order = await createOrder(user_id, data);
+export const placeOrder = async (user_id: string, data: orderType.CreateOrderRequest, idempotency_key: string) => {
+    const order = await createOrder(user_id, data, idempotency_key);
     try {
         await prisma.$transaction(async (tx) => {
             await deductWalletService(order.user_id, {

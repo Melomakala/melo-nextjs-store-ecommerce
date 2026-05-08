@@ -69,6 +69,15 @@ export const findTopupWalletModel = async (topup_id: string) => {
     });
 }
 
+export const findTopupWalletByIdempotencyKey = async (idempotency_key: string) => {
+    return await prisma.walletTopup.findUnique({
+        where: { idempotency_key },
+        select: {
+            idempotency_key: true,
+        }
+    });
+}
+
 export const updateTopupWalletModel = async (topup_id: string, status: walletType.status) => {
     return await prisma.walletTopup.update({
         where: { topup_id },

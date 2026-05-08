@@ -182,6 +182,7 @@ exports.Prisma.OrderScalarFieldEnum = {
   order_id: 'order_id',
   user_id: 'user_id',
   transaction_id: 'transaction_id',
+  idempotency_key: 'idempotency_key',
   total_amount: 'total_amount',
   status: 'status',
   created_at: 'created_at',
