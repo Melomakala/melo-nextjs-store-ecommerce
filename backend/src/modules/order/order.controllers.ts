@@ -11,7 +11,6 @@ export const placeOrder = async (req: Request, res: Response) => {
     if (!idempotency_key || typeof idempotency_key !== "string") {
         throw new CustomError("Idempotency-Key is required", 400);
     }
-
     const order = await orderServices.placeOrder(req.user.user_id, req.body, idempotency_key);
     res.status(201).json(order);
     logger.info("Order placed successfully", {

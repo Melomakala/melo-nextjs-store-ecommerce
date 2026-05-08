@@ -39,6 +39,7 @@ import { useUserStore } from "@/modules/user/user.store"
 import { formatPrice } from "@/lib/formatPrice"
 import { useWallet } from "@/modules/wallet/wallet.hook"
 import { BuySuccess } from "./components/buy-success"
+import { useCreateOrder } from "@/modules/order/order.hook"
 
 type Props = {
     params: Promise<{
@@ -50,11 +51,12 @@ export default function ProductDetailPage({ params }: Props) {
     const { id } = use(params)
     const router = useRouter()
     const { user } = useUserStore()
+    const { handleCreateOrder } = useCreateOrder()
     const { handleGetWallet } = useWallet()
     const { getProductById } = useProductById()
     const [product, setProduct] = useState<ProductType.Product | null>(null)
     const [confirmed, setConfirmed] = useState(false)
-    const [mockOrderId, setMockOrderId] = useState("")
+    const [orderId, setOrderId] = useState("")
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -71,11 +73,22 @@ export default function ProductDetailPage({ params }: Props) {
     const [dialogOpen, setDialogOpen] = useState(false)
     const [addedToCart, setAddedToCart] = useState(false)
 
-    // TODO: เมื่อมี hook จริง สามารถนำมาเรียกใช้ที่นี่ หรือส่งไปให้ BuyProductDialog โดยตรง
     const handleConfirmPurchase = async () => {
-        // Mock logic สำหรับในอนาคตที่ต้องต่อ API
-        await new Promise((resolve) => setTimeout(resolve, 1500))
-        setMockOrderId(`ORD-MOCK-${Math.random().toString(36).substring(2, 10).toUpperCase()}`)
+        if (!product) return
+
+        const orderItems = [
+            {
+                product_id: product.product_id,
+                quantity: 1,
+                price: product.price,
+            },
+        ]
+
+        const orderData = {
+            items: orderItems,
+        }
+        const order = await handleCreateOrder(orderData)
+        setOrderId(order.order_id)
         setConfirmed(true)
     }
 
@@ -95,7 +108,7 @@ export default function ProductDetailPage({ params }: Props) {
     if (confirmed && product) {
         return (
             <BuySuccess
-                order_id={mockOrderId}
+                order_id={orderId}
                 product_name={product.name}
                 total_amount={product.price}
             />

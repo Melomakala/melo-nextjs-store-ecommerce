@@ -46,9 +46,6 @@ export function BuyProductDialog({
         try {
             if (onConfirm) {
                 await onConfirm()
-            } else {
-                // Default mock if no onConfirm is provided
-                await new Promise((resolve) => setTimeout(resolve, 1500))
             }
             onOpenChange(false)
         } catch (error) {

@@ -65,7 +65,7 @@ model WalletTopup {
   topup_id       String   @id @default(uuid())
   wallet_id      String
   transaction_id String?   @unique
-  idempotency_key String   @unique
+  idempotency_key String?   @unique
   amount         Int
   fee            Int
   method         String
@@ -95,7 +95,7 @@ model Order {
   order_id        String   @id @default(uuid())
   user_id         String
   transaction_id  String?  @unique
-  idempotency_key String   @unique
+  idempotency_key String?   @unique
   total_amount    Int
   status          String   @default("PENDING") // PENDING, COMPLETED, CANCELLED
 

@@ -50,11 +50,19 @@ export const findManyProductById = async (product_ids: string[], tx?: Prisma.Tra
     });
 };
 
-export const decrementStockModel = async (product_id: string, quantity: number, tx?: Prisma.TransactionClient) => {
+export const decrementStockModel = async (product_id: string, quantity: number, stock: number, tx?: Prisma.TransactionClient) => {
     const client = tx || prisma;
-    return await client.product.update({
+    const isUnlimitedStock = stock === -1;
+
+    // Unlimited stock (-1) → ไม่ต้องหัก stock ในฐานข้อมูล
+    if (isUnlimitedStock) {
+        return { count: 1 };
+    }
+
+    const result = await client.product.updateMany({
         where: {
             product_id: product_id,
+            stock: { gte: quantity },
         },
         data: {
             stock: {
@@ -62,4 +70,10 @@ export const decrementStockModel = async (product_id: string, quantity: number, 
             },
         },
     });
+
+    if (result.count === 0) {
+        throw new Error("Insufficient stock or product not found");
+    }
+
+    return result;
 };

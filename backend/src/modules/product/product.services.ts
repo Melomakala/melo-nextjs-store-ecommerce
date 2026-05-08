@@ -58,6 +58,9 @@ export const decrementStock = async (items: productType.StockDecrementItem[], tx
 
     // 4. หัก stock ทั้งหมดพร้อมกัน (ผ่าน validation แล้ว)
     await Promise.all(
-        items.map((item) => productModel.decrementStockModel(item.product_id, item.quantity, tx))
+        items.map((item) => {
+            const product = productMap.get(item.product_id)!;
+            return productModel.decrementStockModel(item.product_id, item.quantity, product.stock, tx);
+        })
     );
 }

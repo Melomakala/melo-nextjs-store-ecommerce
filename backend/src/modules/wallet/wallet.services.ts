@@ -19,9 +19,11 @@ export const topupWalletService = async (user_id: string, data: walletType.Topup
     if (!wallet) {
         throw new CustomError("Wallet not found", 404);
     }
-    const checkIdempotencyKey = await walletModel.findTopupWalletByIdempotencyKey(idempotency_key);
-    if (checkIdempotencyKey) {
-        throw new CustomError("Idempotency key already exists", 400);
+    if (idempotency_key) {
+        const checkIdempotencyKey = await walletModel.findTopupWalletByIdempotencyKey(idempotency_key);
+        if (checkIdempotencyKey) {
+            throw new CustomError("Idempotency key already exists", 400);
+        }
     }
     if (data.fee !== 0) {
         data.fee = data.amount * data.fee;

@@ -2,13 +2,15 @@ import { prisma } from "../../common/utils/prisma";
 import * as orderType from "./order.types";
 import { Prisma } from "../../../generated/prisma";
 
-export const createOrderModel = async (user_id: string, data: orderType.CreateOrderRequest) => {
-    return await prisma.order.create({
+export type OrderWithItems = Prisma.OrderGetPayload<{ include: { items: true } }>;
+
+export const createOrderModel = async (user_id: string, data: orderType.CreateOrderRequest): Promise<OrderWithItems> => {
+    const order = await prisma.order.create({
         data: {
             user_id: user_id,
             total_amount: data.total_amount,
             status: orderType.status.PENDING,
-            idempotency_key: data.idempotency_key!,
+            idempotency_key: data.idempotency_key ?? null,
             items: {
                 create: data.items.map((item) => ({
                     product_id: item.product_id,
@@ -21,6 +23,7 @@ export const createOrderModel = async (user_id: string, data: orderType.CreateOr
             items: true,
         },
     });
+    return order as OrderWithItems;
 };
 
 export const findManyProductById = async (product_ids: string[]) => {

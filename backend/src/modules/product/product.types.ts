@@ -10,4 +10,5 @@ export interface Product {
 export interface StockDecrementItem {
     product_id: string;
     quantity: number;
+    stock?: number;
 }

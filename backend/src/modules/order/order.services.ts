@@ -4,12 +4,9 @@ import * as orderType from "./order.types";
 import { deductWalletService } from "../wallet/wallet.services";
 import { decrementStock } from "../product/product.services";
 import { prisma } from "../../common/utils/prisma";
+import { toCents } from "../../common/utils/formatcent";
 
-const createOrder = async (user_id: string, data: orderType.CreateOrderRequest, idempotency_key: string) => {
-    const checkIdempotencyKey = await orderModel.findOrderByIdempotencyKey(idempotency_key);
-    if (checkIdempotencyKey) {
-        throw new CustomError("Idempotency key already exists", 400);
-    }
+const createOrder = async (user_id: string, data: orderType.CreateOrderRequest, idempotency_key: string): Promise<orderModel.OrderWithItems> => {
     const product_ids = data.items.map((item) => item.product_id);
     const products = await orderModel.findManyProductById(product_ids);
 
@@ -24,9 +21,6 @@ const createOrder = async (user_id: string, data: orderType.CreateOrderRequest, 
         if (!product) {
             throw new CustomError("Product not found", 404);
         }
-        if (product.stock !== -1 && product.stock < item.quantity) {
-            throw new CustomError("Product stock is not enough", 400);
-        }
         total_amount += product.price * item.quantity;
         return {
             product_id: product.product_id,
@@ -35,7 +29,7 @@ const createOrder = async (user_id: string, data: orderType.CreateOrderRequest, 
         };
     });
 
-    if (total_amount !== data.total_amount) {
+    if (total_amount !== toCents(data.total_amount)) {
         throw new CustomError("Total price is not matching", 400);
     }
 
@@ -50,8 +44,14 @@ const createOrder = async (user_id: string, data: orderType.CreateOrderRequest, 
 }
 
 export const placeOrder = async (user_id: string, data: orderType.CreateOrderRequest, idempotency_key: string) => {
-    const order = await createOrder(user_id, data, idempotency_key);
     try {
+        if (idempotency_key) {
+            const checkIdempotencyKey = await orderModel.findOrderByIdempotencyKey(idempotency_key);
+            if (checkIdempotencyKey) {
+                throw new CustomError("Idempotency key already exists", 400);
+            }
+        }
+        const order = await createOrder(user_id, data, idempotency_key);
         await prisma.$transaction(async (tx) => {
             await deductWalletService(order.user_id, {
                 total_amount: order.total_amount,
@@ -69,7 +69,6 @@ export const placeOrder = async (user_id: string, data: orderType.CreateOrderReq
         })
         return order
     } catch (error) {
-        await orderModel.updateOrderModel(order.order_id, orderType.status.CANCEL);
         throw error;
     }
 }
