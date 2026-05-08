@@ -3,8 +3,13 @@
 A modern e-commerce storefront for digital products, featuring a secure user authentication system, product browsing, and wallet management.
 
 ## Project Preview
+### Storefront & Products
 ![Homepage Screenshot](./screenshots/homepage.png)
 ![Product Detail Screenshot](./screenshots/product_detail.png)
+
+### Authentication & Wallet
+![Login Page](./screenshots/login.png)
+![Topup Page](./screenshots/topup.png)
 
 ## Tech Stack
 ### Frontend
