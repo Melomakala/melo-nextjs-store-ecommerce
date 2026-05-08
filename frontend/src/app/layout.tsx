@@ -8,7 +8,6 @@ import { Toaster } from "@/components/ui/sonner"
 import UserInit from "@/components/user-init";
 
 
-
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
@@ -27,12 +26,14 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+
           <UserInit />
           <TooltipProvider>
             {children}

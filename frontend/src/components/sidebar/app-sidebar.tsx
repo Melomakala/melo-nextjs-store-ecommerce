@@ -28,7 +28,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     profile: user ? {
       name: user?.name,
       email: user?.email,
-      avatar: "/avatars/shadcn.jpg",
+      avatar: "",
     } : null,
     navMain: [
       {

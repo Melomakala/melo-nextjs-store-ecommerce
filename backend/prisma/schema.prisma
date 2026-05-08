@@ -69,7 +69,7 @@ model WalletTopup {
   amount         Int
   fee            Int
   method         String
-  status         String
+  status         String   @default("PENDING") // PENDING, COMPLETED, CANCELLED
   created_at     DateTime @default(now())
 
   wallet      Wallet             @relation(fields: [wallet_id], references: [wallet_id])

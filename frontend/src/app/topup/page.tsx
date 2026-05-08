@@ -28,6 +28,7 @@ import { TopupWalletData } from "@/modules/wallet/wallet.types";
 import { useWallet } from "@/modules/wallet/wallet.hook";
 import { TopupSuccess } from "./components/topup-success";
 import { formatPrice } from "@/lib/formatPrice";
+import { useEffect } from "react";
 
 const AMOUNTS = [
     { value: 50, bonus: 0, label: "50" },
@@ -77,6 +78,10 @@ export default function Page() {
     const [selectedMethod, setSelectedMethod] = useState("promptpay");
     const [confirmed, setConfirmed] = useState(false);
 
+    useEffect(() => {
+        handleGetWallet()
+    }, [])
+
     if (isLoading || isRedirecting) {
         return <LoadingSpiner />;
     }
@@ -101,11 +106,11 @@ export default function Page() {
             fee,
             method: selectedMethod,
         }
-        console.log(data)
+
         const response = await handleTopupWallet(data as TopupWalletData);
         if (response) {
+            await handleGetWallet();
             setConfirmed(true);
-            handleGetWallet();
         }
     }
 
@@ -113,10 +118,6 @@ export default function Page() {
         return (
             <TopupSuccess
                 balance={balance}
-                onReset={() => {
-                    setConfirmed(false);
-                    setSelectedAmount(null);
-                }}
             />
         );
     }

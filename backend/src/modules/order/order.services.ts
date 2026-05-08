@@ -2,15 +2,21 @@ import { CustomError } from "../../common/utils/CustomError";
 import * as orderModel from "./order.model";
 import * as orderType from "./order.types";
 import { deductWalletService } from "../wallet/wallet.services";
+import { decrementStock } from "../product/product.services";
 import { prisma } from "../../common/utils/prisma";
 
 const createOrder = async (user_id: string, data: orderType.CreateOrderRequest) => {
     const product_ids = data.items.map((item) => item.product_id);
     const products = await orderModel.findManyProductById(product_ids);
 
+    //สร้างสารบัญข้อมูล
+    const productMap = new Map(products.map((p) => [p.product_id, p]));
+
     let total_amount = 0;
     const order_items = data.items.map((item) => {
-        const product = products.find((product) => product.product_id === item.product_id);
+
+        const product = productMap.get(item.product_id);
+
         if (!product) {
             throw new CustomError("Product not found", 404);
         }
@@ -41,12 +47,21 @@ const createOrder = async (user_id: string, data: orderType.CreateOrderRequest) 
 export const placeOrder = async (user_id: string, data: orderType.CreateOrderRequest) => {
     const order = await createOrder(user_id, data);
     try {
-        const deductWallet = await deductWalletService(order.user_id, {
-            total_amount: order.total_amount,
-            reference_id: order.order_id,
-        });
-        // update stock เดี๋ยวมาทำ
-        await orderModel.updateOrderModel(order.order_id, orderType.status.COMPLETE);
+        await prisma.$transaction(async (tx) => {
+            await deductWalletService(order.user_id, {
+                total_amount: order.total_amount,
+                reference_id: order.order_id,
+            },
+                tx);
+            await decrementStock(
+                order.items.map((item) => ({
+                    product_id: item.product_id,
+                    quantity: item.quantity,
+                })),
+                tx
+            );
+            await orderModel.updateOrderModel(order.order_id, orderType.status.COMPLETE, tx);
+        })
         return order
     } catch (error) {
         await orderModel.updateOrderModel(order.order_id, orderType.status.CANCEL);

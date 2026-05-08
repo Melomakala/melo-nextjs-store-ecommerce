@@ -1,5 +1,6 @@
 import { prisma } from "../../common/utils/prisma";
 import * as orderType from "./order.types";
+import { Prisma } from "../../../generated/prisma";
 
 export const createOrderModel = async (user_id: orderType.CreateOrderRequest["user_id"], data: orderType.CreateOrderRequest) => {
     return await prisma.order.create({
@@ -39,8 +40,9 @@ export const findOrderById = async (order_id: string) => {
     });
 };
 
-export const updateOrderModel = async (order_id: string, status: orderType.status) => {
-    return await prisma.order.update({
+export const updateOrderModel = async (order_id: string, status: orderType.status, tx?: Prisma.TransactionClient) => {
+    const client = tx || prisma;
+    return await client.order.update({
         where: {
             order_id,
         },

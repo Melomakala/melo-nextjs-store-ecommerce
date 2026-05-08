@@ -37,6 +37,8 @@ import { useRouter } from "next/navigation"
 import LoadingSpiner from "@/components/loadingspiner"
 import { useUserStore } from "@/modules/user/user.store"
 import { formatPrice } from "@/lib/formatPrice"
+import { useWallet } from "@/modules/wallet/wallet.hook"
+import { BuySuccess } from "./components/buy-success"
 
 type Props = {
     params: Promise<{
@@ -48,8 +50,11 @@ export default function ProductDetailPage({ params }: Props) {
     const { id } = use(params)
     const router = useRouter()
     const { user } = useUserStore()
+    const { handleGetWallet } = useWallet()
     const { getProductById } = useProductById()
     const [product, setProduct] = useState<ProductType.Product | null>(null)
+    const [confirmed, setConfirmed] = useState(false)
+    const [mockOrderId, setMockOrderId] = useState("")
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -70,6 +75,8 @@ export default function ProductDetailPage({ params }: Props) {
     const handleConfirmPurchase = async () => {
         // Mock logic สำหรับในอนาคตที่ต้องต่อ API
         await new Promise((resolve) => setTimeout(resolve, 1500))
+        setMockOrderId(`ORD-MOCK-${Math.random().toString(36).substring(2, 10).toUpperCase()}`)
+        setConfirmed(true)
     }
 
     function handleAddToCart() {
@@ -82,6 +89,16 @@ export default function ProductDetailPage({ params }: Props) {
     if (!product) {
         return (
             <LoadingSpiner />
+        )
+    }
+
+    if (confirmed && product) {
+        return (
+            <BuySuccess
+                order_id={mockOrderId}
+                product_name={product.name}
+                total_amount={product.price}
+            />
         )
     }
 
@@ -202,7 +219,10 @@ export default function ProductDetailPage({ params }: Props) {
                                     size="lg"
                                     disabled={product.stock === 0 || !user}
                                     className="w-full bg-blue-600 font-semibold text-white hover:bg-blue-700 cursor-pointer"
-                                    onClick={() => setDialogOpen(true)}
+                                    onClick={async () => {
+                                        await handleGetWallet()
+                                        setDialogOpen(true)
+                                    }}
                                 >
                                     <CreditCard className="mr-2 size-5" />
                                     Buy Now

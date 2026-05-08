@@ -26,7 +26,7 @@ interface BuyProductDialogProps {
     open: boolean
     onOpenChange: (open: boolean) => void
     product: ProductType.Product
-    onConfirm?: () => Promise<void> | void
+    onConfirm?: () => Promise<{ order_id: string } | null | void> | void
 }
 
 export function BuyProductDialog({
@@ -37,6 +37,7 @@ export function BuyProductDialog({
 }: BuyProductDialogProps) {
     const { balance } = useWalletStore()
     const [isConfirming, setIsConfirming] = useState(false)
+
     const afterPurchase = balance - product.price
     const canAfford = balance >= product.price
 

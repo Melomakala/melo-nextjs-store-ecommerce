@@ -6,3 +6,8 @@ export interface Product {
     stock: number;
     image_url: string | null;
 }
+
+export interface StockDecrementItem {
+    product_id: string;
+    quantity: number;
+}

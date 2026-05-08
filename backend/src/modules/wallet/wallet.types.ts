@@ -6,8 +6,8 @@ export interface TopupWalletRequest {
 
 export enum status {
     PENDING = "PENDING",
-    SUCCESS = "SUCCESS",
-    FAILED = "FAILED",
+    COMPLETE = "COMPLETE",
+    CANCEL = "CANCEL",
 }
 
 export interface TopupWalletResponse {
@@ -27,4 +27,6 @@ export interface WalletTransactionRequest {
     balance_before: number;
     balance_after: number;
     reference_id: string;
+    order_id?: string
+    topup_id?: string
 }

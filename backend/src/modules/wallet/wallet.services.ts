@@ -3,6 +3,7 @@ import * as walletModel from "./wallet.models";
 import { fromCents } from "../../common/utils/formatcent";
 import * as walletType from "./wallet.types";
 import { toCents } from "../../common/utils/formatcent";
+import { Prisma } from "../../../generated/prisma";
 
 export const getWalletService = async (user_id: string) => {
     const wallet = await walletModel.getWalletModel(user_id);
@@ -64,13 +65,13 @@ export const mockupTopupWalletService = async (topup_id: string, status: walletT
     if (tx.status !== walletType.status.PENDING) {
         throw new CustomError("Transaction already processed", 400);
     }
-    const topup = await walletModel.updateTopupWalletModel(tx.topup_id, walletType.status.SUCCESS);
-    if (topup.status === walletType.status.SUCCESS) {
+    const topup = await walletModel.updateTopupWalletModel(tx.topup_id, walletType.status.COMPLETE);
+    if (topup.status === walletType.status.COMPLETE) {
         const wallet = await walletModel.getWalletByWalletIdModel(tx.wallet_id);
         if (!wallet) {
             throw new CustomError("Wallet not found", 404);
         }
-        await walletModel.updateWalletModel(tx.wallet_id, wallet.balance + tx.amount);
+        await walletModel.incrementWalletModel(tx.wallet_id, tx.amount);
         const transaction = await walletModel.createWalletTransactionModel({
             wallet_id: tx.wallet_id,
             amount: tx.amount,
@@ -80,18 +81,25 @@ export const mockupTopupWalletService = async (topup_id: string, status: walletT
             reference_id: tx.topup_id,
         });
     }
-    return "Topup-Success";
+    return "transaction-Success";
 }
 
-export const deductWalletService = async (user_id: string, data: { total_amount: number, reference_id: string }) => {
-    const wallet = await walletModel.getWalletModel(user_id);
+export const deductWalletService = async (
+    user_id: string,
+    data: {
+        total_amount: number,
+        reference_id: string
+    },
+    tx?: Prisma.TransactionClient
+) => {
+    const wallet = await walletModel.getWalletModel(user_id, tx);
     if (!wallet) {
         throw new CustomError("Wallet not found", 404);
     }
     if (wallet.balance < data.total_amount) {
         throw new CustomError("Insufficient balance", 400);
     }
-    await walletModel.updateWalletModel(wallet.wallet_id, wallet.balance - data.total_amount);
+    await walletModel.decrementWalletModel(wallet.wallet_id, data.total_amount, tx);
     const transaction = await walletModel.createWalletTransactionModel({
         wallet_id: wallet.wallet_id,
         amount: -data.total_amount,
@@ -99,6 +107,6 @@ export const deductWalletService = async (user_id: string, data: { total_amount:
         balance_before: wallet.balance,
         balance_after: wallet.balance - data.total_amount,
         reference_id: data.reference_id,
-    });
+    }, tx);
     return transaction
 }

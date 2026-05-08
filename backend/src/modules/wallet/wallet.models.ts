@@ -1,8 +1,10 @@
 import { prisma } from "../../common/utils/prisma";
 import * as walletType from "./wallet.types";
+import { Prisma } from "../../../generated/prisma";
 
-export const getWalletModel = async (user_id: string) => {
-    return await prisma.wallet.findUnique({
+export const getWalletModel = async (user_id: string, tx?: Prisma.TransactionClient) => {
+    const client = tx || prisma;
+    return await client.wallet.findUnique({
         where: { user_id },
         select: {
             wallet_id: true,
@@ -27,10 +29,10 @@ export const topupWalletModel = async (
         data: walletType.TopupWalletRequest,
         transaction_id: string | null,
         idempotency_key: string,
-        status: walletType.status
+        status: walletType.status.PENDING
     }
 ) => {
-    const { wallet_id, data, transaction_id, idempotency_key, status } = payload;
+    const { wallet_id, data, transaction_id, idempotency_key } = payload;
     return await prisma.walletTopup.create({
         data: {
             wallet_id,
@@ -39,7 +41,7 @@ export const topupWalletModel = async (
             amount: data.amount,
             fee: data.fee,
             method: data.method,
-            status,
+            status: walletType.status.PENDING
         },
         select: {
             topup_id: true,
@@ -82,27 +84,39 @@ export const updateTopupWalletModel = async (topup_id: string, status: walletTyp
     });
 }
 
-export const createWalletTransactionModel = async (data: walletType.WalletTransactionRequest) => {
-    return await prisma.walletTransaction.create({
-        data: {
-            wallet_id: data.wallet_id,
-            amount: data.amount,
-            type: data.type,
-            balance_before: data.balance_before,
-            balance_after: data.balance_after,
-            reference_id: data.reference_id,
+export const createWalletTransactionModel = async (data: walletType.WalletTransactionRequest, tx?: Prisma.TransactionClient) => {
+    const { wallet_id, topup_id, order_id, ...payload } = data;
+    const client = tx || prisma;
 
-            topup: {
-                connect: {
-                    topup_id: data.reference_id,
-                }
-            }
-        },
+    return await client.walletTransaction.create({
+        data: {
+            ...payload,
+            wallet: { connect: { wallet_id } },
+            ...(data.type === walletType.transactionType.TOPUP && {
+                topup: { connect: { topup_id: data.reference_id } }
+            }),
+            ...(data.type === walletType.transactionType.PAYMENT && {
+                order: { connect: { order_id: data.reference_id } }
+            })
+        } as Prisma.WalletTransactionCreateInput
     });
 }
 
-export const updateWalletModel = async (wallet_id: string, amount: number) => {
+
+export const incrementWalletModel = async (wallet_id: string, amount: number) => {
     return await prisma.wallet.update({
+        where: { wallet_id },
+        data: {
+            balance: {
+                increment: amount,
+            },
+        }
+    });
+}
+
+export const decrementWalletModel = async (wallet_id: string, amount: number, tx?: Prisma.TransactionClient) => {
+    const client = tx || prisma;
+    return await client.wallet.update({
         where: { wallet_id },
         data: {
             balance: {
