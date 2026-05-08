@@ -8,8 +8,8 @@ A modern e-commerce storefront for digital products, featuring a secure user aut
 ![Product Detail Screenshot](./screenshots/product_detail.png)
 
 ### Authentication & Wallet
-![Login Page](./screenshots/login.png)
-![Topup Page](./screenshots/topup.png)
+![Login Page](./screenshots/login_page.png)
+![Topup Page](./screenshots/topup_page.png)
 
 ## Tech Stack
 ### Frontend
