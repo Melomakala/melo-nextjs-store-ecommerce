@@ -7,5 +7,4 @@ import * as orderController from "./order.controllers";
 const router = Router();
 
 router.post("/place-order", authenticateAccessToken, validate(createOrderSchema), orderController.placeOrder);
-
 export default router;

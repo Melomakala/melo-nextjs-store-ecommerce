@@ -39,6 +39,7 @@ import { useUserStore } from "@/modules/user/user.store"
 import { formatPrice } from "@/lib/formatPrice"
 import { useWallet } from "@/modules/wallet/wallet.hook"
 import { BuySuccess } from "./components/buy-success"
+import { useCartStore } from "@/modules/cart/cart.store"
 import { useCreateOrder } from "@/modules/order/order.hook"
 
 type Props = {
@@ -71,7 +72,8 @@ export default function ProductDetailPage({ params }: Props) {
     }, [id, router])
 
     const [dialogOpen, setDialogOpen] = useState(false)
-    const [addedToCart, setAddedToCart] = useState(false)
+    const { addItem, isInCart } = useCartStore()
+    const addedToCart = product ? isInCart(product.product_id) : false
 
     const handleConfirmPurchase = async () => {
         if (!product) return
@@ -93,10 +95,8 @@ export default function ProductDetailPage({ params }: Props) {
     }
 
     function handleAddToCart() {
-        if (addedToCart) return
-        setAddedToCart(true)
-        // TODO: ต่อ Cart API / Zustand store จริง
-        setTimeout(() => setAddedToCart(false), 2000)
+        if (!product || addedToCart) return
+        addItem(product)
     }
 
     if (!product) {
@@ -244,7 +244,7 @@ export default function ProductDetailPage({ params }: Props) {
                                 <Button
                                     size="lg"
                                     variant="outline"
-                                    disabled={product.stock === 0 || !user}
+                                    disabled={product.stock === 0}
                                     className={`w-full font-semibold transition-all duration-300 cursor-pointer ${addedToCart
                                         ? "border-emerald-500 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/10"
                                         : "border-border/60 hover:border-blue-500/60 hover:bg-blue-500/5 hover:text-blue-400"
