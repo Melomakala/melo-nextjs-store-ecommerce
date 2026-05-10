@@ -22,3 +22,18 @@ export enum status {
     COMPLETE = "COMPLETE",
     CANCEL = "CANCEL",
 }
+
+export interface GetOrderHistoryRequest {
+    page: string;
+    search?: string;
+    status?: string;
+    timeRange?: string;
+}
+
+export interface OrderHistoryModelQuery {
+    skip: number;
+    take: number;
+    search?: string | undefined;
+    status?: string | undefined;
+    timeRange?: any;
+}

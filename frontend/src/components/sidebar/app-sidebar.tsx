@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { NavMain } from "@/components/sidebar/nav-main"
 import { NavUser } from "@/components/sidebar/nav-user"
 import {
@@ -20,9 +20,20 @@ import { useUserStore } from "@/modules/user/user.store";
 import Link from "next/link";
 import { useWalletStore } from "@/modules/wallet/wallet.store";
 import { formatPrice } from "@/lib/formatPrice";
+import { usePathname } from "next/navigation";
+import { useCartStore } from "@/modules/cart/cart.store";
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUserStore();
-  const { balance } = useWalletStore();
+  const balance = useWalletStore((state) => state.balance);
+  const cartItemsCount = useCartStore((state) => state.items.length);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const pathname = usePathname();
 
   const data = {
     profile: user ? {
@@ -35,17 +46,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: "Store",
         url: "/",
         icon: <Home />,
-        isActive: true,
+        isActive: pathname === "/",
       },
       {
         title: "Shopping Cart",
         url: "/cart",
         icon: <ShoppingCart />,
+        isActive: pathname === "/cart",
+        badge: mounted && cartItemsCount > 0 ? cartItemsCount : undefined,
       },
       {
         title: "Order History",
-        url: "#",
+        url: "/orderhistory",
         icon: <Package />,
+        isActive: pathname === "/orderhistory",
       },
     ],
   }

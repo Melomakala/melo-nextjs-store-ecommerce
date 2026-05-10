@@ -63,3 +63,61 @@ export const updateOrderModel = async (order_id: string, status: orderType.statu
         },
     });
 };
+
+
+export const getOrderHistoryModel = async (user_id: string, query: orderType.OrderHistoryModelQuery) => {
+    const { skip, take, search, status, timeRange } = query;
+    const where: Prisma.OrderWhereInput = {
+        user_id,
+        ...(status && { status: status as string }),
+        ...(timeRange && { created_at: timeRange }),
+        ...(search && {
+            OR: [
+                {
+                    order_id: {
+                        contains: search,
+                    },
+                },
+                {
+                    items: {
+                        some: {
+                            product: {
+                                name: {
+                                    contains: search,
+                                },
+                            },
+                        },
+                    },
+                },
+            ],
+        }),
+    };
+
+    const [orders, totalCount] = await Promise.all([
+        prisma.order.findMany({
+            where,
+            skip,
+            take,
+            orderBy: {
+                created_at: "desc",
+            },
+            include: {
+                items: {
+                    include: {
+                        product: {
+                            select: {
+                                product_id: true,
+                                name: true,
+                                image_url: true,
+                            }
+                        }
+                    },
+                },
+            },
+        }),
+        prisma.order.count({
+            where,
+        }),
+    ]);
+    return { orders, totalCount };
+};

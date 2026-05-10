@@ -59,7 +59,7 @@ export function BuySuccess({ order_id, total_amount, product_name }: BuySuccessP
                         variant="ghost"
                         className="w-full h-11 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground"
                     >
-                        <Link href="/history">View Order History</Link>
+                        <Link href="/orderhistory">View Order History</Link>
                     </Button>
                 </CardFooter>
             </Card>

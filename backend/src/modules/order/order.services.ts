@@ -73,3 +73,46 @@ export const placeOrder = async (user_id: string, data: orderType.CreateOrderReq
     }
 }
 
+
+export const getOrderHistoryService = async (user_id: string, query: orderType.GetOrderHistoryRequest) => {
+    const LIMIT = 4
+    const { search, status, timeRange, page } = query
+    const pageNum = parseInt(page) || 1;
+    const skip = (pageNum - 1) * LIMIT;
+
+    let dateFilter = {};
+    const now = new Date()
+    if (timeRange === 'thisMonth') {
+
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        dateFilter = { gte: startOfMonth };
+    } else if (timeRange === 'last3Months') {
+
+        const threeMonthsAgo = new Date();
+        threeMonthsAgo.setMonth(now.getMonth() - 3);
+        dateFilter = { gte: threeMonthsAgo };
+    } else if (timeRange === 'lastYear') {
+
+        const lastYear = new Date();
+        lastYear.setFullYear(now.getFullYear() - 1);
+        dateFilter = { gte: lastYear };
+    }
+    const { orders, totalCount } = await orderModel.getOrderHistoryModel(user_id, {
+        skip,
+        take: LIMIT,
+        search: search,
+        status: status !== "ALL" ? status : undefined,
+        timeRange: dateFilter,
+    });
+
+    const totalPages = Math.ceil(totalCount / LIMIT);
+
+    return {
+        orders,
+        pagination: {
+            page,
+            totalPages,
+            totalCount,
+        },
+    };
+}

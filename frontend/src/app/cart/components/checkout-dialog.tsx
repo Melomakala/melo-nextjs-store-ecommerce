@@ -14,8 +14,7 @@ import {
     Wallet,
     ShoppingCart,
     ArrowDown,
-    Info,
-    Package,
+    Info
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
