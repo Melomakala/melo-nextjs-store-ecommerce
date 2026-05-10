@@ -16,12 +16,16 @@ import { formatPrice } from "@/lib/formatPrice";
 
 export function ProductGrid() {
   const { getProducts } = useProduct();
+  const searchQuery = useProductStore((state) => state.searchQuery);
 
   useEffect(() => {
     getProducts();
   }, []);
-  const { products } = useProductStore();
-  if (products.length === 0) {
+  const products = useProductStore((state) => state.products);
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  if (filteredProducts.length === 0) {
     return (
       <div>
         <div className="mb-4 flex items-center justify-between">
@@ -41,7 +45,7 @@ export function ProductGrid() {
         <span className="text-sm text-muted-foreground">{products.length} items</span>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <Card
             key={product.product_id}
             className="group relative overflow-hidden border-border/40 bg-card/50 transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5"
