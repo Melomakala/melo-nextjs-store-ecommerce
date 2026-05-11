@@ -17,6 +17,8 @@ export const getProductById = async (product_id: string): Promise<Product> => {
     const product = response.data.result
     return {
         ...product,
-        image_url: `${IMAGE_BASE_URL}${product.image_url}`
+        image_url: product.image_url
+            ? `${IMAGE_BASE_URL}${product.image_url}`
+            : null
     }
 }

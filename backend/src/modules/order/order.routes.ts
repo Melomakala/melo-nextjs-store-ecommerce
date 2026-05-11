@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { authenticateAccessToken } from "../../common/middleware/authenticate";
 import { validate } from "../../common/middleware/validate";
-import { createOrderSchema } from "./order.schema";
+import { createOrderSchema, getOrderHistorySchema } from "./order.schema";
 import * as orderController from "./order.controllers";
 
 const router = Router();

@@ -30,7 +30,7 @@ export const updateRefreshToken = async (refreshtoken_id: string, refreshToken: 
         where: { refreshtoken_id },
         data: {
             token_hash: refreshToken,
-            expires_at: new Date(Date.now() + 5 * 60 * 1000),
+            expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
             created_at: new Date(),
             revoked_at: null,
         }
@@ -42,7 +42,7 @@ export const createRefreshToken = async (user_id: string, refreshToken: string) 
         data: {
             user_id,
             token_hash: refreshToken,
-            expires_at: new Date(Date.now() + 5 * 60 * 1000),
+            expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
             created_at: new Date(),
             revoked_at: null,
         }

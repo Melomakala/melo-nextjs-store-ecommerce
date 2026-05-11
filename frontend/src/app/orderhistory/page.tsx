@@ -1,6 +1,7 @@
 "use client"
 
 import { AppSidebar } from "@/components/sidebar/app-sidebar"
+import Image from "next/image"
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -29,161 +30,48 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouteGuard } from "@/hooks/use-route-guard"
 import LoadingSpiner from "@/components/loadingspiner"
+import { useGetOrderHistory } from "@/modules/order/order.hook"
+import { GetOrderHistoryResponse } from "@/modules/order/order.types"
 
-const MOCK_ORDERS = [
-    {
-        id: "ORD-00115",
-        date: "9 May 2026",
-        itemsCount: 3,
-        total: 547,
-        status: "Completed",
-        items: [
-            {
-                name: "Free Fire Diamonds",
-                description: "520 Diamonds",
-                qty: 1,
-                price: 149,
-                color: "bg-[#1d2238]",
-            },
-            {
-                name: "Steam Wallet",
-                description: "฿250 THB Code",
-                qty: 1,
-                price: 250.5,
-                color: "bg-[#1b2838]",
-            },
-            {
-                name: "Roblox Gift Card",
-                description: "400 Robux",
-                qty: 1,
-                price: 199,
-                color: "bg-[#3e2c4f]",
-            },
-        ],
-    },
-    {
-        id: "ORD-00109",
-        date: "2 May 2026",
-        itemsCount: 2,
-        total: 398,
-        status: "Completed",
-        items: [
-            {
-                name: "Roblox Gift Card",
-                description: "400 Robux",
-                qty: 2,
-                price: 199,
-                color: "bg-[#3e2c4f]",
-            }
-        ],
-    },
-    {
-        id: "ORD-00107",
-        date: "28 Apr 2026",
-        itemsCount: 1,
-        total: 220,
-        status: "Pending",
-        items: [
-            {
-                name: "Steam Wallet",
-                description: "฿200 THB Code",
-                qty: 1,
-                price: 220,
-                color: "bg-[#1b2838]",
-            }
-        ],
-    },
-    {
-        id: "ORD-00105",
-        date: "20 Apr 2026",
-        itemsCount: 1,
-        total: 349,
-        status: "Cancelled",
-        items: [
-            {
-                name: "Free Fire Diamonds",
-                description: "1080 Diamonds",
-                qty: 1,
-                price: 349,
-                color: "bg-[#1d2238]",
-            }
-        ],
-    },
-    {
-        id: "ORD-00102",
-        date: "15 Mar 2026",
-        itemsCount: 2,
-        total: 800,
-        status: "Completed",
-        items: [
-            {
-                name: "PlayStation Store",
-                description: "฿800 Card",
-                qty: 1,
-                price: 800,
-                color: "bg-[#003791]",
-            }
-        ],
-    },
-    {
-        id: "ORD-00098",
-        date: "10 Mar 2026",
-        itemsCount: 1,
-        total: 150,
-        status: "Completed",
-        items: [
-            {
-                name: "Netflix Gift Card",
-                description: "Basic Plan",
-                qty: 1,
-                price: 150,
-                color: "bg-[#e50914]",
-            }
-        ],
-    },
-    {
-        id: "ORD-00095",
-        date: "1 Mar 2026",
-        itemsCount: 1,
-        total: 500,
-        status: "Completed",
-        items: [
-            {
-                name: "Riot Points",
-                description: "League of Legends",
-                qty: 1,
-                price: 500,
-                color: "bg-[#eb0029]",
-            }
-        ],
-    },
-    {
-        id: "ORD-00090",
-        date: "15 Feb 2026",
-        itemsCount: 3,
-        total: 1250,
-        status: "Completed",
-        items: [
-            {
-                name: "Amazon Gift Card",
-                description: "$10 USD",
-                qty: 3,
-                price: 416.66,
-                color: "bg-[#232f3e]",
-            }
-        ],
-    },
-]
+
 
 export default function OrderHistoryPage() {
+    const { handleGetOrderHistory } = useGetOrderHistory();
     const [expandedOrders, setExpandedOrders] = useState<string[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
     const [statusFilter, setStatusFilter] = useState<string>("All");
+    const [timeRange, setTimeRange] = useState<string>("");
     const { isLoading, isRedirecting } = useRouteGuard(true, "/");
+    const [totalAmount, setTotalAmout] = useState<number>(0);
+    const [totalComplete, setTotalComplete] = useState<number>(0);
+
+    const [apiOrders, setApiOrders] = useState<any[]>([]);
+    const [totalOrdersServer, setTotalOrdersServer] = useState(0);
+    const [totalPagesServer, setTotalPagesServer] = useState(1);
+
+    useEffect(() => {
+        // เรียกใช้ฟังก์ชันและนำข้อมูลมาอัปเดต state
+        handleGetOrderHistory({
+            page: currentPage,
+            search: searchQuery,
+            status: statusFilter,
+            timeRange: timeRange
+        }).then((result: GetOrderHistoryResponse) => {
+            if (result && result.data) {
+                setApiOrders(result.data);
+                setTotalOrdersServer(result.meta.total);
+                setTotalPagesServer(result.meta.last_page);
+                setTotalAmout(result.meta.totalAmount);
+                setTotalComplete(result.meta.totalCompleteCount)
+            }
+        }).catch((err: any) => {
+            console.error("Fetch orders failed:", err);
+        });
+    }, [currentPage, searchQuery, statusFilter, timeRange]);
 
     const itemsPerPage = 4;
 
@@ -195,23 +83,15 @@ export default function OrderHistoryPage() {
         setExpandedOrders(prev => prev.includes(id) ? prev.filter(o => o !== id) : [...prev, id]);
     };
 
-    // Filter Logic
-    const filteredOrders = MOCK_ORDERS.filter(order => {
-        const matchesSearch = order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            order.items.some(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
-        const matchesStatus = statusFilter === "All" || order.status === statusFilter;
-        return matchesSearch && matchesStatus;
-    });
-
-    const totalOrders = filteredOrders.length;
-    const totalPages = Math.ceil(totalOrders / itemsPerPage);
+    const totalOrders = totalOrdersServer;
+    const totalPages = totalPagesServer;
 
     // Calculate showing range
     const startIdx = totalOrders === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
     const endIdx = Math.min(currentPage * itemsPerPage, totalOrders);
 
     // Get current page items
-    const currentOrders = filteredOrders.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    const currentOrders = apiOrders;
 
     return (
         <SidebarProvider>
@@ -281,10 +161,27 @@ export default function OrderHistoryPage() {
                                 <DropdownMenuContent align="end" className="w-[180px]">
                                     <DropdownMenuLabel>Time Range</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem>All time</DropdownMenuItem>
-                                    <DropdownMenuItem>This Month</DropdownMenuItem>
-                                    <DropdownMenuItem>Last 3 Months</DropdownMenuItem>
-                                    <DropdownMenuItem>Last Year</DropdownMenuItem>
+                                    {["", "thisMonth", "last3Months", "lastYear"].map((timeRange) => (
+                                        <DropdownMenuItem
+                                            key={timeRange}
+                                            onClick={() => {
+                                                setTimeRange(timeRange);
+                                                setCurrentPage(1);
+                                            }}
+                                            className={timeRange === timeRange ? "bg-accent" : ""}
+                                        >
+                                            {timeRange === "" ?
+                                                "All Time"
+                                                : timeRange === "thisMonth" ?
+                                                    "This Month"
+                                                    : timeRange === "last3Months" ?
+                                                        "Last 3 Months"
+                                                        : timeRange === "lastYear" ?
+                                                            "Last Year"
+                                                            : ""
+                                            }
+                                        </DropdownMenuItem>
+                                    ))}
                                 </DropdownMenuContent>
                             </DropdownMenu>
 
@@ -301,7 +198,7 @@ export default function OrderHistoryPage() {
                                 <DropdownMenuContent align="end" className="w-[180px]">
                                     <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    {["All", "Completed", "Pending", "Cancelled"].map((status) => (
+                                    {["All", "COMPLETE", "PENDING", "CANCEL"].map((status) => (
                                         <DropdownMenuItem
                                             key={status}
                                             onClick={() => {
@@ -327,7 +224,7 @@ export default function OrderHistoryPage() {
                                 </div>
                                 <div>
                                     <p className="text-xs text-muted-foreground mb-1">Total Orders</p>
-                                    <h2 className="text-2xl font-bold">{MOCK_ORDERS.length}</h2>
+                                    <h2 className="text-2xl font-bold">{totalOrdersServer}</h2>
                                 </div>
                             </CardContent>
                         </Card>
@@ -338,7 +235,10 @@ export default function OrderHistoryPage() {
                                 </div>
                                 <div>
                                     <p className="text-xs text-muted-foreground mb-1">Total Spent</p>
-                                    <h2 className="text-2xl font-bold">฿{MOCK_ORDERS.reduce((acc, o) => acc + o.total, 0).toLocaleString()}</h2>
+                                    <h2 className="text-2xl font-bold">
+                                        {/* แก้ไขให้โชว์ข้อมูลจาก backend ถ้าจะนำมาใช้ควรรวมผลรวมของเซิร์ฟเวอร์มา */}
+                                        {totalAmount}
+                                    </h2>
                                 </div>
                             </CardContent>
                         </Card>
@@ -349,7 +249,7 @@ export default function OrderHistoryPage() {
                                 </div>
                                 <div>
                                     <p className="text-xs text-muted-foreground mb-1">Completed</p>
-                                    <h2 className="text-2xl font-bold">{MOCK_ORDERS.filter(o => o.status === 'Completed').length}</h2>
+                                    <h2 className="text-2xl font-bold">{totalComplete}</h2>
                                 </div>
                             </CardContent>
                         </Card>
@@ -359,33 +259,33 @@ export default function OrderHistoryPage() {
                     <div className="flex flex-col gap-4">
                         {currentOrders.length > 0 ? (
                             currentOrders.map((order) => {
-                                const isExpanded = expandedOrders.includes(order.id);
+                                const isExpanded = expandedOrders.includes(order.order_id || order.id);
 
                                 return (
                                     <Card
-                                        key={order.id}
-                                        className={`group border-border/40 bg-card/50 shadow-sm overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5 border-l-2 ${order.status === 'Completed' ? 'border-l-emerald-500' : order.status === 'Pending' ? 'border-l-orange-500' : 'border-l-rose-500'}`}
+                                        key={order.order_id || order.id || `order-${Math.random()}`}
+                                        className={`group border-border/40 bg-card/50 shadow-sm overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5 border-l-2 ${order.status === 'COMPLETE' || order.status === 'Completed' ? 'border-l-emerald-500' : order.status === 'PENDING' || order.status === 'Pending' ? 'border-l-orange-500' : 'border-l-rose-500'}`}
                                     >
                                         {/* Order Header */}
                                         <div
                                             className="p-6 pb-4 cursor-pointer hover:bg-muted/10 transition-colors"
-                                            onClick={() => toggleOrder(order.id)}
+                                            onClick={() => toggleOrder(order.order_id || order.id)}
                                         >
                                             <div className="flex items-start justify-between">
                                                 <div>
-                                                    <h3 className="font-semibold">{order.id}</h3>
+                                                    <h3 className="font-semibold">{order.order_id || order.id}</h3>
                                                     <p className="text-xs text-muted-foreground mt-0.5">
-                                                        {order.date} • {order.itemsCount} {order.itemsCount === 1 ? 'item' : 'items'}
+                                                        {order.created_at ? new Date(order.created_at).toLocaleDateString() : order.date} • {order.items ? order.items.length : order.itemsCount} {(order.items ? order.items.length : order.itemsCount) === 1 ? 'item' : 'items'}
                                                     </p>
                                                 </div>
                                                 <div className="flex items-center gap-3">
-                                                    <span className="font-semibold text-sm">฿{order.total}</span>
+                                                    <span className="font-semibold text-sm">฿{order.total_amount ? (order.total_amount / 100).toLocaleString() : order.total}</span>
                                                     <Badge
                                                         variant="secondary"
                                                         className={`
-                                                    ${order.status === 'Completed' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500/25' : ''}
-                                                    ${order.status === 'Pending' ? 'bg-orange-500/15 text-orange-700 dark:text-orange-400 hover:bg-orange-500/25' : ''}
-                                                    ${order.status === 'Cancelled' ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400 hover:bg-rose-500/25' : ''}
+                                                    ${order.status === 'COMPLETE' || order.status === 'Completed' ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500/25' : ''}
+                                                    ${order.status === 'PENDING' || order.status === 'Pending' ? 'bg-orange-500/15 text-orange-700 dark:text-orange-400 hover:bg-orange-500/25' : ''}
+                                                    ${order.status === 'CANCELLED' || order.status === 'Cancelled' ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400 hover:bg-rose-500/25' : ''}
                                                 `}
                                                     >
                                                         {order.status}
@@ -409,20 +309,29 @@ export default function OrderHistoryPage() {
                                                     </div>
 
                                                     <div className="flex flex-col gap-4">
-                                                        {order.items.map((item, idx) => (
-                                                            <div key={idx} className="grid grid-cols-[1fr_80px_80px] gap-4 items-center">
+                                                        {order.items.map((item: any, idx: number) => (
+                                                            <div key={`${order.order_id || order.id}-item-${item.product_id || idx}`} className="grid grid-cols-[1fr_80px_80px] gap-4 items-center">
                                                                 <div className="flex gap-4 items-center">
-                                                                    <div className={`size-10 rounded-md ${item.color} shrink-0`} />
+                                                                    <div className={`relative size-10 rounded-md bg-blue-500/20 shrink-0 overflow-hidden flex items-center justify-center`}>
+                                                                        {item.product?.image_url && (
+                                                                            <Image
+                                                                                src={item.product.image_url}
+                                                                                alt={item.product?.name || "Product"}
+                                                                                fill
+                                                                                className="object-cover"
+                                                                            />
+                                                                        )}
+                                                                    </div>
                                                                     <div>
-                                                                        <p className="font-medium text-sm leading-tight">{item.name}</p>
-                                                                        <p className="text-xs text-muted-foreground mt-0.5">{item.description}</p>
+                                                                        <p className="font-medium text-sm leading-tight">{item.product?.name || "Unknown Product"}</p>
+                                                                        <p className="text-xs text-muted-foreground mt-0.5">{item.product_id}</p>
                                                                     </div>
                                                                 </div>
                                                                 <div className="text-right text-sm text-muted-foreground">
-                                                                    ×{item.qty}
+                                                                    ×{item.quantity || item.qty}
                                                                 </div>
                                                                 <div className="text-right font-medium text-sm">
-                                                                    ฿{item.price}
+                                                                    ฿{item.price_at_purchase ? item.price_at_purchase / 100 : item.price}
                                                                 </div>
                                                             </div>
                                                         ))}
@@ -431,7 +340,7 @@ export default function OrderHistoryPage() {
                                                 <Separator />
                                                 <div className="p-4 px-6 bg-muted/30 flex items-center justify-between text-sm">
                                                     <span className="text-muted-foreground">Order total</span>
-                                                    <span className="font-semibold">฿{order.total}</span>
+                                                    <span className="font-semibold">฿{order.total_amount ? (order.total_amount / 100).toLocaleString() : order.total}</span>
                                                 </div>
                                             </>
                                         )}

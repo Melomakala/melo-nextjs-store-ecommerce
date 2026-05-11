@@ -11,11 +11,11 @@ export interface JwtPayload {
 }
 
 export const genAccessToken = (payload: JwtPayload): string => {
-    return Jwt.sign(payload, JWT_ACCESS_SECRET, { expiresIn: "1m" })
+    return Jwt.sign(payload, JWT_ACCESS_SECRET, { expiresIn: "1h" })
 }
 
 export const genRefreshToken = (payload: JwtPayload): string => {
-    return Jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: "5m" })
+    return Jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: "24h" })
 }
 
 

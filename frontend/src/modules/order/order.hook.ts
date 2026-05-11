@@ -1,6 +1,6 @@
-import { createOrder } from "./order.services";
+import { createOrder, getOrderHistory } from "./order.services";
 import { useIdempotencyKeyStore } from "@/lib/idempotencykey";
-import { OrderRequest } from "./order.types";
+import { OrderRequest, GetOrderHistoryRequest } from "./order.types";
 import { useWallet } from "../wallet/wallet.hook";
 
 export const useCreateOrder = () => {
@@ -30,4 +30,22 @@ export const useCreateOrder = () => {
         }
     };
     return { handleCreateOrder };
+};
+
+export const useGetOrderHistory = () => {
+    const handleGetOrderHistory = async (params: GetOrderHistoryRequest) => {
+        try {
+            const orderHistory = await getOrderHistory({
+                page: params.page || 1,
+                search: params.search || undefined,
+                status: params.status || undefined,
+                timeRange: params.timeRange || undefined,
+            });
+            console.log(orderHistory)
+            return orderHistory;
+        } catch (error: any) {
+            throw Error(error?.response?.data?.message || "Failed to get order history");
+        }
+    };
+    return { handleGetOrderHistory };
 };

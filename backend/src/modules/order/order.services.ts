@@ -4,7 +4,7 @@ import * as orderType from "./order.types";
 import { deductWalletService } from "../wallet/wallet.services";
 import { decrementStock } from "../product/product.services";
 import { prisma } from "../../common/utils/prisma";
-import { toCents } from "../../common/utils/formatcent";
+import { fromCents, toCents } from "../../common/utils/formatcent";
 
 const createOrder = async (user_id: string, data: orderType.CreateOrderRequest, idempotency_key: string): Promise<orderModel.OrderWithItems> => {
     const product_ids = data.items.map((item) => item.product_id);
@@ -79,7 +79,6 @@ export const getOrderHistoryService = async (user_id: string, query: orderType.G
     const { search, status, timeRange, page } = query
     const pageNum = parseInt(page) || 1;
     const skip = (pageNum - 1) * LIMIT;
-
     let dateFilter = {};
     const now = new Date()
     if (timeRange === 'thisMonth') {
@@ -97,11 +96,11 @@ export const getOrderHistoryService = async (user_id: string, query: orderType.G
         lastYear.setFullYear(now.getFullYear() - 1);
         dateFilter = { gte: lastYear };
     }
-    const { orders, totalCount } = await orderModel.getOrderHistoryModel(user_id, {
+    const { orders, totalCount, totalAmount, totalCompleteCount } = await orderModel.getOrderHistoryModel(user_id, {
         skip,
         take: LIMIT,
         search: search,
-        status: status !== "ALL" ? status : undefined,
+        status: status !== "All" ? status : undefined,
         timeRange: dateFilter,
     });
 
@@ -113,6 +112,8 @@ export const getOrderHistoryService = async (user_id: string, query: orderType.G
             page,
             totalPages,
             totalCount,
+            totalAmount: fromCents(totalAmount),
+            totalCompleteCount,
         },
     };
 }

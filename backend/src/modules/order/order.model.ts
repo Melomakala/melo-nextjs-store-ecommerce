@@ -93,7 +93,7 @@ export const getOrderHistoryModel = async (user_id: string, query: orderType.Ord
         }),
     };
 
-    const [orders, totalCount] = await Promise.all([
+    const [orders, totalCount, aggregateResult] = await Promise.all([
         prisma.order.findMany({
             where,
             skip,
@@ -118,6 +118,24 @@ export const getOrderHistoryModel = async (user_id: string, query: orderType.Ord
         prisma.order.count({
             where,
         }),
+        prisma.order.aggregate({
+            where: {
+                ...where,
+                user_id,
+                status: orderType.status.COMPLETE,
+            },
+            _sum: {
+                total_amount: true,
+            },
+            _count: {
+                order_id: true
+            }
+        })
     ]);
-    return { orders, totalCount };
+    return {
+        orders,
+        totalCount,
+        totalAmount: aggregateResult._sum.total_amount || 0,
+        totalCompleteCount: aggregateResult._count.order_id || 0
+    };
 };
