@@ -52,7 +52,7 @@ export default function OrderHistoryPage() {
     const [apiOrders, setApiOrders] = useState<any[]>([]);
     const [totalOrdersServer, setTotalOrdersServer] = useState(0);
     const [totalPagesServer, setTotalPagesServer] = useState(1);
-
+    const [totalCount, setTotalCount] = useState(0);
     useEffect(() => {
         // เรียกใช้ฟังก์ชันและนำข้อมูลมาอัปเดต state
         handleGetOrderHistory({
@@ -63,7 +63,8 @@ export default function OrderHistoryPage() {
         }).then((result: GetOrderHistoryResponse) => {
             if (result && result.data) {
                 setApiOrders(result.data);
-                setTotalOrdersServer(result.meta.total);
+                setTotalCount(result.meta.total);
+                setTotalOrdersServer(result.meta.totalOrder)
                 setTotalPagesServer(result.meta.last_page);
                 setTotalAmout(result.meta.totalAmount);
                 setTotalComplete(result.meta.totalCompleteCount)
@@ -83,12 +84,11 @@ export default function OrderHistoryPage() {
         setExpandedOrders(prev => prev.includes(id) ? prev.filter(o => o !== id) : [...prev, id]);
     };
 
-    const totalOrders = totalOrdersServer;
     const totalPages = totalPagesServer;
 
     // Calculate showing range
-    const startIdx = totalOrders === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
-    const endIdx = Math.min(currentPage * itemsPerPage, totalOrders);
+    const startIdx = totalCount === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
+    const endIdx = Math.min(currentPage * itemsPerPage, totalCount);
 
     // Get current page items
     const currentOrders = apiOrders;
@@ -237,7 +237,7 @@ export default function OrderHistoryPage() {
                                     <p className="text-xs text-muted-foreground mb-1">Total Spent</p>
                                     <h2 className="text-2xl font-bold">
                                         {/* แก้ไขให้โชว์ข้อมูลจาก backend ถ้าจะนำมาใช้ควรรวมผลรวมของเซิร์ฟเวอร์มา */}
-                                        {totalAmount}
+                                        ฿{totalAmount}
                                     </h2>
                                 </div>
                             </CardContent>
@@ -358,7 +358,7 @@ export default function OrderHistoryPage() {
                     {/* Pagination */}
                     <div className="flex items-center justify-between mt-4">
                         <span className="text-sm text-muted-foreground">
-                            Showing {startIdx} to {endIdx} of {totalOrders} orders
+                            Showing {startIdx} to {endIdx} of {totalCount} orders
                         </span>
                         <div className="flex items-center gap-1">
                             <Button

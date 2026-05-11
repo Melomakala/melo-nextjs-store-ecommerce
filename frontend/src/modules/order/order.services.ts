@@ -42,6 +42,7 @@ export const getOrderHistory = async (params: GetOrderHistoryRequest): Promise<G
             data: processedOrders,
             meta: {
                 total: pagination.totalCount,
+                totalOrder: pagination.totalOrder,
                 page: Number(pagination.page),
                 last_page: pagination.totalPages,
                 totalAmount: pagination.totalAmount,

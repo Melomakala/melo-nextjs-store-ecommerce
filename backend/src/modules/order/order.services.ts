@@ -96,7 +96,7 @@ export const getOrderHistoryService = async (user_id: string, query: orderType.G
         lastYear.setFullYear(now.getFullYear() - 1);
         dateFilter = { gte: lastYear };
     }
-    const { orders, totalCount, totalAmount, totalCompleteCount } = await orderModel.getOrderHistoryModel(user_id, {
+    const { orders, totalCount, totalOrder, totalAmount, totalCompleteCount } = await orderModel.getOrderHistoryModel(user_id, {
         skip,
         take: LIMIT,
         search: search,
@@ -112,6 +112,7 @@ export const getOrderHistoryService = async (user_id: string, query: orderType.G
             page,
             totalPages,
             totalCount,
+            totalOrder,
             totalAmount: fromCents(totalAmount),
             totalCompleteCount,
         },

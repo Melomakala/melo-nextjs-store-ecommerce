@@ -37,9 +37,10 @@ export interface GetOrderHistoryResponse {
     data: Order[];
     meta: {
         total: number;
+        totalOrder: number;
         page: number;
         last_page: number;
         totalAmount: number;
         totalCompleteCount: number;
     }
-}
+}
