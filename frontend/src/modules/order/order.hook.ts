@@ -2,6 +2,7 @@ import { createOrder, getOrderHistory } from "./order.services";
 import { useIdempotencyKeyStore } from "@/lib/idempotencykey";
 import { OrderRequest, GetOrderHistoryRequest } from "./order.types";
 import { useWallet } from "../wallet/wallet.hook";
+import { useOrderHistoryStore } from "./order.store";
 import { useCallback } from "react";
 
 export const useCreateOrder = () => {
@@ -34,6 +35,7 @@ export const useCreateOrder = () => {
 };
 
 export const useGetOrderHistory = () => {
+    const { setOrderHistory } = useOrderHistoryStore();
     const handleGetOrderHistory = useCallback(async (params: GetOrderHistoryRequest) => {
         try {
             const orderHistory = await getOrderHistory({
@@ -42,11 +44,12 @@ export const useGetOrderHistory = () => {
                 status: params.status || undefined,
                 timeRange: params.timeRange || undefined,
             });
-            console.log(orderHistory)
-            return orderHistory;
+            setOrderHistory(orderHistory);
         } catch (error: any) {
-            throw Error(error?.response?.data?.message || "Failed to get order history");
+            const message = error?.response?.data?.message || "Failed to get order history";
+            throw Error(message);
         }
-    }, []);
+    }, [setOrderHistory]);
+
     return { handleGetOrderHistory };
-};
+};

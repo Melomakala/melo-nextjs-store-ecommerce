@@ -75,8 +75,8 @@ export const placeOrder = async (user_id: string, data: orderType.CreateOrderReq
 
 
 export const getOrderHistoryService = async (user_id: string, query: orderType.GetOrderHistoryRequest) => {
-    const LIMIT = 4
-    const { search, status, timeRange, page } = query
+    const { search, status, timeRange, page, limit } = query
+    const LIMIT = parseInt(limit as string) || 4;
     const pageNum = parseInt(page) || 1;
     const skip = (pageNum - 1) * LIMIT;
     let dateFilter = {};

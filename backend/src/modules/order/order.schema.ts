@@ -16,8 +16,9 @@ export const createOrderSchema = z.object({
 export const getOrderHistorySchema = z.object({
     query: z.object({
         page: z.string().optional(),
+        limit: z.string().optional(),
         search: z.string().optional(),
-        status: z.string().optional(),
-        timeRange: z.string().optional(),
+        status: z.string().optional(), // Allowed: "All", "PENDING", "COMPLETE", "CANCEL"
+        timeRange: z.string().optional(), // Allowed: "thisMonth", "last3Months", "lastYear"
     }),
 });

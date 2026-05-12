@@ -25,6 +25,7 @@ export enum status {
 
 export interface GetOrderHistoryRequest {
     page: string;
+    limit?: string;
     search?: string;
     status?: string;
     timeRange?: string;

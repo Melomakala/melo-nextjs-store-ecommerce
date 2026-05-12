@@ -34,64 +34,45 @@ import { useEffect, useState } from "react"
 import { useRouteGuard } from "@/hooks/use-route-guard"
 import LoadingSpiner from "@/components/loadingspiner"
 import { useGetOrderHistory } from "@/modules/order/order.hook"
-import { GetOrderHistoryResponse } from "@/modules/order/order.types"
+import { GetOrderHistoryResponse, Order, OrderItem } from "@/modules/order/order.types"
 import { useDebounce } from "@/hooks/use-debounce"
+import { useOrderHistoryStore } from "@/modules/order/order.store"
 
 
 
 export default function OrderHistoryPage() {
     const { handleGetOrderHistory } = useGetOrderHistory();
+    const { orders, meta, } = useOrderHistoryStore();
     const [expandedOrders, setExpandedOrders] = useState<string[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
     const [statusFilter, setStatusFilter] = useState<string>("All");
     const [timeRange, setTimeRange] = useState<string>("");
-    const { isLoading, isRedirecting } = useRouteGuard(true, "/");
-    const [totalAmount, setTotalAmount] = useState<number>(0);
-    const [totalComplete, setTotalComplete] = useState<number>(0);
+    const { isLoading: isAuthLoading, isRedirecting } = useRouteGuard(true, "/");
     const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-    const [apiOrders, setApiOrders] = useState<any[]>([]);
-    const [totalOrdersServer, setTotalOrdersServer] = useState(0);
-    const [totalPagesServer, setTotalPagesServer] = useState(1);
-    const [totalCount, setTotalCount] = useState(0);
     useEffect(() => {
-        let isMounted = true;
+        if (isRedirecting) return;
 
         const fetchOrders = async () => {
             try {
-                const result = await handleGetOrderHistory({
+                await handleGetOrderHistory({
                     page: currentPage,
                     search: debouncedSearchQuery,
                     status: statusFilter === "All" ? "" : statusFilter,
                     timeRange: timeRange
                 });
-
-                if (isMounted && result && result.data) {
-                    setApiOrders(result.data);
-                    setTotalCount(result.meta.total);
-                    setTotalOrdersServer(result.meta.totalOrder)
-                    setTotalPagesServer(result.meta.last_page);
-                    setTotalAmount(result.meta.totalAmount);
-                    setTotalComplete(result.meta.totalCompleteCount)
-                }
             } catch (err: any) {
-                if (isMounted) {
-                    console.error("Fetch orders failed:", err);
-                }
+                console.error("Fetch orders failed:", err);
             }
         };
 
         fetchOrders();
-
-        return () => {
-            isMounted = false;
-        };
-    }, [currentPage, debouncedSearchQuery, statusFilter, timeRange, handleGetOrderHistory]);
+    }, [currentPage, debouncedSearchQuery, statusFilter, timeRange, handleGetOrderHistory, isRedirecting]);
 
     const itemsPerPage = 4;
 
-    if (isLoading || isRedirecting) {
+    if (isAuthLoading || isRedirecting) {
         return <LoadingSpiner />;
     }
 
@@ -99,14 +80,15 @@ export default function OrderHistoryPage() {
         setExpandedOrders(prev => prev.includes(id) ? prev.filter(o => o !== id) : [...prev, id]);
     };
 
-    const totalPages = totalPagesServer;
+    const totalPages = meta?.last_page || 1;
+    const totalCount = meta?.total || 0;
 
     // Calculate showing range
     const startIdx = totalCount === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
     const endIdx = Math.min(currentPage * itemsPerPage, totalCount);
 
     // Get current page items
-    const currentOrders = apiOrders;
+    const currentOrders = orders;
 
     return (
         <SidebarProvider>
@@ -239,7 +221,7 @@ export default function OrderHistoryPage() {
                                 </div>
                                 <div>
                                     <p className="text-xs text-muted-foreground mb-1">Total Orders</p>
-                                    <h2 className="text-2xl font-bold">{totalOrdersServer}</h2>
+                                    <h2 className="text-2xl font-bold">{meta?.totalOrder || 0}</h2>
                                 </div>
                             </CardContent>
                         </Card>
@@ -251,7 +233,7 @@ export default function OrderHistoryPage() {
                                 <div>
                                     <p className="text-xs text-muted-foreground mb-1">Total Spent</p>
                                     <h2 className="text-2xl font-bold">
-                                        ฿{totalAmount}
+                                        ฿{meta?.totalAmount || 0}
                                     </h2>
                                 </div>
                             </CardContent>
@@ -263,7 +245,7 @@ export default function OrderHistoryPage() {
                                 </div>
                                 <div>
                                     <p className="text-xs text-muted-foreground mb-1">Completed</p>
-                                    <h2 className="text-2xl font-bold">{totalComplete}</h2>
+                                    <h2 className="text-2xl font-bold">{meta?.totalCompleteCount || 0}</h2>
                                 </div>
                             </CardContent>
                         </Card>
@@ -272,28 +254,28 @@ export default function OrderHistoryPage() {
                     {/* Order List */}
                     <div className="flex flex-col gap-4">
                         {currentOrders.length > 0 ? (
-                            currentOrders.map((order) => {
-                                const isExpanded = expandedOrders.includes(order.order_id || order.id);
+                            currentOrders.map((order: Order) => {
+                                const isExpanded = expandedOrders.includes(order.order_id);
 
                                 return (
                                     <Card
-                                        key={order.order_id || order.id || `order-${Math.random()}`}
+                                        key={order.order_id}
                                         className={`group border-border/40 bg-card/50 shadow-sm overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5 border-l-2 ${order.status === 'COMPLETE' || order.status === 'Completed' ? 'border-l-emerald-500' : order.status === 'PENDING' || order.status === 'Pending' ? 'border-l-orange-500' : 'border-l-rose-500'}`}
                                     >
                                         {/* Order Header */}
                                         <div
                                             className="p-6 pb-4 cursor-pointer hover:bg-muted/10 transition-colors"
-                                            onClick={() => toggleOrder(order.order_id || order.id)}
+                                            onClick={() => toggleOrder(order.order_id)}
                                         >
                                             <div className="flex items-start justify-between">
                                                 <div>
-                                                    <h3 className="font-semibold">{order.order_id || order.id}</h3>
+                                                    <h3 className="font-semibold">{order.order_id}</h3>
                                                     <p className="text-xs text-muted-foreground mt-0.5">
-                                                        {order.created_at ? new Date(order.created_at).toLocaleDateString() : order.date} • {order.items ? order.items.length : order.itemsCount} {(order.items ? order.items.length : order.itemsCount) === 1 ? 'item' : 'items'}
+                                                        {new Date(order.created_at).toLocaleDateString()} • {order.items.length} {order.items.length === 1 ? 'item' : 'items'}
                                                     </p>
                                                 </div>
                                                 <div className="flex items-center gap-3">
-                                                    <span className="font-semibold text-sm">฿{order.total_amount ? (order.total_amount / 100).toLocaleString() : order.total}</span>
+                                                    <span className="font-semibold text-sm">฿{(order.total_amount / 100).toLocaleString()}</span>
                                                     <Badge
                                                         variant="secondary"
                                                         className={`
@@ -323,8 +305,8 @@ export default function OrderHistoryPage() {
                                                     </div>
 
                                                     <div className="flex flex-col gap-4">
-                                                        {order.items.map((item: any, idx: number) => (
-                                                            <div key={`${order.order_id || order.id}-item-${item.product_id || idx}`} className="grid grid-cols-[1fr_80px_80px] gap-4 items-center">
+                                                        {order.items.map((item: OrderItem, idx: number) => (
+                                                            <div key={`${order.order_id}-item-${item.product_id || idx}`} className="grid grid-cols-[1fr_80px_80px] gap-4 items-center">
                                                                 <div className="flex gap-4 items-center">
                                                                     <div className={`relative size-10 rounded-md bg-blue-500/20 shrink-0 overflow-hidden flex items-center justify-center`}>
                                                                         {item.product?.image_url && (
@@ -342,10 +324,10 @@ export default function OrderHistoryPage() {
                                                                     </div>
                                                                 </div>
                                                                 <div className="text-right text-sm text-muted-foreground">
-                                                                    ×{item.quantity || item.qty}
+                                                                    ×{item.quantity}
                                                                 </div>
                                                                 <div className="text-right font-medium text-sm">
-                                                                    ฿{item.price_at_purchase ? item.price_at_purchase / 100 : item.price}
+                                                                    ฿{item.price_at_purchase / 100}
                                                                 </div>
                                                             </div>
                                                         ))}
@@ -354,7 +336,7 @@ export default function OrderHistoryPage() {
                                                 <Separator />
                                                 <div className="p-4 px-6 bg-muted/30 flex items-center justify-between text-sm">
                                                     <span className="text-muted-foreground">Order total</span>
-                                                    <span className="font-semibold">฿{order.total_amount ? (order.total_amount / 100).toLocaleString() : order.total}</span>
+                                                    <span className="font-semibold">฿{(order.total_amount / 100).toLocaleString()}</span>
                                                 </div>
                                             </>
                                         )}
@@ -370,37 +352,48 @@ export default function OrderHistoryPage() {
                     </div>
 
                     {/* Pagination */}
-                    <div className="flex items-center justify-between mt-4">
-                        <span className="text-sm text-muted-foreground">
-                            Showing {startIdx} to {endIdx} of {totalCount} orders
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 pb-10 border-t border-border/10 pt-6">
+                        <span className="text-sm text-muted-foreground order-2 sm:order-1">
+                            Showing <span className="font-medium text-foreground">{startIdx}</span> to <span className="font-medium text-foreground">{endIdx}</span> of <span className="font-medium text-foreground">{totalCount}</span> orders
                         </span>
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1 order-1 sm:order-2 flex-wrap justify-center">
                             <Button
                                 variant="outline"
                                 size="sm"
-                                className="bg-card disabled:opacity-50"
+                                className="bg-card hover:bg-accent disabled:opacity-50"
                                 onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                                 disabled={currentPage === 1}
                             >
                                 Previous
                             </Button>
 
-                            {[...Array(totalPages)].map((_, i) => (
-                                <Button
-                                    key={i + 1}
-                                    variant={currentPage === i + 1 ? "default" : "outline"}
-                                    size="sm"
-                                    className={`w-9 ${currentPage === i + 1 ? "" : "bg-card"}`}
-                                    onClick={() => setCurrentPage(i + 1)}
-                                >
-                                    {i + 1}
-                                </Button>
-                            ))}
+                            <div className="flex items-center gap-1">
+                                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                    .filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1)
+                                    .map((page, i, array) => {
+                                        const prevPage = array[i - 1];
+                                        const showEllipsis = prevPage && page - prevPage > 1;
+
+                                        return (
+                                            <div key={page} className="flex items-center gap-1">
+                                                {showEllipsis && <span className="text-muted-foreground px-1">...</span>}
+                                                <Button
+                                                    variant={currentPage === page ? "default" : "outline"}
+                                                    size="sm"
+                                                    className={`w-9 ${currentPage === page ? "shadow-sm shadow-primary/20" : "bg-card hover:bg-accent"}`}
+                                                    onClick={() => setCurrentPage(page)}
+                                                >
+                                                    {page}
+                                                </Button>
+                                            </div>
+                                        );
+                                    })}
+                            </div>
 
                             <Button
                                 variant="outline"
                                 size="sm"
-                                className="bg-card disabled:opacity-50"
+                                className="bg-card hover:bg-accent disabled:opacity-50"
                                 onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                                 disabled={currentPage === totalPages}
                             >

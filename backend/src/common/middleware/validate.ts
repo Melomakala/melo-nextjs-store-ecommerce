@@ -24,10 +24,18 @@ export const validate = (schema: ZodSchema<RequestSchema>) => {
 
         const { body, query, params, headers } = result.data;
 
-        if (body !== undefined) req.body = body;
-        if (query !== undefined) req.query = query as any;
-        if (params !== undefined) req.params = params as any;
-        if (headers !== undefined) req.headers = headers as any;
+        if (body !== undefined) {
+            Object.defineProperty(req, 'body', { value: body, writable: true, configurable: true, enumerable: true });
+        }
+        if (query !== undefined) {
+            Object.defineProperty(req, 'query', { value: query, writable: true, configurable: true, enumerable: true });
+        }
+        if (params !== undefined) {
+            Object.defineProperty(req, 'params', { value: params, writable: true, configurable: true, enumerable: true });
+        }
+        if (headers !== undefined) {
+            Object.defineProperty(req, 'headers', { value: headers, writable: true, configurable: true, enumerable: true });
+        }
 
         next();
     };
