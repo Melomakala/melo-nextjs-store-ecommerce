@@ -35,6 +35,7 @@ import { useRouteGuard } from "@/hooks/use-route-guard"
 import LoadingSpiner from "@/components/loadingspiner"
 import { useGetOrderHistory } from "@/modules/order/order.hook"
 import { GetOrderHistoryResponse } from "@/modules/order/order.types"
+import { useDebounce } from "@/hooks/use-debounce"
 
 
 
@@ -46,33 +47,47 @@ export default function OrderHistoryPage() {
     const [statusFilter, setStatusFilter] = useState<string>("All");
     const [timeRange, setTimeRange] = useState<string>("");
     const { isLoading, isRedirecting } = useRouteGuard(true, "/");
-    const [totalAmount, setTotalAmout] = useState<number>(0);
+    const [totalAmount, setTotalAmount] = useState<number>(0);
     const [totalComplete, setTotalComplete] = useState<number>(0);
+    const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
     const [apiOrders, setApiOrders] = useState<any[]>([]);
     const [totalOrdersServer, setTotalOrdersServer] = useState(0);
     const [totalPagesServer, setTotalPagesServer] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
     useEffect(() => {
-        // เรียกใช้ฟังก์ชันและนำข้อมูลมาอัปเดต state
-        handleGetOrderHistory({
-            page: currentPage,
-            search: searchQuery,
-            status: statusFilter,
-            timeRange: timeRange
-        }).then((result: GetOrderHistoryResponse) => {
-            if (result && result.data) {
-                setApiOrders(result.data);
-                setTotalCount(result.meta.total);
-                setTotalOrdersServer(result.meta.totalOrder)
-                setTotalPagesServer(result.meta.last_page);
-                setTotalAmout(result.meta.totalAmount);
-                setTotalComplete(result.meta.totalCompleteCount)
+        let isMounted = true;
+
+        const fetchOrders = async () => {
+            try {
+                const result = await handleGetOrderHistory({
+                    page: currentPage,
+                    search: debouncedSearchQuery,
+                    status: statusFilter === "All" ? "" : statusFilter,
+                    timeRange: timeRange
+                });
+
+                if (isMounted && result && result.data) {
+                    setApiOrders(result.data);
+                    setTotalCount(result.meta.total);
+                    setTotalOrdersServer(result.meta.totalOrder)
+                    setTotalPagesServer(result.meta.last_page);
+                    setTotalAmount(result.meta.totalAmount);
+                    setTotalComplete(result.meta.totalCompleteCount)
+                }
+            } catch (err: any) {
+                if (isMounted) {
+                    console.error("Fetch orders failed:", err);
+                }
             }
-        }).catch((err: any) => {
-            console.error("Fetch orders failed:", err);
-        });
-    }, [currentPage, searchQuery, statusFilter, timeRange]);
+        };
+
+        fetchOrders();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [currentPage, debouncedSearchQuery, statusFilter, timeRange, handleGetOrderHistory]);
 
     const itemsPerPage = 4;
 
@@ -161,22 +176,22 @@ export default function OrderHistoryPage() {
                                 <DropdownMenuContent align="end" className="w-[180px]">
                                     <DropdownMenuLabel>Time Range</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    {["", "thisMonth", "last3Months", "lastYear"].map((timeRange) => (
+                                    {["", "thisMonth", "last3Months", "lastYear"].map((range) => (
                                         <DropdownMenuItem
-                                            key={timeRange}
+                                            key={range}
                                             onClick={() => {
-                                                setTimeRange(timeRange);
+                                                setTimeRange(range);
                                                 setCurrentPage(1);
                                             }}
-                                            className={timeRange === timeRange ? "bg-accent" : ""}
+                                            className={timeRange === range ? "bg-accent" : ""}
                                         >
-                                            {timeRange === "" ?
+                                            {range === "" ?
                                                 "All Time"
-                                                : timeRange === "thisMonth" ?
+                                                : range === "thisMonth" ?
                                                     "This Month"
-                                                    : timeRange === "last3Months" ?
+                                                    : range === "last3Months" ?
                                                         "Last 3 Months"
-                                                        : timeRange === "lastYear" ?
+                                                        : range === "lastYear" ?
                                                             "Last Year"
                                                             : ""
                                             }
@@ -236,7 +251,6 @@ export default function OrderHistoryPage() {
                                 <div>
                                     <p className="text-xs text-muted-foreground mb-1">Total Spent</p>
                                     <h2 className="text-2xl font-bold">
-                                        {/* แก้ไขให้โชว์ข้อมูลจาก backend ถ้าจะนำมาใช้ควรรวมผลรวมของเซิร์ฟเวอร์มา */}
                                         ฿{totalAmount}
                                     </h2>
                                 </div>

@@ -8,6 +8,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
+import { useUserStore } from "@/modules/user/user.store"
+import { useEffect, useState } from "react"
 
 export function NavMain({
   items,
@@ -18,13 +20,28 @@ export function NavMain({
     icon: React.ReactNode
     isActive?: boolean
     badge?: string | number
+    isLogin: boolean
   }[]
 }) {
+  const { user } = useUserStore()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const filteredItems = items.filter((item) => {
+    if (item.isLogin) {
+      return mounted && !!user
+    }
+    return true
+  })
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Menu</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
+        {filteredItems.map((item) => (
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild tooltip={item.title} isActive={item.isActive}>
               <Link href={item.url}>

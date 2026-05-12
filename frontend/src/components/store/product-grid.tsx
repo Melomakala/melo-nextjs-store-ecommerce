@@ -13,17 +13,19 @@ import { useProduct } from "@/modules/product/product.hook";
 import { useEffect } from "react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/formatPrice";
+import { useDebounce } from "@/hooks/use-debounce"
 
 export function ProductGrid() {
   const { getProducts } = useProduct();
   const searchQuery = useProductStore((state) => state.searchQuery);
+  const searchuseDebounce = useDebounce(searchQuery, 300);
 
   useEffect(() => {
     getProducts();
   }, []);
   const products = useProductStore((state) => state.products);
   const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    product.name.toLowerCase().includes(searchuseDebounce.toLowerCase())
   );
   if (filteredProducts.length === 0) {
     return (

@@ -3,6 +3,7 @@
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
 import { useProductStore } from "@/modules/product/product.store"
+import { useDebounce } from "@/hooks/use-debounce"
 
 export function StoreSearch() {
   const searchQuery = useProductStore((state) => state.searchQuery);

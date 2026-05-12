@@ -47,6 +47,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "/",
         icon: <Home />,
         isActive: pathname === "/",
+        isLogin: false,
       },
       {
         title: "Shopping Cart",
@@ -54,12 +55,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: <ShoppingCart />,
         isActive: pathname === "/cart",
         badge: mounted && cartItemsCount > 0 ? cartItemsCount : undefined,
+        isLogin: false,
       },
       {
         title: "Order History",
         url: "/orderhistory",
         icon: <Package />,
         isActive: pathname === "/orderhistory",
+        isLogin: true,
       },
     ],
   }
